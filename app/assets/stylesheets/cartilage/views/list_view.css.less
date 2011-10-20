@@ -1,0 +1,44 @@
+
+ul.list-view
+{
+  position: relative;
+  display: block;
+  list-style: none;
+  margin: 0;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
+  cursor: default;
+
+  li
+  {
+    margin: 0;
+    padding: 6px;
+
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+
+    &:nth-of-type(even)
+    {
+      background-color: rgba(0, 0, 0, 0.025);
+    }
+
+    &.selected
+    {
+      background-color: #73adff;
+    }
+
+    &:focus
+    {
+      outline: none;
+    }
+  }
+
+  &:focus
+  {
+    outline: none;
+  }
+}
