@@ -2,7 +2,7 @@
 # Bar Segment View
 #
 
-class window.Aphid.Views.BarSegmentView extends Backbone.View
+class window.Cartilage.Views.BarSegmentView extends Backbone.View
 
   tagName: "li"
   className: "bar-segment-view"

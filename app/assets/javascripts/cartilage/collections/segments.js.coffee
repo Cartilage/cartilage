@@ -1,4 +1,4 @@
 
-class window.Aphid.Collections.Segments extends Backbone.Collection
+class window.Cartilage.Collections.Segments extends Backbone.Collection
 
-  model: Aphid.Models.Segment
+  model: Cartilage.Models.Segment

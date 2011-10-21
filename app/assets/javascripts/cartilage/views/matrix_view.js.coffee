@@ -1,12 +1,12 @@
 
-class window.Aphid.Views.MatrixView extends Aphid.Views.ListView
+class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
 
   className: "list-view matrix-view"
 
   events: _.extend {
     "mouseup": "onMouseUp",
     "mousemove": "onMouseMove"
-  }, Aphid.Views.ListView.prototype.events
+  }, Cartilage.Views.ListView.prototype.events
 
   render: =>
     super

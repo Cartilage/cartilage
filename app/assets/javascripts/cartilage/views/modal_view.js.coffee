@@ -2,7 +2,7 @@
 # Modal View
 #
 
-class window.Aphid.Views.ModalView extends Backbone.View
+class window.Cartilage.Views.ModalView extends Backbone.View
 
   className: "modal modal-view"
 

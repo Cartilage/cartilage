@@ -2,7 +2,7 @@
 # Usage Bar View
 #
 
-class window.Aphid.Views.UsageBarView extends Backbone.View
+class window.Cartilage.Views.UsageBarView extends Backbone.View
 
   className: "usage-bar-view"
 
@@ -21,7 +21,7 @@ class window.Aphid.Views.UsageBarView extends Backbone.View
     @colors = options["colors"] if options["colors"]?
     @segments = options["segments"] || (@segments ?= [])
 
-    @barView = new Aphid.Views.BarView
+    @barView = new Cartilage.Views.BarView
 
   render: ->
 

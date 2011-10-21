@@ -2,7 +2,7 @@
 # Bar View
 #
 
-class window.Aphid.Views.BarView extends Backbone.View
+class window.Cartilage.Views.BarView extends Backbone.View
 
   tagName: "ul"
   className: "bar-view"
@@ -23,7 +23,7 @@ class window.Aphid.Views.BarView extends Backbone.View
   colors: [ '#6ba2d4', '#a765a2', '#f69062', '#8ccc64', '#c26bb4', '#e9d243' ]
 
   initialize: ->
-    @segments ?= new Aphid.Collections.Segments
+    @segments ?= new Cartilage.Collections.Segments
 
   render: ->
     @_cumulativeWidth = 0
@@ -35,7 +35,7 @@ class window.Aphid.Views.BarView extends Backbone.View
     _.each @segments.models, (segment, index) =>
       segmentWidth = @_percentageWidthForSegmentAtIndex(index)
       barWidth     = @_percentageWidthForBarInSegmentAtIndex(index)
-      segmentView  = new Aphid.Views.BarSegmentView {
+      segmentView  = new Cartilage.Views.BarSegmentView {
         barView: @,
         model: segment,
         width: segmentWidth,

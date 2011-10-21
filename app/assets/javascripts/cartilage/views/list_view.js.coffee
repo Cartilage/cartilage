@@ -1,5 +1,5 @@
 
-class window.Aphid.Views.ListView extends Backbone.View
+class window.Cartilage.Views.ListView extends Backbone.View
 
   tagName: "ul"
   className: "list-view"
