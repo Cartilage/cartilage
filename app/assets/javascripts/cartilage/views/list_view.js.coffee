@@ -149,18 +149,20 @@ class window.Cartilage.Views.ListView extends Backbone.View
     if event.metaKey
       element = event.target
       @selectAnother element
+      event.preventDefault()
 
     else if event.shiftKey
       element = event.target
-      @expandSelectionToElement element
+      @expandSelectionToElement ($ element).parents("li") || element
+      event.preventDefault()
 
   #
   # Handles focus events.
   #
   onFocus: (event) =>
     @focusedElement = event.target
-    unless event.metaKey
-      @select event.target
+    @select event.target unless event.metaKey
+
 
   #
   # Handles key down events while the view is focused.
@@ -251,6 +253,9 @@ class window.Cartilage.Views.ListView extends Backbone.View
       ($ @focusedElement).index(),
       ($ element).index()
     ].sort()
+
+    # Increment the end range since slice does not include it...
+    indexes[1] += 1
 
     # Select the elements in the requested indexes.
     elements = ($ @el).find("li").slice indexes...
