@@ -1,3 +1,0 @@
-= Cartilage for Backbone.js
-
-

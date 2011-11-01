@@ -42,7 +42,11 @@ class window.Cartilage.Views.SplitView extends Backbone.View
     @firstElement  = ($ '<div class="first"></div>')
     @secondElement = ($ '<div class="second"></div>')
 
-  render: ->
+    # Observe for window resize events and re-render the view when it occurs...
+    ($ window).resize =>
+      @position(@_currentPosition)
+
+  render: =>
     ($ @el).addClass @orientation
 
     @firstElement.html @firstView.render().el
