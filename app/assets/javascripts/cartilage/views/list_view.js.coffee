@@ -260,3 +260,67 @@ class window.Cartilage.Views.ListView extends Backbone.View
     # Select the elements in the requested indexes.
     elements = ($ @el).find("li").slice indexes...
     _.each elements, @selectAnother
+
+  #
+  # Scrolls the list view to fully expose the selected item if it is not
+  # fully visible within the list view. Returns true or false depending on
+  # whether the scroll was performed.
+  #
+  # scrollToSelectedItem: =>
+  #   console.log "scrollToSelectedItem"
+  #
+  #   scrollElement = ($ @el).parent()[0]
+  #   console.log scrollElement
+  #
+  #   if ($ scrollElement).scrollHeight < ($ scrollElement).innerHeight() and ($ scrollElement).scrollWidth < ($ scrollElement).innerWidth()
+  #     console.log "returning"
+  #     return
+  #
+  #   selectedItemTop     = @selectedElement.offset().top - ($ scrollElement).offset().top
+  #   selectedItemBottom  = selectedItemTop + @selectedElement.innerHeight()
+  #   selectedItemLeft    = @selectedElement.offset().left - ($ scrollElement).offset().left
+  #   selectedItemRight   = selectedItemLeft + @selectedElement.innerWidth()
+  #   currentScrollTop    = ($ scrollElement).scrollTop()
+  #   currentScrollBottom = ($ scrollElement).scrollTop() + ($ scrollElement).innerHeight()
+  #   currentScrollLeft   = ($ scrollElement).scrollLeft()
+  #   currentScrollRight  = ($ scrollElement).scrollLeft() + ($ scrollElement).innerWidth()
+  #   itemTopMargin       = parseInt(@selectedElement.css("margin-top"), 10)
+  #   itemBottomMargin    = parseInt(@selectedElement.css("margin-bottom"), 10)
+  #   itemLeftMargin      = parseInt(@selectedElement.css("margin-left"), 10)
+  #   itemRightMargin     = parseInt(@selectedElement.css("margin-right"), 10)
+  #   scrollTopValue      = selectedItemTop - itemTopMargin
+  #   scrollLeftValue     = selectedItemLeft - itemLeftMargin
+  #   shouldScrollTop     = false
+  #   shouldScrollLeft    = false
+  #
+  #   # selectedItem is above current scroll position
+  #   if selectedItemTop < currentScrollTop
+  #     shouldScrollTop = true
+  #
+  #   # selectedItem is below current, viewable scroll position
+  #   if selectedItemTop >= currentScrollBottom
+  #     shouldScrollTop = true
+  #
+  #   # selectedItem is partially visible below the current, viewable scroll position
+  #   else if selectedItemBottom > currentScrollBottom
+  #     shouldScrollTop = true
+  #     scrollTopValue = currentScrollTop + (selectedItemBottom - currentScrollBottom) + itemBottomMargin
+  #
+  #   # selectedItem is left of current scroll position
+  #   if selectedItemLeft < currentScrollLeft
+  #     shouldScrollLeft = true
+  #
+  #   # selectedItem is right of current, viewable scroll position
+  #   if selectedItemLeft >= currentScrollRight
+  #     shouldScrollLeft = true
+  #
+  #   # selectedItem is partially visible below the current, viewable scroll position
+  #   else if selectedItemRight > currentScrollRight
+  #     shouldScrollLeft = true
+  #     scrollLeftValue = currentScrollLeft + (selectedItemRight - currentScrollRight) + itemRightMargin
+  #
+  #   if shouldScrollTop or shouldScrollLeft
+  #     ($ @el).scrollTop(scrollTopValue) if shouldScrollTop
+  #     ($ @el).scrollLeft(scrollLeftValue) if shouldScrollLeft
+  #
+  #   (shouldScrollTop or shouldScrollLeft)
