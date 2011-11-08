@@ -9,12 +9,23 @@ class window.Cartilage.Views.ModalView extends Backbone.View
   events:
     "click .close": "dismiss"
 
+  isVisible: false
+
   render: ->
-    @overlayElement = ($ "<div class='overlay'></div>")
+    @overlayElement = ($ "<div class='modal-overlay'></div>")
     ($ document.body).append @overlayElement
     ($ @el).html @template { model: @model }
+    @delegateEvents()
     @
 
-  dismiss: ->
+  display: ->
+    return unless not @isVisible
+    @isVisible = true
+    ($ document.body).append @render().el
+
+  dismiss: =>
+    console.log "FOOO"
+    return unless @isVisible
     ($ @el).remove()
     ($ @overlayElement).remove()
+    @isVisible = false

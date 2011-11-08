@@ -3,6 +3,10 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.ModalView] Made the modal view class responsible for
+   display in addition to dismissal, preventing more than one instance from
+   being displayed at once.
+
  * [Cartilage.Views.ListView] Fixed an issue when expanding selection to
    another element in the list (or matrix).
 
