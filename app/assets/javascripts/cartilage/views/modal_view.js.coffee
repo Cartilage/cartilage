@@ -24,7 +24,6 @@ class window.Cartilage.Views.ModalView extends Backbone.View
     ($ document.body).append @render().el
 
   dismiss: =>
-    console.log "FOOO"
     return unless @isVisible
     ($ @el).remove()
     ($ @overlayElement).remove()
