@@ -20,6 +20,9 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
   onMouseDown: (event) =>
     super(event)
 
+    # Only handle this event if the primary mouse button was pressed...
+    return unless event.button is 0
+
     @isDragging = true
     @originX = event.pageX - ($ @el).offset().left
     @originY = event.pageY - ($ @el).offset().top
