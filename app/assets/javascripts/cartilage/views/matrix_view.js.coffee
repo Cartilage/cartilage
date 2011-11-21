@@ -8,6 +8,18 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
     "mousemove": "onMouseMove"
   }, Cartilage.Views.ListView.prototype.events
 
+  #
+  # Whether or not drag-selection should be enabled.
+  #
+  allowsDragSelection: false
+
+  initialize: (options = {}) ->
+
+    # Apply options
+    @allowsDragSelection = options["allowsDragSelection"] || (@allowsDragSelection ?= false)
+
+    super(options)
+
   render: =>
     super
     ($ @el).append ($ "<div/>").addClass("overlay").hide()
@@ -19,6 +31,9 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
   #
   onMouseDown: (event) =>
     super(event)
+
+    # Only process mouse down events if drag-selection is allowed...
+    return unless @allowsDragSelection
 
     # Only handle this event if the primary mouse button was pressed...
     return unless event.button is 0

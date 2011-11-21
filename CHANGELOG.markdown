@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.MatrixView] Allow drag-selection to be enabled/disabled by
+   setting the allowsDragSelection property. Defaults to false.
+
  * [Cartilage.Views.MatrixView] Hide the overlay when rendering to prevent a
    1x1 pixel artifact being visible.
 
