@@ -137,6 +137,9 @@ body
   background-color: #f2f3f4;
   .box-shadow(0 1px 3px rgba(0, 0, 0, 0.075));
 
+  -webkit-user-select: none;
+  -moz-user-select: none;
+
   h1
   {
     margin-bottom: (@baseline / 2) - 1px;
@@ -150,22 +153,32 @@ body
 
     small
     {
+      position: relative;
       font-size: inherit;
       color: rgba(0, 0, 0, 0.4);
-      margin-left: 0.9em;
+      margin-left: 20px;
       line-height: inherit !important;
       height: inherit !important;
-      border-left: 0.1em solid rgba(0, 0, 0, 0.1);
-      padding-top: 0.4em;
-      padding-bottom: 0.4em;
+      padding-left: 20px;
+      font-size: 80%;
 
-      :before
+      &:before
       {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
         content: "";
-        border-left: 0.1em solid rgba(255, 255, 255, 0.8);
-        margin-right: 0.9em;
-        padding-top: 0.4em;
-        padding-bottom: 0.4em;
+        border-left: 1px solid rgba(0, 0, 0, 0.1);
+        border-right: 1px solid rgba(255, 255, 255, 0.8);
+        margin-right: 20px;
+      }
+
+      a
+      {
+        color: inherit;
+        text-decoration: none;
+        display: inline;
       }
     }
   }
