@@ -10,7 +10,7 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
 
   render: =>
     super
-    ($ @el).append ($ "<div/>").addClass("overlay")
+    ($ @el).append ($ "<div/>").addClass("overlay").hide()
     @
 
   #

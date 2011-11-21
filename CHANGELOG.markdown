@@ -3,8 +3,11 @@
 
 ## Version 0.9.5 — Not Yet Released
 
- * [Cartilage.Views.MatrixView] Only begin drag operations on left button
-   clicks.
+ * [Cartilage.Views.MatrixView] Hide the overlay when rendering to prevent a
+   1x1 pixel artifact being visible.
+
+ * [Cartilage.Views.MatrixView] Only begin drag operations on left mouse
+   button clicks.
 
  * [Cartilage.Views.ModalView] Made the modal view class responsible for
    display in addition to dismissal, preventing more than one instance from
