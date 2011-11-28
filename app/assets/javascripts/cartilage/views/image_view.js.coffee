@@ -33,8 +33,9 @@ class window.Cartilage.Views.ImageView extends Backbone.View
   #
   initialize: (options = {}) ->
     @isLoaded     = false
-    @imageAddress = options["imageAddress"]
     @imageElement = ($ "<img />").hide()
+    @imageAddress = options["imageAddress"]
+    ($ @imageElement).attr("src", @imageAddress) if @imageAddress?
 
   render: ->
 
