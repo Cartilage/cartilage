@@ -123,6 +123,8 @@ class window.Cartilage.Views.PopoverView extends Backbone.View
     ($ @el).hide().css { visibility: "visible" }
     ($ @el).fadeIn()
 
+    ($ document).unbind("click", @handleDocumentClickEvent).click @handleDocumentClickEvent
+
   resizeToFitContents: ->
     element = ($ @contentElement).children()[0]
     width = ($ element).outerWidth()
@@ -137,6 +139,15 @@ class window.Cartilage.Views.PopoverView extends Backbone.View
       width: "#{width}px",
       height: "#{height}px"
     }
+
+  handleDocumentClickEvent: (event) =>
+
+    return if event.target == @attachedElement
+
+    ($ document).unbind("click", @handleDocumentClickEvent)
+
+    ($ @el).fadeOut "fast", =>
+      ($ @el).remove()
 
 #   // Event Handlers ----------------------------------------------------------
 #
