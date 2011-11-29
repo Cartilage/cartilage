@@ -1,0 +1,131 @@
+
+@import "twitter/bootstrap/mixins";
+
+.popover-view
+{
+  position: absolute;
+
+  width: 100px; /* auto; */
+  height: 80px; /* auto; */
+  z-index: 1000;
+  margin: 20px;
+
+  border: 2px solid rgb(0, 0, 0) !important;
+  border: 2px solid rgba(0, 0, 0, 0.9) !important;
+
+  .border-radius(2px);
+
+  color: white;
+  text-align: center;
+  line-height: 40px;
+
+  -webkit-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+
+  .triangle
+  {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    width:0px;
+    height:0px;
+
+    margin-left: -14px;
+
+    font-size: 0px;
+    line-height: 0px;
+  }
+
+  .content-view
+  {
+    position: relative;
+
+    background-color: rgba(0, 0, 0, 0.9);
+
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.825);
+    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
+    background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
+    background: -o-linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
+    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.75)), to(rgba(0, 0, 0, 0.95)));
+    background: linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
+
+    -webkit-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.25);
+    -moz-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.25);
+    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.25);
+
+    p, li
+    {
+      text-shadow: none;
+    }
+
+  }
+}
+
+.popover-view.top
+{
+  .triangle
+  {
+    top: auto;
+    bottom: 0;
+    margin-bottom: -15px;
+
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-top: 14px solid rgb(0, 0, 0);
+    border-top: 14px solid rgba(0, 0, 0, 0.85);
+  }
+}
+
+.popover-view.bottom
+{
+  .triangle
+  {
+    top: 0;
+    bottom: auto;
+    margin-top: -15px;
+
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent;
+    border-bottom: 14px solid rgb(0, 0, 0);
+    border-bottom: 14px solid rgba(0, 0, 0, 0.85);
+  }
+}
+
+.popover-view.left
+{
+  .triangle
+  {
+    top: 50%;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    margin-right: -15px;
+    margin-top: -15px;
+
+    border-left: 14px solid rgb(0, 0, 0);
+    border-left: 14px solid rgba(0, 0, 0, 0.85);
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+  }
+}
+
+.popover-view.right
+{
+  .triangle
+  {
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    left: 0;
+    margin-left: -15px;
+    margin-top: -15px;
+
+    border-right: 14px solid rgb(0, 0, 0);
+    border-right: 14px solid rgba(0, 0, 0, 0.85);
+    border-top: 14px solid transparent;
+    border-bottom: 14px solid transparent;
+  }
+}
