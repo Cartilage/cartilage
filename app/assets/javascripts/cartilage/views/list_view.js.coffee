@@ -39,7 +39,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
   renderModels: ->
     items = _.map @collection.models, (model) =>
-      itemElement = ($ '<li />')
+      itemElement = ($ "<li />")
       itemElement.attr("tabindex", ($ @el).attr("tabindex"))
       itemElement.data("model", model)
       if @itemView?
@@ -48,6 +48,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
         itemElement.data "view", itemView
       else
         itemElement.html model.constructor.name
+      itemElement
 
   #
   # Selects the specified list item. Returns true if the item was selected or
@@ -65,7 +66,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
     @selected.add model
     ($ element).addClass "selected"
-    ($ element).focus()
+    ($ element).focus() unless ($ element).is(":focus")
     @focusedElement = ($ element)
     @trigger "select", @selected
 
@@ -162,7 +163,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
   onFocus: (event) =>
     @focusedElement = event.target
     @select event.target unless event.metaKey
-
+    event.preventDefault()
 
   #
   # Handles key down events while the view is focused.

@@ -37,15 +37,22 @@ class window.Cartilage.Views.ImageView extends Backbone.View
     @imageAddress = options["imageAddress"]
     ($ @imageElement).attr("src", @imageAddress) if @imageAddress?
 
-  render: ->
+  render: =>
 
-    # Add the Image Element
-    ($ @el).html @imageElement
+    unless @isRendered
 
-    # (Re-)bind to Events manually because event delegation will not work for
-    # image load and error events...
-    ($ @imageElement).load @handleLoadEvent
-    ($ @imageElement).error @handleErrorEvent
+      # Add the Image Element
+      ($ @el).html @imageElement
+
+      # (Re-)bind to Events manually because event delegation will not work for
+      # image load and error events...
+      ($ @imageElement).load @handleLoadEvent
+      ($ @imageElement).error @handleErrorEvent
+
+      @isRendered = true
+
+    # unless @_loadEventsBound
+      # @_loadEventsBound = true
 
     # Update the Image Source
     @imageElement.attr("src", @imageAddress) if @imageAddress?

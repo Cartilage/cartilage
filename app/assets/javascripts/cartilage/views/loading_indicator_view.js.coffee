@@ -67,13 +67,13 @@ class window.Cartilage.Views.LoadingIndicatorView extends Backbone.View
     # Initialize Canvas Element
     @canvasElement = ($ "<canvas width='96' height='96'/>")[0]
 
-    # Initialize Canvas Context
-    @canvasContext = @canvasElement.getContext("2d")
-
     # If ExplorerCanvas is present, initialize the canvas element with it for
     # compatibility with Internet Explorer
-    # if (typeof G_vmlCanvasManager !== "undefined")
-    #   G_vmlCanvasManager.initElement(this.get("canvasElement"));
+    if typeof G_vmlCanvasManager != "undefined"
+      G_vmlCanvasManager.initElement(@canvasElement)
+
+    # Initialize Canvas Context
+    @canvasContext = @canvasElement.getContext("2d")
 
   render: ->
     ($ @el).html @canvasElement
