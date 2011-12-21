@@ -85,7 +85,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
   # Selects the first element in the list.
   #
   selectFirst: ->
-    element = ($ @el).find "li:first-of-type"
+    element = ($ @el).find("li").first()
     @select element
 
   #
@@ -161,8 +161,8 @@ class window.Cartilage.Views.ListView extends Backbone.View
   # Handles focus events.
   #
   onFocus: (event) =>
-    @focusedElement = event.target
-    @select event.target unless event.metaKey
+    @focusedElement = $(event.target).closest("li")
+    @select @focusedElement unless event.metaKey
     event.preventDefault()
 
   #
