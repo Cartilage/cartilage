@@ -51,11 +51,9 @@ class window.Cartilage.Views.ImageView extends Backbone.View
 
       @isRendered = true
 
-    # unless @_loadEventsBound
-      # @_loadEventsBound = true
-
     # Update the Image Source
-    @imageElement.attr("src", @imageAddress) if @imageAddress?
+    unless @imageAddress == @imageElement.attr("src")
+      @imageElement.attr("src", @imageAddress)
 
     @
 
