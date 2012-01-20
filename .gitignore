@@ -1,4 +1,5 @@
 *.tmproj
+*.sublime*
 *.DS_Store
 .bundle/
 log/*.log
