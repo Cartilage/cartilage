@@ -13,5 +13,4 @@ gemspec
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem 'less', :git => 'https://github.com/cowboyd/less.rb.git', :submodules => true
-gem 'twitter-bootstrap-rails', "~> 1.4.3"
+gem 'less-rails-bootstrap'
