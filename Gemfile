@@ -13,4 +13,5 @@ gemspec
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
+gem 'less-rails', '2.1.3'
 gem 'less-rails-bootstrap'
