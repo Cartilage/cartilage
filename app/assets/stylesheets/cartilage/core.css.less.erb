@@ -2,6 +2,8 @@
 /*= require_tree . */
 
 @import "twitter/bootstrap";
+@import "cartilage/variables";
+@import "cartilage/mixins";
 
 body
 {
@@ -31,85 +33,116 @@ body
   {
     margin-left: 240px;
   }
+}
+
+// Navigation Bar ------------------------------------------------------------
+
+.navbar-inner
+{
+
+  //
+  // Add a subtle bevel (highlight and shadow) to the navbar by using inset
+  // box shadows.
+  //
+  .box-shadow(inset 0px 1px 0px rgba(255, 255, 255, 0.15),
+    inset 1px 0px 0px rgba(255, 255, 255, 0.05),
+    inset -1px 0px 0px rgba(255, 255, 255, 0.05),
+    inset 0px -1px 0px rgba(0, 0, 0, 0.5));
 
 }
 
-// Top Bar -------------------------------------------------------------------
-
-.topbar
+.navbar
 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 64px;
-  z-index: 1;
 
-  h3
+  .user-select(none);
+
+  .brand
   {
-    a
+
+    //
+    // Apply Fitt's law to the entire brand area. The navigation bar will be
+    // clickable from all the way to the left of the browser window to the top
+    // and bottom of the navigation bar. We will cap the overlap area on the
+    // right side at 10px to leave 10px of unclickable space between the brand
+    // and the navigation.
+    //
+    line-height: @navbarHeight;
+    padding: 0 10px 0 inherit;
+    margin-right: 10px;
+
+    img
     {
-      font-size: 24px;
-      padding: 20px 20px 20px;
-      &:hover
-      {
-        background: none;
-      }
+      vertical-align: middle;
+
+      //
+      // Vertically aligning the image to the middle does not result in a
+      // perfect alignment, depending on the font size of the brand element
+      // itself. Offset it here to ensure we get it centered correctly.
+      //
+      // TODO This is to offset for better centering, but it's a total hack
+      // and hard-coded...
+      //
+      padding-bottom: 6px;
+
+      //
+      // Don't allow the user to click and drag the brand image.
+      //
+      .user-drag(none);
     }
   }
 
-  ul.nav
+  //
+  // Override the navigation styles within the context of the navigation bar
+  // with our own tabbed implementation. We could override the nav-tabs class
+  // instead, but it would be more to override and nav-tabs are not intended
+  // to be used inside the navbar (as far as I can tell).
+  //
+  .nav
   {
-    li
+    > li
     {
-      a
+      > a
       {
-        margin-top: 34px;
+        line-height: @navbarHeight / 2;
+        margin-top: @navbarHeight / 2;
         margin-right: 6px;
+        padding: 0 10px;
 
-        padding: 6px 10px 6px;
-
-        line-height: inherit;
-        color: rgba(255, 255, 255, 0.8);
-        text-shadow: 0 -1px 1px rgba(0, 0, 0, 0.9);
+        text-shadow: 0 -1px 0 black;
         font-weight: bold;
         font-size: 13px;
 
-        background-color: rgb(95, 95, 95);
-        background-color: rgba(255, 255, 255, 0.2);
-        color: white;
-
-        text-shadow: 0 -1px 0px rgba(0, 0, 0, 0.9);
+        background-color: rgba(0, 0, 0, 0.25);
 
         .border-radius(3px 3px 0 0);
-        .transition(background-color 0.25s);
+        .transition(all 0.25s linear);
       }
 
       &:not(.active):hover a
       {
-        color: rgba(255, 255, 255, 0.95);
+        background-color: rgba(0, 0, 0, 0.45);
       }
 
-      &.active a
+      &.active
       {
-        color: black;
-        text-shadow: 0 1px 0px rgba(255, 255, 255, 0.9);
-        #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
-        .box-shadow(0 0 6px black);
+        > a
+        {
+          color: @navbarLinkColorActive;
+          text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
+          #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
+          .box-shadow(0 0 4px black);
+
+          &:hover
+          {
+            //
+            // Don't allow the text color to change for the active tab when
+            // the user hovers over the link.
+            //
+            color: @navbarLinkColorActive;
+          }
+        }
       }
     }
-  }
-
-  .fill
-  {
-    height: inherit;
-    background-color: #464d53;
-    #gradient > .vertical(#464d53, #2b3036);
-
-    .box-shadow(inset 0px 1px 0px rgba(255, 255, 255, 0.15),
-      inset 1px 0px 0px rgba(255, 255, 255, 0.05),
-      inset -1px 0px 0px rgba(255, 255, 255, 0.05),
-      inset 0px -1px 0px rgba(0, 0, 0, 0.5));
   }
 }
 
@@ -153,7 +186,6 @@ body
 
     h1
     {
-      margin-bottom: (@baseline / 2) - 1px;
       line-height: inherit;
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
                    "Helvetica Neue", sans-serif;
