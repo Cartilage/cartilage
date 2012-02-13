@@ -17,6 +17,11 @@ html
   overflow: hidden;
 }
 
+body
+{
+  background-image: url('<%= image_path "cartilage/patterns/background.png" %>');
+}
+
 // Structural Layout ---------------------------------------------------------
 
 .container-absolute
@@ -164,7 +169,11 @@ html
           color: @navbarLinkColorActive;
           text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
           #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
-          .box-shadow(0 0 4px black);
+
+          // TODO We cannot use a drop-shadow because dropdowns in the navbar
+          //      are at the wrong z-index, therefore we can't place the page-header
+          //      above the navbar to pull off the desired shadow effect.
+          // .box-shadow(0 0 4px black);
 
           &:hover
           {
@@ -180,7 +189,8 @@ html
   }
 }
 
-.btn-navbar .icon-bar {
+.btn-navbar .icon-bar
+{
   display: block;
   width: 18px;
   height: 2px;
@@ -189,7 +199,8 @@ html
   .box-shadow(0 1px 0 rgba(0,0,0,.25));
 }
 
-.btn-navbar .icon-bar + .icon-bar {
+.btn-navbar .icon-bar + .icon-bar
+{
   margin-top: 3px;
 }
 
@@ -197,7 +208,6 @@ html
 
 #content
 {
-  background-image: url('<%= image_path "cartilage/patterns/background.png" %>');
 
   // Page Header -------------------------------------------------------------
 
@@ -214,14 +224,11 @@ html
     padding-left: 20px;
     padding-right: 20px;
 
-    z-index: @zindexFixedNavbar + 1;
     border-bottom: 1px solid rgb(198, 198, 199);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
     .box-shadow(0 1px 3px rgba(0, 0, 0, 0.075));
-
-    -webkit-user-select: none;
-    -moz-user-select: none;
+    .user-select(none);
 
     h1
     {
