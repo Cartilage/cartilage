@@ -1,0 +1,68 @@
+
+// Cartilage Variables -------------------------------------------------------
+
+@import "variables.less";
+
+// Tablets and Below ---------------------------------------------------------
+
+@media (max-width: 980px)
+{
+
+  html
+  {
+    overflow: visible;
+  }
+
+  .navbar
+  {
+    margin-bottom: 0;
+  }
+
+  .navbar-fixed-top .navbar-inner
+  {
+    padding: 0;
+  }
+
+  .navbar .brand
+  {
+    float: none;
+    line-height: @navbarHeight;
+    padding: 0 10px 0 inherit;
+    margin: 0 10px 0 -20px;
+  }
+
+  .navbar .nav > li > a
+  {
+    margin: 0;
+    margin-bottom: 10px;
+    line-height: @navbarHeight / 2.75;
+    .border-radius(3px);
+  }
+
+  // Absolute Container ------------------------------------------------------
+
+  .container-absolute
+  {
+    position: static;
+    overflow: visible;
+  }
+
+  // Page Content ------------------------------------------------------------
+
+  #content
+  {
+
+    #page-header
+    {
+      position: static;
+    }
+
+    #page-content
+    {
+      position: static;
+      overflow: visible;
+    }
+  }
+
+
+}

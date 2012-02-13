@@ -1,11 +1,18 @@
 
 /*= require_tree . */
 
+// Twitter Bootstrap ---------------------------------------------------------
+
 @import "twitter/bootstrap";
+
+// Cartilage Overrides -------------------------------------------------------
+
 @import "cartilage/variables";
 @import "cartilage/mixins";
 
-body
+// ---------------------------------------------------------------------------
+
+html
 {
   overflow: hidden;
 }
@@ -15,7 +22,7 @@ body
 .container-absolute
 {
   position: absolute;
-  top: 112px;
+  top: @navbarHeight;
   left: 0;
   right: 0;
   bottom: 0;
@@ -53,7 +60,9 @@ body
 
 .navbar
 {
-
+  //
+  // Don't allow the user to select any text within the navbar.
+  //
   .user-select(none);
 
   .brand
@@ -85,10 +94,35 @@ body
       padding-bottom: 6px;
 
       //
-      // Don't allow the user to click and drag the brand image.
+      // Don't allow the user to drag the brand image. This will allow the
+      // user to drag the link to which the brand image points, instead,
+      // which is likely what the user would want anyways.
       //
       .user-drag(none);
     }
+  }
+
+  .btn
+  {
+
+    &.btn-navbar
+    {
+      //
+      // Properly align buttons in the middle of the navigation bar, based on
+      // the defined height of the navbar (and the known height of the buttons,
+      // which at the time this was written was 30px).
+      //
+      // PATCH Submitted to Bootstrap (https://github.com/twitter/bootstrap/pull/1853)
+      //
+      margin-top: (@navbarHeight - 30px) / 2;
+
+      //
+      // Remove the excess right margin so that it aligns properly (at 20px)
+      // from the right border.
+      //
+      margin-right: 0;
+    }
+
   }
 
   //
@@ -115,7 +149,7 @@ body
         background-color: rgba(0, 0, 0, 0.25);
 
         .border-radius(3px 3px 0 0);
-        .transition(all 0.25s linear);
+        .transition('color 0.25s, background-color 0.25s');
       }
 
       &:not(.active):hover a
@@ -146,16 +180,23 @@ body
   }
 }
 
+.btn-navbar .icon-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background-color: #f5f5f5;
+  .border-radius(1px);
+  .box-shadow(0 1px 0 rgba(0,0,0,.25));
+}
+
+.btn-navbar .icon-bar + .icon-bar {
+  margin-top: 3px;
+}
+
 // Page Content --------------------------------------------------------------
 
 #content
 {
-  position: absolute;
-  top: 64px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
   background-image: url('<%= image_path "cartilage/patterns/background.png" %>');
 
   // Page Header -------------------------------------------------------------
@@ -169,13 +210,11 @@ body
 
     height: 48px;
     line-height: 48px;
-
     margin-bottom: 20px;
-
     padding-left: 20px;
     padding-right: 20px;
 
-    z-index: 2;
+    z-index: @zindexFixedNavbar + 1;
     border-bottom: 1px solid rgb(198, 198, 199);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
     #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
@@ -252,7 +291,7 @@ body
     }
   }
 
-  div#page-content
+  #page-content
   {
     position: absolute;
     top: 48px;
@@ -262,3 +301,8 @@ body
     overflow: auto;
   }
 }
+
+// Responsive Layout -------------------------------------------------------
+
+@import "twitter/bootstrap/responsive";
+@import "cartilage/responsive";
