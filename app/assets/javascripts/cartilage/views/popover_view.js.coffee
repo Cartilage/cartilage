@@ -118,6 +118,7 @@ class window.Cartilage.Views.PopoverView extends Backbone.View
     @attachedElement = element
     @position = (position ?= "top")
     ($ @el).css { visibility: "hidden" }
+    ($ @contentElement).children().css("display", "block")
     ($ document.body).append @render().el
     @calculatePosition()
     ($ @el).hide().css { visibility: "visible" }
