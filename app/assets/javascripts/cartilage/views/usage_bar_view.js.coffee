@@ -20,6 +20,7 @@ class window.Cartilage.Views.UsageBarView extends Backbone.View
     # Apply options
     @colors = options["colors"] if options["colors"]?
     @segments = options["segments"] || (@segments ?= [])
+    @value = options["value"] || (@value ?= 0)
 
     @barView = new Cartilage.Views.BarView
 
@@ -28,6 +29,7 @@ class window.Cartilage.Views.UsageBarView extends Backbone.View
     # Render the Bar View
     @barView.segments.reset @segments
     @barView.colors = @colors
+    @barView.value = @value
     ($ @el).html @barView.render().el
 
     @
