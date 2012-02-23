@@ -30,9 +30,7 @@
       right: 0;
       bottom: 0;
       top: 0;
-      -webkit-box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.5);
-      -moz-box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.5);
-      box-shadow: inset 0px 1px 4px rgba(0, 0, 0, 0.5);
+      .box-shadow(inset 0px 1px 4px rgba(0, 0, 0, 0.5));
     }
 
     // Bar Segment Views -----------------------------------------------------
@@ -41,11 +39,9 @@
     {
       position: relative;
       width: 0px;
-      height: 24px;
+      height: inherit;
       float: left;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
+      .box-sizing(border-box);
 
       &:before,
       &:after
@@ -102,11 +98,10 @@
         background-image: none, url("../../Vendor/Aphid/Resources/Images/Gradients/Light.svg");
         #gradient > .vertical(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
 
-        -webkit-box-sizing: border-box;
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
         border-right: 1px solid rgba(0, 0, 0, 0.1);
         border-left: 1px solid rgba(255, 255, 255, 0.15);
+
+        .box-sizing(border-box);
       }
     }
   }
