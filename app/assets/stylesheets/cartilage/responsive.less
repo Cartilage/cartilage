@@ -30,6 +30,7 @@
     line-height: @navbarHeight;
     padding: 0 10px 0 inherit;
     margin: 0 10px 0 -20px;
+    display: inline-block;
   }
 
   .navbar .nav > li > a
@@ -44,7 +45,8 @@
 
   .container-absolute
   {
-    position: static;
+    position: relative;
+    top: auto;
     overflow: visible;
   }
 
@@ -55,7 +57,7 @@
 
     #page-header
     {
-      position: static;
+      position: relative;
     }
 
     #page-content
