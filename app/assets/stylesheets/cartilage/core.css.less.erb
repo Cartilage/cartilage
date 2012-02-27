@@ -83,7 +83,7 @@ body
     line-height: @navbarHeight;
     padding-top: 0px;
     padding-bottom: 0px;
-    padding-left: 10px;
+    padding-left: 20px;
     padding-right: 10px;
     margin-right: 10px;
 
@@ -172,6 +172,7 @@ body
           color: @navbarLinkColorActive;
           text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
           #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
+          .border-radius(3px 3px 0 0);
 
           // TODO We cannot use a drop-shadow because dropdowns in the navbar
           //      are at the wrong z-index, therefore we can't place the page-header
