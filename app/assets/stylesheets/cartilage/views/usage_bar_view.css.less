@@ -82,7 +82,14 @@
         top: 0;
         left: 0;
         bottom: 0;
-        #gradient > .vertical(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+        background-color: rgba(0, 0, 0, 0.09500000000000001);
+        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.025)), to(rgba(0, 0, 0, 0.2)));
+        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+        background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+        background-image: linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+        background-repeat: repeat-x;
 
         border-right: 1px solid rgb(216, 216, 217);
         border-right: 1px solid rgba(0, 0, 0, 0.1);
