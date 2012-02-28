@@ -1,5 +1,5 @@
 
-@import "twitter/bootstrap/mixins";
+@import "cartilage/mixins";
 
 .usage-bar-view
 {
@@ -15,8 +15,6 @@
     height: 24px;
     overflow: hidden;
 
-    background-image: url("../../Vendor/Aphid/Resources/Images/Gradients/Light Reversed.png");
-    background-image: none, url("../../Vendor/Aphid/Resources/Images/Gradients/Light Reversed.svg");
     #gradient > .vertical(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.125));
     .border-radius(2px);
 
@@ -63,28 +61,18 @@
       &:after
       {
         right: 0;
-        background-color: rgb(100, 100, 100);
+        background-color: rgb(216, 216, 217);
         background-color: rgba(0, 0, 0, 0.1);
       }
 
       &:first-of-type
       {
-        -webkit-border-top-left-radius: 2px;
-        -webkit-border-bottom-left-radius: 2px;
-        -moz-border-radius-topleft: 2px;
-        -moz-border-radius-bottomleft: 2px;
-        border-top-left-radius: 2px;
-        border-bottom-left-radius: 2px;
+        .border-radius(2px 0px 0px 2px);
       }
 
       &:last-of-type
       {
-        -webkit-border-top-right-radius: 2px;
-        -webkit-border-bottom-right-radius: 2px;
-        -moz-border-radius-topright: 2px;
-        -moz-border-radius-bottomright: 2px;
-        border-top-right-radius: 2px;
-        border-bottom-right-radius: 2px;
+        .border-radius(0px 2px 2px 0);
       }
 
       .bar
@@ -94,10 +82,9 @@
         top: 0;
         left: 0;
         bottom: 0;
-        background-image: url("../../Vendor/Aphid/Resources/Images/Gradients/Light.png");
-        background-image: none, url("../../Vendor/Aphid/Resources/Images/Gradients/Light.svg");
         #gradient > .vertical(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
 
+        border-right: 1px solid rgb(216, 216, 217);
         border-right: 1px solid rgba(0, 0, 0, 0.1);
         border-left: 1px solid rgba(255, 255, 255, 0.15);
 
