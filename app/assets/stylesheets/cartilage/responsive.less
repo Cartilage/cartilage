@@ -1,12 +1,12 @@
 
-// Cartilage Variables -------------------------------------------------------
+/* Cartilage Variables ---------------------------------------------------- */
 
 @import "cartilage/variables.less";
 @import "cartilage/mixins.less";
 
-// Tablets and Below ---------------------------------------------------------
+/* Tablets and Below ------------------------------------------------------ */
 
-@media (max-width: 980px)
+@media (max-width: 979px)
 {
 
   html
@@ -50,15 +50,55 @@
     overflow: visible;
   }
 
-  // Page Content ------------------------------------------------------------
+  /* Application Content -------------------------------------------------- */
 
   #content
   {
 
+    /* Page Header -------------------------------------------------------- */
+
     #page-header
     {
       position: relative;
+      height: auto;
+
+      // Actions Button
+      .btn-actions
+      {
+        display: block;
+      }
+
+      // Hide the pageactions
+      .actions-collapse
+      {
+        overflow: hidden;
+        height: 0;
+        clear: left;
+      }
+
+      // Block-level the nav
+      ul.actions
+      {
+        float: none;
+        padding: 0;
+        margin-left: 0;
+
+        > li
+        {
+          float: none;
+          margin-left: 0;
+        }
+
+        .btn
+        {
+          float: none;
+          margin: 0 0 (@baseLineHeight / 2);
+          display: block;
+        }
+      }
     }
+
+    /* Page Content ------------------------------------------------------- */
 
     #page-content
     {
@@ -67,5 +107,14 @@
     }
   }
 
+}
 
+/* Default Desktop ------------------------------------------------------- */
+
+@media (min-width: 980px)
+{
+  .actions-collapse.collapse
+  {
+    height: auto !important;
+  }
 }
