@@ -81,12 +81,17 @@ body
     // and the navigation.
     //
     line-height: @navbarHeight;
-    padding: 0 10px 0 inherit;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 20px;
+    padding-right: 10px;
     margin-right: 10px;
 
     img
     {
       vertical-align: middle;
+
+      max-width: none;
 
       //
       // Vertically aligning the image to the middle does not result in a
@@ -146,20 +151,23 @@ body
         margin-top: @navbarHeight / 2;
         margin-right: 6px;
         padding: 0 10px;
+        color: white;
 
         text-shadow: 0 -1px 0 black;
         font-weight: bold;
         font-size: 13px;
 
+        background-color: rgb(38, 46, 49);
         background-color: rgba(0, 0, 0, 0.25);
 
         .border-radius(3px 3px 0 0);
         .transition('color 0.25s, background-color 0.25s');
-      }
 
-      &:not(.active):hover a
-      {
-        background-color: rgba(0, 0, 0, 0.45);
+        &:hover
+        {
+          background-color: rgb(25, 33, 36);
+          background-color: rgba(0, 0, 0, 0.45);
+        }
       }
 
       &.active
@@ -356,19 +364,19 @@ body
 {
   position: relative;
   margin: 20px;
+  background-color: rgb(245, 247, 247);
   background-color: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgb(195, 196, 196);
+  border: 1px solid rgba(0, 0, 0, 0.2);
   .border-radius(3px);
   .box-shadow(0 1px 3px rgba(0, 0, 0, 0.075));
-  border: 1px solid rgba(0, 0, 0, 0.2);
 
   header
   {
     background-color: white;
-    -webkit-border-top-left-radius: 2px;
-    -webkit-border-top-right-radius: 2px;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 2px;
+    .border-radius(2px 2px 0 0);
     padding: 10px 20px;
+    border-bottom: 1px solid rgb(217, 217, 217);
     border-bottom: 1px solid rgba(0, 0, 0, 0.15);
 
     h1
@@ -376,6 +384,7 @@ body
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
       font-weight: 300;
       font-size: 20.4px;
+      color: rgb(128, 128, 128);
       color: rgba(0, 0, 0, 0.5);
       margin: 0;
     }
