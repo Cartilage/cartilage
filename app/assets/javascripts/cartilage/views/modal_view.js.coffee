@@ -1,30 +1,21 @@
 #
 # Modal View
 #
+# This is a thin wrapper around Bootstrap's Modal plugin that allows you
+# to contain your modal view logic in its own class.
+#
 
 class window.Cartilage.Views.ModalView extends Backbone.View
 
-  className: "modal modal-view"
-
-  events:
-    "click .close": "dismiss"
-
-  isVisible: false
+  className: "modal-view modal fade"
 
   render: ->
-    @overlayElement = ($ "<div class='modal-overlay'></div>")
-    ($ document.body).append @overlayElement
     ($ @el).html @template { model: @model }
-    @delegateEvents()
     @
 
-  display: ->
-    return unless not @isVisible
-    @isVisible = true
+  show: ->
     ($ document.body).append @render().el
+    ($ @el).modal('show')
 
-  dismiss: =>
-    return unless @isVisible
-    ($ @el).remove()
-    ($ @overlayElement).remove()
-    @isVisible = false
+  hide: =>
+    ($ @el).modal('hide')
