@@ -28,6 +28,11 @@ class window.Cartilage.Views.ImageView extends Backbone.View
   isLoaded: false
 
   #
+  # Denotes whether or not an error occurred while loading.
+  #
+  isError: false
+
+  #
   # Initializes a new instance of the split view. Pass firstView and
   # secondView as options, at a minimum, to specify the view setup.
   #
@@ -68,14 +73,17 @@ class window.Cartilage.Views.ImageView extends Backbone.View
   clear: (options = {}) ->
     @isLoaded = false
     @imageAddress = null
+    ($ @imageElement).off()
     @imageElement.hide().attr("src", null)
     @trigger "cleared" unless options["silent"]
 
   handleLoadEvent: (event) =>
     @isLoaded = true
+    @isError = false
     @imageElement.fadeIn() unless @imageElement.is ":visible"
     @trigger "load", event
 
   handleErrorEvent: (event) =>
     @clear()
+    @isError = true
     @trigger "error", event
