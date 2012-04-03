@@ -25,8 +25,8 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
     # Bind to collection
     @collection.bind "reset", @render
-    @collection.bind "add", @render
-    @collection.bind "remove", @render
+    @collection.bind "add", @addModel
+    @collection.bind "remove", @render # TODO Don't re-render the entire view for removals
 
     # Set a tab index on the element, if necessary, to enable focus support
     # for the list view and its items
@@ -39,16 +39,22 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
   renderModels: ->
     items = _.map @collection.models, (model) =>
-      itemElement = ($ "<li />")
-      itemElement.attr("tabindex", ($ @el).attr("tabindex"))
-      itemElement.data("model", model)
-      if @itemView?
-        itemView = new @itemView { model: model }
-        itemElement.html itemView.render().el
-        itemElement.data "view", itemView
-      else
-        itemElement.html model.constructor.name
-      itemElement
+      @renderModel(model)
+
+  renderModel: (model) =>
+    itemElement = ($ "<li />")
+    itemElement.attr("tabindex", ($ @el).attr("tabindex"))
+    itemElement.data("model", model)
+    if @itemView?
+      itemView = new @itemView { model: model }
+      itemElement.html itemView.render().el
+      itemElement.data "view", itemView
+    else
+      itemElement.html model.constructor.name
+    itemElement
+
+  addModel: (model) =>
+    @renderModel(foo).appendTo ($ @el)
 
   #
   # Selects the specified list item. Returns true if the item was selected or
