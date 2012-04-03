@@ -54,7 +54,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
     itemElement
 
   addModel: (model) =>
-    @renderModel(foo).appendTo ($ @el)
+    @renderModel(model).appendTo ($ @el)
 
   #
   # Selects the specified list item. Returns true if the item was selected or
