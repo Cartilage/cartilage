@@ -168,7 +168,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
     if event.metaKey
       element = event.target
-      @selectAnother element
+      @selectAnother ($ element).parents("li") || element
       event.preventDefault()
 
     else if event.shiftKey
