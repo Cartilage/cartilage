@@ -1,4 +1,3 @@
-
 class window.Cartilage.Views.ListView extends Backbone.View
 
   tagName: "ul"
@@ -15,13 +14,15 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
   allowsRemove: false
   allowsDeselection: true
+  allowsMultipleSelection: false
 
   initialize: (options = {}) ->
 
     # Apply options
-    @allowsRemove      = options["allowsRemove"] || (@allowsRemove ?= false)
+    @allowsRemove = options["allowsRemove"] || (@allowsRemove ?= false)
     @allowsDeselection = options["allowsDeselection"] || (@allowsDeselection ?= true)
-    @itemView          = options["itemView"]
+    @allowsMultipleSelection = options["allowsMultipleSelection"] || (@allowsMultipleSelection ?= true)
+    @itemView = options["itemView"]
 
     # Bind to collection
     @collection.bind "reset", @render
@@ -82,6 +83,12 @@ class window.Cartilage.Views.ListView extends Backbone.View
     @trigger "select", @selected
 
   selectAnother: (e) =>
+    # If multiple selection is not allowed, simply select the requested item
+    # and return instead of adding it to the selection.
+    unless @allowsMultipleSelection
+      @select(e)
+      return
+
     element = e.target || e
     model = ($ element).data("model")
 
@@ -110,6 +117,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
   # Selects all elements in the list.
   #
   selectAll: ->
+    return unless @allowsMultipleSelection
     elements = ($ @el).find "li:not(.selected)"
     _.each elements, @selectAnother
 
