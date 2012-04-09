@@ -1,6 +1,8 @@
 #
 #= require "extensions"
 #
+#= require "jquery-points"
+#
 #= require "cartilage/core"
 #
 #= require_tree "./cartilage/models"
