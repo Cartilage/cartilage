@@ -272,7 +272,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
     indexes = [
       ($ @focusedElement).index(),
       ($ element).index()
-    ].sort()
+    ].sort (a, b) -> a - b
 
     # Increment the end range since slice does not include it...
     indexes[1] += 1
