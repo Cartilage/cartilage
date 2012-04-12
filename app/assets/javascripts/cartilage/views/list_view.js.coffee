@@ -25,7 +25,6 @@ class window.Cartilage.Views.ListView extends Backbone.View
     @itemView = options["itemView"]
 
     # Bind to collection
-    @collection.bind "reset", @render
     @collection.bind "add", @addModel
     @collection.bind "remove", @render # TODO Don't re-render the entire view for removals
 
@@ -34,8 +33,15 @@ class window.Cartilage.Views.ListView extends Backbone.View
     ($ @el).attr("tabindex", 0) unless ($ @el).attr("tabindex")
 
   render: =>
-    ($ @el).empty()
-    _.each @renderModels(), (element) => element.appendTo ($ @el)
+
+    # Clean up all existing item views and their container elements.
+    (@$ "li").each (idx, element) ->
+      view = ($ element).data("view")
+      view.remove()
+      ($ element).remove()
+
+    _.each @renderModels(), (element) =>
+      element.appendTo ($ @el)
     @
 
   renderModels: ->

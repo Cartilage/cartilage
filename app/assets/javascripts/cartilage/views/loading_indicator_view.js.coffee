@@ -27,15 +27,15 @@ class window.Cartilage.Views.LoadingIndicatorView extends Backbone.View
   # The width and height of the bars. Defaults to `{ width: 4, height: 12 }`.
   #
   barSize:
-    width: 4,
+    width: 4
     height: 12
 
   #
   # The color of the bars.
   #
   barColor:
-    red: 85,
-    green: 85,
+    red: 85
+    green: 85
     blue: 85
 
   #
@@ -44,7 +44,7 @@ class window.Cartilage.Views.LoadingIndicatorView extends Backbone.View
   # divided by 2.
   #
   centerPosition:
-    x: 48,
+    x: 48
     y: 48
 
   #
@@ -89,14 +89,14 @@ class window.Cartilage.Views.LoadingIndicatorView extends Backbone.View
     #       this.barColor = { red: red, green: green, blue: blue };
     #     }
     #     else this.barColor = { red: 85, green: 85, blue: 85 };
-    @start()
+    # @start()
     @
 
 
   #
   # Starts the loading indicator animation.
   #
-  start: =>
+  start: ->
     return if @isAnimating
     @isAnimating = true
     @_animateNextFrame()
@@ -110,8 +110,8 @@ class window.Cartilage.Views.LoadingIndicatorView extends Backbone.View
     @_clearFrame(@canvasContext)
     @isAnimating = false
 
-  remove: ->
-    @stop and super()
+  remove: =>
+    @stop() and super()
 
   #
   # Draw a frame.
