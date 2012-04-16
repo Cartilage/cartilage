@@ -135,8 +135,8 @@ class window.Cartilage.Views.ListView extends Backbone.View
   deselect: (element) ->
     model = ($ element).data("model")
     ($ element).removeClass "selected"
-    @trigger "deselect", element
     @selected.remove model
+    @trigger "deselect", element
 
   #
   # Deselects the specified list view item, if it is currently selected.
@@ -145,8 +145,8 @@ class window.Cartilage.Views.ListView extends Backbone.View
   #
   clearSelection: (options = {}) ->
     ($ @el).find("li.selected").removeClass "selected"
-    @trigger("clear", @selected) unless options["silent"]
     @selected.reset()
+    @trigger("clear", @selected) unless options["silent"]
 
   #
   # Opens the selected item(s).
@@ -159,9 +159,9 @@ class window.Cartilage.Views.ListView extends Backbone.View
   #
   remove: (e) =>
     return unless @allowsRemove
-    @trigger "remove", @selected
     @collection.remove @selected.models
     @selected.reset()
+    @trigger "remove", @selected
 
   #
   # Handles click events for the entire list elements, including the list
