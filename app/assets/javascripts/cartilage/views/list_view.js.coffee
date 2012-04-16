@@ -169,12 +169,18 @@ class window.Cartilage.Views.ListView extends Backbone.View
   #
   onMouseDown: (event) =>
 
+    # Get the list item element
+    element = ($ event.target).parents("li") || event.target
+
     # Clear the selection if the user clicks in the list container.
     @clearSelection() if @allowsDeselection and event.target.tagName == "UL"
 
     if event.metaKey
-      element = event.target
-      @selectAnother ($ element).parents("li") || element
+      model = ($ element).data("model")
+      if model in @selected.models
+        @deselect element
+      else
+        @selectAnother element
       event.preventDefault()
 
     else if event.shiftKey
