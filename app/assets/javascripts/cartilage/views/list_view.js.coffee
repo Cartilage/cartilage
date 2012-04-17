@@ -36,8 +36,8 @@ class window.Cartilage.Views.ListView extends Backbone.View
 
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
-      view = ($ element).data("view")
-      view.remove()
+      if view = ($ element).data("view")
+        view.remove()
       ($ element).remove()
 
     _.each @renderModels(), (element) =>
