@@ -1,8 +1,8 @@
 
 /* Cartilage Variables ---------------------------------------------------- */
 
-@import "cartilage/variables.less";
-@import "cartilage/mixins.less";
+@import "cartilage/variables";
+@import "cartilage/mixins";
 
 /* Tablets and Below ------------------------------------------------------ */
 
@@ -27,7 +27,7 @@
   .navbar .brand
   {
     float: none;
-    line-height: @navbarHeight;
+    line-height: $navbarHeight;
     padding: 0 10px 0 inherit;
     margin: 0 10px 0 -20px;
     display: inline-block;
@@ -37,7 +37,7 @@
   {
     margin: 0;
     margin-bottom: 10px;
-    line-height: @navbarHeight / 2.75;
+    line-height: $navbarHeight / 2.75;
     .border-radius(3px);
   }
 
@@ -92,7 +92,7 @@
         .btn
         {
           float: none;
-          margin: 0 0 (@baseLineHeight / 2);
+          margin: 0 0 ($baseLineHeight / 2);
           display: block;
         }
       }
