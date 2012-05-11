@@ -15,10 +15,11 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
 
   initialize: (options = {}) ->
 
+    super(options)
+
     # Apply options
     @allowsDragSelection = options["allowsDragSelection"] || (@allowsDragSelection ?= false)
-
-    super(options)
+    @allowsMultipleSelection = options["allowsDragSelection"] || (@allowsMultipleSelection ?= @allowsDragSelection)
 
   render: =>
     super()
