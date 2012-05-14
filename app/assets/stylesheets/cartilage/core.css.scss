@@ -48,7 +48,7 @@ body
   // Add a subtle bevel (highlight and shadow) to the navbar by using inset
   // box shadows.
   //
-  @include box-shadow('inset 0px 1px 0px rgba(255, 255, 255, 0.15), inset 1px 0px 0px rgba(255, 255, 255, 0.05), inset -1px 0px 0px rgba(255, 255, 255, 0.05), inset 0px -1px 0px rgba(0, 0, 0, 0.5)');
+  @include box-shadow(#{inset 0px 1px 0px rgba(255, 255, 255, 0.15), inset 1px 0px 0px rgba(255, 255, 255, 0.05), inset -1px 0px 0px rgba(255, 255, 255, 0.05), inset 0px -1px 0px rgba(0, 0, 0, 0.5)});
 
 }
 
@@ -136,8 +136,8 @@ body
     {
       > a
       {
-        line-height: $navbarHeight / 2;
-        margin-top: $navbarHeight / 2;
+        line-height: ($navbarHeight / 2);
+        margin-top: ($navbarHeight / 2);
         margin-right: 6px;
         padding: 0 10px;
         color: white;
@@ -170,7 +170,7 @@ body
           // TODO We cannot use a drop-shadow because dropdowns in the navbar
           //      are at the wrong z-index, therefore we can't place the page-header
           //      above the navbar to pull off the desired shadow effect.
-          @include box-shadow(0 0 4px black);
+          // @include box-shadow(0 0 4px black);
 
           &:hover
           {
@@ -227,8 +227,6 @@ body
     @include gradient-vertical(rgb(248, 248, 249), rgb(252, 251, 252));
     @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.075));
     @include user-select(none);
-
-    // z-index: $zindexPageHeader;
 
     h1
     {
