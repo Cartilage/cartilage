@@ -6,15 +6,21 @@
 
 // Loading Indicator View ----------------------------------------------------
 
+/* Configuration */
+
+$loadingIndicatorSize: 96px;
+
+/* Definition */
+
 .loading-indicator-view
 {
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-top: -48px;
-  margin-left: -48px;
-  height: 96px;
-  width: 96px;
+  margin-top: -($loadingIndicatorSize / 2);
+  margin-left: -($loadingIndicatorSize / 2);
+  height: $loadingIndicatorSize;
+  width: $loadingIndicatorSize;
 
   background: transparent;
   background-color: rgba(0, 0, 0, 0.15);
@@ -26,12 +32,13 @@
 
   canvas
   {
-    width: 96px !important;
-    height: 96px !important;
+    width: $loadingIndicatorSize;
+    height: $loadingIndicatorSize;
+
     > div
     {
-      width: 96px !important;
-      height: 96px !important;
+      width: $loadingIndicatorSize;
+      height: $loadingIndicatorSize;
     }
   }
 }

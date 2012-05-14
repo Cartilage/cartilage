@@ -54,6 +54,7 @@ fieldset.segmented-view
 
     @include border-radius(3px);
 
+    // TODO @include transition()?
     -webkit-transition-property: color;
     -webkit-transition-duration: 0.5s;
     -moz-transition-property: color;
@@ -63,13 +64,10 @@ fieldset.segmented-view
 
     &:hover
     {
-      background-color: none !important;
-      background-image: none !important;
+      background: none !important;
       color: rgb(85, 85, 85);
       color: rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
+      @include box-shadow(none);
     }
 
     &:active
@@ -78,9 +76,7 @@ fieldset.segmented-view
       background-image: none !important;
       color: rgb(85, 85, 85);
       color: rgba(0, 0, 0, 0.6);
-      -webkit-box-shadow: none;
-      -moz-box-shadow: none;
-      box-shadow: none;
+      @include box-shadow(none);
     }
   }
 
@@ -90,18 +86,12 @@ fieldset.segmented-view
     color: rgb(85, 85, 85);
     color: rgba(0, 0, 0, 0.6);
 
-    -webkit-box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 0.1), inset -1px -1px 0px rgba(255, 255, 255, 0.8);
-    -moz-box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 0.1), inset -1px -1px 0px rgba(255, 255, 255, 0.8);
-    box-shadow: inset 1px 1px 0px rgba(0, 0, 0, 0.1), inset -1px -1px 0px rgba(255, 255, 255, 0.8);
+    @include box-shadow(#{
+      inset 1px 1px 0px rgba(0, 0, 0, 0.1),
+      inset -1px -1px 0px rgba(255, 255, 255, 0.8)
+    });
 
-    background-color: transparent !important;
-    background-image: url("../../Vendor/Aphid/Resources/Images/Gradients/Light Reversed.png") !important;
-    background-image: none, url("../../Vendor/Aphid/Resources/Images/Gradients/Light Reversed.svg") !important;
-    background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)) !important;
-    background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)) !important;
-    background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)) !important;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.1)), to(rgba(0, 0, 0, 0.0))) !important;
-    background-image: linear-gradient(top, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0)) !important;
+    @include gradient-vertical(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
   }
 
   &:after

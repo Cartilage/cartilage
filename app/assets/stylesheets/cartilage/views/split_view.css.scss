@@ -53,14 +53,6 @@
   }
 }
 
-
-
-
-
-
-
-
-
 /*
 
 .SplitViewController.vertical
@@ -71,9 +63,9 @@
     top: 0;
     left: 0;
     bottom: 0;
-    width: @first-view-width;
-    min-width: @first-view-width / 2;
-    max-width: @first-view-width * 2;
+    width: $first-view-width;
+    min-width: ($first-view-width / 2);
+    max-width: ($first-view-width * 2);
   }
 
   > .secondView
@@ -81,7 +73,7 @@
     position: absolute;
     top: 0;
     bottom: 0;
-    left: @first-view-width + @drag-handle-width;
+    left: ($first-view-width + $drag-handle-width);
     right: 0;
   }
 }
@@ -90,8 +82,8 @@
 {
   > .dragHandle
   {
-    left: @first-view-width;
-    width: @drag-handle-width - 0.2em;
+    left: $first-view-width;
+    width: ($drag-handle-width - 0.2em);
     top: 0;
     bottom: 0;
     .linear-gradient(#f3f4f5, #d3d4d5);
@@ -122,11 +114,11 @@
 {
   > .dragHandle
   {
-    top: @first-view-height;
-    height: @drag-handle-height - 0.2em;
+    top: $first-view-height;
+    height: ($drag-handle-height - 0.2em);
     left: 0;
     right: 0;
-    .linear-gradient(#f3f4f5, #d3d4d5);
+    // .linear-gradient(#f3f4f5, #d3d4d5);
     border-top: 0.1em solid #ccc;
     border-bottom: 0.1em solid #bbb;
     cursor: row-resize;
@@ -135,14 +127,15 @@
 */
 /* "Padded" Mode ---------------------------------------------------------- */
 
-/*@padded-width: 2em;
+/*
+$padded-width: 2em;
 
 .SplitViewController.padded
 {
-  top: @padded-width;
-  left: @padded-width;
-  right: @padded-width;
-  bottom: @padded-width;
+  top: $padded-width;
+  left: $padded-width;
+  right: $padded-width;
+  bottom: $padded-width;
 
   > .dragHandle
   {
@@ -154,14 +147,15 @@
 {
   > .secondView
   {
-    top: @first-view-height + @padded-width;
+    top: ($first-view-height + $padded-width);
   }
 
   > .dragHandle
   {
+    // TODO This is no longer valid, an Aphid holdout...
     background-image: url('../Images/UI/SplitViewController/DragHandle.horizontal.png');
     border: none;
-    height: @padded-width;
+    height: $padded-width;
   }
 }
 
@@ -169,21 +163,23 @@
 {
   > .secondView
   {
-    left: @first-view-width + @padded-width;
+    left: ($first-view-width + $padded-width);
   }
 
   > .dragHandle
   {
+    // TODO This is no longer valid, an Aphid holdout...
     background-image: url('../Images/UI/SplitViewController/DragHandle.vertical.png');
     border: none;
-    width: @padded-width;
+    width: $padded-width;
   }
 }*/
 
 /* "Borderless" Mode ------------------------------------------------------ */
 
-/*@borderless-drag-handle-width: 0.5;
-@borderless-drag-handle-height: 0.5;
+/*
+$borderless-drag-handle-width: 0.5;
+$borderless-drag-handle-height: 0.5;
 
 .SplitViewController.borderless
 {
@@ -204,8 +200,8 @@
   {
     border: none;
     background-image: none;
-    top: @first-view-height - (@borderless-drag-handle-height / 2);
-    height: @borderless-drag-handle-height;
+    top: ($first-view-height - ($borderless-drag-handle-height / 2));
+    height: $borderless-drag-handle-height;
   }
 }
 
@@ -213,15 +209,15 @@
 {
   > .secondView
   {
-    left: @first-view-width;
+    left: $first-view-width;
   }
 
   > .dragHandle
   {
     border: none;
     background-image: none;
-    left: @first-view-width - (@borderless-drag-handle-width / 2);
-    width: @borderless-drag-handle-width;
+    left: $first-view-width - ($borderless-drag-handle-width / 2);
+    width: $borderless-drag-handle-width;
   }
 }
 */

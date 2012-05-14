@@ -37,7 +37,7 @@
   {
     margin: 0;
     margin-bottom: 10px;
-    line-height: $navbarHeight / 2.75;
+    line-height: ($navbarHeight / 2.75);
     @include border-radius(3px);
   }
 
