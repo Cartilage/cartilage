@@ -1,4 +1,11 @@
 
+// Cartilage Support ---------------------------------------------------------
+
+@import "cartilage/mixins";
+@import "cartilage/variables";
+
+// Split View ----------------------------------------------------------------
+
 .split-view
 {
   position: absolute;

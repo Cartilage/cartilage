@@ -1,5 +1,9 @@
 
-@import "twitter/bootstrap/mixins";
+// Bootstrap Support ---------------------------------------------------------
+
+@import "bootstrap/mixins";
+
+// Cartilage Mixins ----------------------------------------------------------
 
 @mixin user-select($select: inherit)
 {
@@ -13,4 +17,3 @@
 {
   -webkit-user-drag: $drag;
 }
-

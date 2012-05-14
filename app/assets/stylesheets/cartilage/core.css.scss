@@ -1,12 +1,17 @@
 
+// Cartilage Variables -------------------------------------------------------
+//
+// NOTE: Variable overrides must be set before Bootstrap is included!
+//
+
+@import "cartilage/variables";
 
 // Twitter Bootstrap ---------------------------------------------------------
 
-// @import "twitter/bootstrap";
+@import "bootstrap";
 
-// Cartilage Overrides -------------------------------------------------------
+// Cartilage Mixins ----------------------------------------------------------
 
-@import "cartilage/variables";
 @import "cartilage/mixins";
 
 // ---------------------------------------------------------------------------
@@ -160,7 +165,7 @@ body
         {
           color: $navbarLinkColorActive;
           text-shadow: 0 1px 0 rgba(255, 255, 255, 0.9);
-          // #gradient > .vertical(rgb(244, 245, 246), rgb(248, 248, 249));
+          @include gradient-vertical(rgb(244, 245, 246), rgb(248, 248, 249));
 
           // TODO We cannot use a drop-shadow because dropdowns in the navbar
           //      are at the wrong z-index, therefore we can't place the page-header
@@ -219,9 +224,11 @@ body
 
     border-bottom: 1px solid rgb(198, 198, 199);
     border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-    // #gradient > .vertical(rgb(248, 248, 249), rgb(252, 251, 252));
+    @include gradient-vertical(rgb(248, 248, 249), rgb(252, 251, 252));
     @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.075));
     @include user-select(none);
+
+    // z-index: $zindexPageHeader;
 
     h1
     {
@@ -229,7 +236,7 @@ body
       font-family: "HelveticaNeue-Light", "Helvetica Neue Light",
                    "Helvetica Neue", sans-serif;
       font-weight: 300;
-      font-size: 46px / 2.25;
+      font-size: (46px / 2.25);
       color: rgb(76, 76, 76);
       color: rgba(0, 0, 0, 0.7);
       text-shadow: 0 1px 0px rgba(255, 255, 255, 0.9);
@@ -424,5 +431,5 @@ body
 
 // Responsive Layout -------------------------------------------------------
 
-// @import "twitter/bootstrap/responsive";
+// @import "bootstrap-responsive";
 // @import "cartilage/responsive";

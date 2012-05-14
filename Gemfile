@@ -14,4 +14,4 @@ gemspec
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
 gem 'sass-rails'
-gem 'sass-rails-bootstrap'
+gem 'bootstrap-sass'

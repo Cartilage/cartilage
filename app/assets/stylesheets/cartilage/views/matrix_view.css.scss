@@ -1,4 +1,11 @@
 
+// Cartilage Support ---------------------------------------------------------
+
+@import "cartilage/mixins";
+@import "cartilage/variables";
+
+// Matrix View ---------------------------------------------------------------
+
 ul.matrix-view
 {
   position: absolute;

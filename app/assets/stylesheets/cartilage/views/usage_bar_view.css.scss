@@ -1,5 +1,10 @@
 
+// Cartilage Support ---------------------------------------------------------
+
 @import "cartilage/mixins";
+@import "cartilage/variables";
+
+// Usage Bar View ------------------------------------------------------------
 
 .usage-bar-view
 {
@@ -15,8 +20,8 @@
     height: 24px;
     overflow: hidden;
 
-    #gradient > .vertical(rgb(161, 162, 162), rgb(177, 179, 179));
-    .border-radius(2px);
+    @include gradient-vertical(rgb(161, 162, 162), rgb(177, 179, 179));
+    @include border-radius(2px);
 
     list-style: none;
 
@@ -28,7 +33,7 @@
       right: 0;
       bottom: 0;
       top: 0;
-      .box-shadow(inset 0px 1px 4px rgba(0, 0, 0, 0.5));
+      @include box-shadow(inset 0px 1px 4px rgba(0, 0, 0, 0.5));
     }
 
     // Bar Segment Views -----------------------------------------------------
@@ -39,7 +44,7 @@
       width: 0px;
       height: inherit;
       float: left;
-      .box-sizing(border-box);
+      @include box-sizing(border-box);
 
       &:before,
       &:after
@@ -67,12 +72,12 @@
 
       &:first-of-type
       {
-        .border-radius(2px 0px 0px 2px);
+        @include border-radius(2px 0px 0px 2px);
       }
 
       &:last-of-type
       {
-        .border-radius(0px 2px 2px 0);
+        @include border-radius(0px 2px 2px 0);
         &:after
         {
           display: none;
@@ -86,20 +91,14 @@
         top: 0;
         left: 0;
         bottom: 0;
-        background-color: rgba(0, 0, 0, 0.09500000000000001);
-        background-image: -moz-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
-        background-image: -ms-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
-        background-image: -webkit-gradient(linear, 0 0, 0 100%, from(rgba(0, 0, 0, 0.025)), to(rgba(0, 0, 0, 0.2)));
-        background-image: -webkit-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
-        background-image: -o-linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
-        background-image: linear-gradient(top, rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
-        background-repeat: repeat-x;
+
+        @include gradient-vertical(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
 
         border-right: 1px solid rgb(216, 216, 217);
         border-right: 1px solid rgba(0, 0, 0, 0.1);
         border-left: 1px solid rgba(255, 255, 255, 0.15);
 
-        .box-sizing(border-box);
+        @include box-sizing(border-box);
       }
     }
   }

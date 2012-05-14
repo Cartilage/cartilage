@@ -1,14 +1,20 @@
 
+// Cartilage Support ---------------------------------------------------------
+
+@import "cartilage/mixins";
+@import "cartilage/variables";
+
+// List View -----------------------------------------------------------------
+
 ul.list-view
 {
   position: relative;
   display: block;
   list-style: none;
   margin: 0;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-
   cursor: default;
+
+  @include user-select(none);
 
   li
   {
@@ -17,9 +23,7 @@ ul.list-view
 
     text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
 
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
+    @include box-sizing(border-box);
 
     &:nth-of-type(even)
     {

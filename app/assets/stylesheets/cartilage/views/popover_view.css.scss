@@ -1,5 +1,10 @@
 
-@import "twitter/bootstrap/mixins";
+// Cartilage Support ---------------------------------------------------------
+
+@import "cartilage/mixins";
+@import "cartilage/variables";
+
+// Popover View --------------------------------------------------------------
 
 .popover-view
 {
@@ -12,16 +17,13 @@
 
   border: 2px solid rgb(0, 0, 0) !important;
   border: 2px solid rgba(0, 0, 0, 0.9) !important;
-
-  .border-radius(2px);
+  @include border-radius(2px);
 
   color: white;
   text-align: center;
   line-height: 40px;
 
-  -webkit-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  @include box-shadow(0px 0px 16px rgba(0, 0, 0, 0.5));
 
   .triangle
   {
@@ -44,17 +46,8 @@
 
     background-color: rgba(0, 0, 0, 0.9);
 
-    background: rgb(0, 0, 0);
-    background: rgba(0, 0, 0, 0.825);
-    background: -moz-linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
-    background: -ms-linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
-    background: -o-linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
-    background: -webkit-gradient(linear, left top, left bottom, from(rgba(0, 0, 0, 0.75)), to(rgba(0, 0, 0, 0.95)));
-    background: linear-gradient(top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
-
-    -webkit-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.25);
-    -moz-box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.25);
-    box-shadow: inset 1px 1px 0 rgba(255, 255, 255, 0.25);
+    @include gradient-vertical(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
+    @include box-shadow(inset 1px 1px 0 rgba(255, 255, 255, 0.25);
 
     p, li
     {
