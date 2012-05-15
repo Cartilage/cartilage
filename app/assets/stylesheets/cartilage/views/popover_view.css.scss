@@ -47,7 +47,7 @@
     background-color: rgba(0, 0, 0, 0.9);
 
     @include gradient-vertical(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.95));
-    @include box-shadow(inset 1px 1px 0 rgba(255, 255, 255, 0.25);
+    @include box-shadow(inset 1px 1px 0 rgba(255, 255, 255, 0.25));
 
     p, li
     {

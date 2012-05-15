@@ -72,7 +72,7 @@ ul.matrix-view
     padding-bottom: 20px;
   }
 
-  .overlay // TODO Rename this to backdrop for consistency with Bootstrap
+  .overlay
   {
     position: absolute;
     height: 0px;
@@ -82,6 +82,6 @@ ul.matrix-view
 
     background-color: #336699;
     border: 1px solid black;
-    opacity: 0.25;
+    @include opacity(0.25);
   }
 }

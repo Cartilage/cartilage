@@ -41,10 +41,11 @@
     li.bar-segment-view
     {
       position: relative;
+      float: left;
       width: 0px;
       height: inherit;
-      float: left;
       @include box-sizing(border-box);
+      list-style: none;
 
       &:before,
       &:after
@@ -102,5 +103,4 @@
       }
     }
   }
-
 }

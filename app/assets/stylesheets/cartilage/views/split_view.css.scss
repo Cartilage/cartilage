@@ -139,7 +139,7 @@ $padded-width: 2em;
 
   > .dragHandle
   {
-    opacity: 0.5;
+    @include opacity(0.5);
   }
 }
 
