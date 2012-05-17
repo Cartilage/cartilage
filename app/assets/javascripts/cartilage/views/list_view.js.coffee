@@ -25,6 +25,7 @@ class window.Cartilage.Views.ListView extends Backbone.View
     @itemView = options["itemView"]
 
     # Bind to collection
+    @collection.bind "reset", @render # TODO Don't re-render the entire view for removals
     @collection.bind "add", @addModel
     @collection.bind "remove", @render # TODO Don't re-render the entire view for removals
 
