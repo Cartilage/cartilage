@@ -1,12 +1,30 @@
 
+// Bootstrap Support ---------------------------------------------------------
+
+@import "bootstrap-responsive";
+
 // Cartilage Support ---------------------------------------------------------
 
 @import "cartilage/variables";
 @import "cartilage/mixins";
 
-// Tablets and Below ---------------------------------------------------------
+// Up to Landscape Phone -----------------------------------------------------
 
-@media (max-width: 979px)
+@media (max-width: 480px)
+{
+
+}
+
+// Landscape Phone to Small Desktop and Portrait Tablet ----------------------
+
+@media (max-width: 768px)
+{
+
+}
+
+// Landscape Phone to Small Desktop and Portrait Tablet ----------------------
+
+@media (max-width: 768px)
 {
 
   html
@@ -14,14 +32,56 @@
     overflow: visible;
   }
 
+  body
+  {
+    padding: 0;
+  }
+
+  // Navigation Bar ----------------------------------------------------------
+
+  .navbar-fixed-top,
+  .navbar-fixed-bottom
+  {
+    margin: 0;
+  }
+
+  // Containers --------------------------------------------------------------
+
+  .container-fluid
+  {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+}
+
+// Portrait Tablet to Default Desktop ----------------------------------------
+
+@media (min-width: 768px) and (max-width: 979px)
+{
+
+}
+
+// Tablets and Below --------------------------------------------------------
+
+@media (max-width: 979px)
+{
+
+  // Navigation Bar ---------------------------------------------------------
+
   .navbar
   {
     margin-bottom: 0;
   }
 
-  .navbar-fixed-top .navbar-inner
+  .navbar-fixed-top,
+  .navbar-fixed-bottom
   {
-    padding: 0;
+    margin: 0;
+
+    .navbar-inner
+    {
+      padding: 0;
+    }
   }
 
   .navbar .brand
@@ -39,6 +99,11 @@
     margin-bottom: 10px;
     line-height: ($navbarHeight / 2.75);
     @include border-radius(3px);
+  }
+
+  .navbar .nav > li:last-of-type > a
+  {
+    margin-bottom: 20px;
   }
 
   // Absolute Container ------------------------------------------------------
@@ -117,4 +182,11 @@
   {
     height: auto !important;
   }
+}
+
+// Large Desktop and Up ------------------------------------------------------
+
+@media (min-width: 1200px)
+{
+
 }
