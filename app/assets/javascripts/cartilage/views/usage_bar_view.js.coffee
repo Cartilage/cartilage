@@ -2,7 +2,7 @@
 # Usage Bar View
 #
 
-class window.Cartilage.Views.UsageBarView extends Backbone.View
+class window.Cartilage.Views.UsageBarView extends Cartilage.View
 
   className: "usage-bar-view"
 

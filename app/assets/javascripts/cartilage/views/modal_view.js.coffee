@@ -5,7 +5,7 @@
 # to contain your modal view logic in its own class.
 #
 
-class window.Cartilage.Views.ModalView extends Backbone.View
+class window.Cartilage.Views.ModalView extends Cartilage.View
 
   className: "modal-view modal fade"
 

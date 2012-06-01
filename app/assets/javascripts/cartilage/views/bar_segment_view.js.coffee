@@ -2,7 +2,7 @@
 # Bar Segment View
 #
 
-class window.Cartilage.Views.BarSegmentView extends Backbone.View
+class window.Cartilage.Views.BarSegmentView extends Cartilage.View
 
   tagName: "li"
   className: "bar-segment-view"
@@ -17,6 +17,7 @@ class window.Cartilage.Views.BarSegmentView extends Backbone.View
   #
   color: null
 
+  #
   # The fill width specified as a float from 0 to 1 that represents the
   # percentage of the segment to occupy.
   #

@@ -1,3 +1,6 @@
+#
+# Matrix View
+#
 
 class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
 

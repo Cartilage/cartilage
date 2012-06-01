@@ -5,7 +5,7 @@
 # stacked on top and bottom.
 #
 
-class window.Cartilage.Views.SplitView extends Backbone.View
+class window.Cartilage.Views.SplitView extends Cartilage.View
 
   className: "split-view"
 

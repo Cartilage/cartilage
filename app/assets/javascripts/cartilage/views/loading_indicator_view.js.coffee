@@ -4,7 +4,7 @@
 # Manages the display of a canvas-based spinning loading indicator.
 #
 
-class window.Cartilage.Views.LoadingIndicatorView extends Backbone.View
+class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
 
   className: "loading-indicator-view"
 

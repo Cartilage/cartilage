@@ -2,7 +2,7 @@
 # Popover View
 #
 
-class window.Cartilage.Views.PopoverView extends Backbone.View
+class window.Cartilage.Views.PopoverView extends Cartilage.View
 
   className: "popover-view"
 

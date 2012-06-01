@@ -2,7 +2,7 @@
 # Bar View
 #
 
-class window.Cartilage.Views.BarView extends Backbone.View
+class window.Cartilage.Views.BarView extends Cartilage.View
 
   tagName: "ul"
   className: "bar-view"

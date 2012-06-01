@@ -13,7 +13,7 @@
 #  * "cleared"
 #
 
-class window.Cartilage.Views.ImageView extends Backbone.View
+class window.Cartilage.Views.ImageView extends Cartilage.View
 
   className: "image-view"
 

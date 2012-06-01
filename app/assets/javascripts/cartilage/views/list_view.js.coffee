@@ -1,4 +1,8 @@
-class window.Cartilage.Views.ListView extends Backbone.View
+#
+# List View
+#
+
+class window.Cartilage.Views.ListView extends Cartilage.View
 
   tagName: "ul"
   className: "list-view"
