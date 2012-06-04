@@ -16,6 +16,11 @@ class window.Cartilage.Views.ModalView extends Cartilage.View
   show: ->
     ($ document.body).append @render().el
     ($ @el).modal('show')
+    ($ @el).on 'hidden', @dismiss
 
   hide: =>
     ($ @el).modal('hide')
+
+  dismiss: =>
+    ($ @el).off 'hidden'
+    super()
