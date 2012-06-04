@@ -1,10 +1,12 @@
-
 # Cartilage for Backbone.js
 
 Cartilage is a standardized set of layouts and user interface elements that
 are bundled as a Rails Engine. It is build on top of Backbone.js (for
 interactivity) and Bootstrap (for visual styling).
 
+## Example
+
+An example project is available at http://github.com/activeprospect/cartilage-example.
 ## Requirements
 
 * Ruby on Rails 3.2+
