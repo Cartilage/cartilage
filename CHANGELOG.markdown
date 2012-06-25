@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.SourceListView] Added SourceListView for use as sidebars
+   with some default styling.
+
  * [Cartilage.Views.MatrixView] Allow drag-selection to be enabled/disabled by
    setting the allowsDragSelection property. Defaults to false.
 

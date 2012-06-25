@@ -1,0 +1,30 @@
+
+// Cartilage Support ---------------------------------------------------------
+
+@import "cartilage/mixins";
+@import "cartilage/variables";
+
+// Source List View ----------------------------------------------------------
+
+.source-list-view
+{
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  background-color: #dee4ea;
+  border-right: 1px solid #b4b4b4;
+
+  overflow: scroll-y;
+
+  li
+  {
+    &.disabled
+    {
+      color: rgba(0, 0, 0, 0.4)
+    }
+  }
+
+}
