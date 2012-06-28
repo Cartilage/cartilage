@@ -19,5 +19,5 @@ class window.Cartilage.View extends Backbone.View
 
   removeObservers: ->
     _.each @observers, (observer) ->
-      observer.source.off(observer.event, observer.callback)
+      observer.source.off(observer.event, observer.callback, @)
     @observers = []
