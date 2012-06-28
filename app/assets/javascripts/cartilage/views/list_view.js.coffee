@@ -13,13 +13,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     "keydown": "onKeyDown"
     "mousedown": "onMouseDown"
 
-  selected:
-    new Backbone.Collection
-
-  allowsRemove: false
-  allowsDeselection: true
-  allowsMultipleSelection: false
-
   initialize: (options = {}) ->
 
     # Apply options
@@ -27,6 +20,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @allowsDeselection = options["allowsDeselection"] || (@allowsDeselection ?= true)
     @allowsMultipleSelection = options["allowsMultipleSelection"] || (@allowsMultipleSelection ?= true)
     @itemView = options["itemView"]
+    @selected = new Backbone.Collection
 
     # Set a tab index on the element, if necessary, to enable focus support
     # for the list view and its items

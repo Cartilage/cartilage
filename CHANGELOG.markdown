@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [CallConduit.Views.ListView] Fixed a rather glaring issue wherein the
+   selected state of list views was shared across instances.
+
  * [CallConduit.Views.SplitView] Added setFirstView and setSecondView methods
    for replacing the views without a full re-rendering of the split view
    instance.
