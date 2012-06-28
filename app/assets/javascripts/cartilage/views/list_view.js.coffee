@@ -40,22 +40,25 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
       if view = ($ element).data("view")
-        view.remove()
+        view.cleanup()
       ($ element).remove()
 
     _.each @renderModels(), (element) =>
       element.appendTo ($ @el)
 
+
+    @restoreSelection() if @selected.models.length > 0
+
     @
 
-  renderModels: ->
+  renderModels: =>
     items = _.map @collection.models, (model) =>
       @renderModel(model)
 
   renderModel: (model) =>
-    itemElement = ($ "<li />")
-    itemElement.attr("tabindex", ($ @el).attr("tabindex"))
-    itemElement.data("model", model)
+    itemElement = ($ @make("li"))
+    itemElement.attr "tabindex", ($ @el).attr("tabindex")
+    itemElement.data "model", model
     if @itemView?
       itemView = new @itemView { model: model }
       itemElement.html itemView.render().el
@@ -130,6 +133,20 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     return unless @allowsMultipleSelection
     elements = ($ @el).find "li:not(.selected)"
     _.each elements, @selectAnother
+
+  #
+  # Restores the selection after a re-rendering.
+  #
+  restoreSelection: =>
+    elements = ($ @el).find "li"
+    _.each elements, (element) =>
+      model = ($ element).data("model")
+      if model in @selected.models
+        console.log "adding class"
+        ($ element).addClass("selected")
+      else
+        console.log "removing model", model
+        @selected.remove model
 
   #
   # Deselects the specified list view item, if it is currently selected.

@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [CallConduit.Views.ListView] Implemented support for restoring the selected
+   state of a list view when its collection is reset or otherwise changed.
+
  * [CallConduit.Views.ListView] Fixed a rather glaring issue wherein the
    selected state of list views was shared across instances.
 
