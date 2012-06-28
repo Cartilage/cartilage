@@ -37,6 +37,10 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     # for the list view and its items
     ($ @el).attr("tabindex", 0) unless ($ @el).attr("tabindex")
 
+  cleanup: ->
+    @clearSelection { silent: true }
+    super()
+
   render: =>
 
     # Clean up all existing item views and their container elements.
@@ -47,6 +51,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     _.each @renderModels(), (element) =>
       element.appendTo ($ @el)
+
     @
 
   renderModels: ->
@@ -150,7 +155,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   clearSelection: (options = {}) ->
     ($ @el).find("li.selected").removeClass "selected"
-    @selected.reset()
+    @selected.reset(null, { silent: options["silent"] })
     @trigger("clear", @selected) unless options["silent"]
 
   #

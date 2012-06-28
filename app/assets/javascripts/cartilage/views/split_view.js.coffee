@@ -43,7 +43,7 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     @secondElement = ($ '<div class="second"></div>')
 
     # Observe for window resize events and re-render the view when it occurs...
-    ($ window).resize => @position(@_currentPosition) if @_currentPosition?
+    ($ window).on "resize", @handleWindowResize
 
   render: =>
     ($ @el).addClass @orientation
@@ -55,6 +55,12 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     ($ @el).append @secondElement
 
     @
+
+  cleanup: ->
+    ($ window).off "resize", @handleWindowResize
+    @firstView.cleanup() if @firstView and @firstView.cleanup
+    @secondView.cleanup() if @secondView and @secondView.cleanup
+    super()
 
   #
   # Sets the position of the divider that separates the two views. In the case
@@ -89,3 +95,6 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
         ($ @secondElement).css { top: bottom + "px", height: '' }
 
     @trigger("resize");
+
+  handleWindowResize: (event) =>
+    @position(@_currentPosition) if @_currentPosition?

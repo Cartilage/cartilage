@@ -3,6 +3,11 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.View] Renamed View#dismiss to View#cleanup. This method should
+   be overridden in subclasses, where necessary, to perform any view cleanup
+   when the view is removed. It should be called whenever you are manually
+   removing a view, in place of View#remove.
+
  * [Cartilage.Views.SourceListView] Added SourceListView for use as sidebars
    with some default styling.
 

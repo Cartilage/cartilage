@@ -62,6 +62,10 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
 
     @
 
+  cleanup: ->
+    @clear { silent: true }
+    super()
+
   #
   # Sets the image to that which is specified by URL. This causes a render to
   # take place.
