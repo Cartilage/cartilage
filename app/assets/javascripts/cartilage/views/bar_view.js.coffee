@@ -49,10 +49,10 @@ class window.Cartilage.Views.BarView extends Cartilage.View
 
   # TODO Move this to Segment.js
   _percentageWidthForSegmentAtIndex: (index) =>
-    segment         = @segments.models[index]
-    segmentWidth    = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")
-    totalWidth      = _.last(@segments.models).get("maximum")
-    computedWidth   = segmentWidth / totalWidth
+    segment       = @segments.models[index]
+    segmentWidth  = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")
+    totalWidth    = _.last(@segments.models).get("maximum")
+    computedWidth = segmentWidth / totalWidth
 
     computedWidth = 0.02 unless computedWidth > 0.02
     computedWidth = 1.0 - @_cumulativeWidth unless @segments.models[index + 1]?
@@ -65,10 +65,10 @@ class window.Cartilage.Views.BarView extends Cartilage.View
 
   # TODO Move this to Segment.js
   _percentageWidthForBarInSegmentAtIndex: (index) ->
-    segment         = @segments.models[index]
-    segmentWidth    = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")
-    fooWidth        = @value - _.sum(_.map(@segments.models.slice(0, index), (segment) -> segment.get("maximum")))
-    barWidth        = 0
+    segment      = @segments.models[index]
+    segmentWidth = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")
+    fooWidth     = @value - _.sum(_.map(@segments.models.slice(0, index), (segment) -> segment.get("maximum")))
+    barWidth     = 0
 
     return 0 if fooWidth <= 0
 

@@ -60,7 +60,6 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
 
   _currentOffset: 0
 
-
   initialize: (options = {}) ->
     # TODO Set options...
 
@@ -78,7 +77,6 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
   render: ->
     ($ @el).html @canvasElement
 
-
     #     var color = this.get("element").getStyle("color");
     #     if (color)
     #     {
@@ -91,7 +89,6 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
     #     else this.barColor = { red: 85, green: 85, blue: 85 };
     # @start()
     @
-
 
   #
   # Starts the loading indicator animation.

@@ -21,6 +21,7 @@ $loadingIndicatorSize: 96px;
   margin-left: -($loadingIndicatorSize / 2);
   height: $loadingIndicatorSize;
   width: $loadingIndicatorSize;
+  overflow: hidden;
 
   background: transparent;
   background-color: rgba(0, 0, 0, 0.15);
@@ -32,13 +33,18 @@ $loadingIndicatorSize: 96px;
 
   canvas
   {
-    width: $loadingIndicatorSize;
-    height: $loadingIndicatorSize;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    // width: $loadingIndicatorSize;
+    // height: $loadingIndicatorSize;
 
-    > div
-    {
-      width: $loadingIndicatorSize;
-      height: $loadingIndicatorSize;
-    }
+    // > div
+    // {
+    //   width: $loadingIndicatorSize;
+    //   height: $loadingIndicatorSize;
+    // }
   }
 }
