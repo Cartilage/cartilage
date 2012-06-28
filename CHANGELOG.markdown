@@ -3,6 +3,10 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [CallConduit.Views.SplitView] Added setFirstView and setSecondView methods
+   for replacing the views without a full re-rendering of the split view
+   instance.
+
  * [Cartilage.View] Introduced View#observe for binding event observers to
    the current view (to be used in place of Object#on). Observed events will
    automatically be cleaned up when the view is removed.

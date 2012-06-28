@@ -39,17 +39,17 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     @firstView     = options["firstView"]
     @secondView    = options["secondView"]
     @orientation   = options["orientation"] || "vertical"
-    @firstElement  = ($ '<div class="first"></div>')
-    @secondElement = ($ '<div class="second"></div>')
+    @firstElement  = @make("div", { class: "first" })
+    @secondElement = @make("div", { class: "second" })
 
     # Observe for window resize events and re-render the view when it occurs...
     ($ window).on "resize", @handleWindowResize
 
   render: =>
-    ($ @el).addClass @orientation
+    ($ @el).empty().addClass @orientation
 
-    @firstElement.html @firstView.render().el
-    @secondElement.html @secondView.render().el
+    ($ @firstElement).html @firstView.render().el
+    ($ @secondElement).html @secondView.render().el
 
     ($ @el).append @firstElement
     ($ @el).append @secondElement
@@ -94,7 +94,17 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
         ($ @firstElement).css { height: bottom + 'px', bottom: '' }
         ($ @secondElement).css { top: bottom + "px", height: '' }
 
-    @trigger("resize");
+    @trigger("resize")
 
   handleWindowResize: (event) =>
     @position(@_currentPosition) if @_currentPosition?
+
+  setFirstView: (view) ->
+    @firstView.cleanup()
+    @firstView = view
+    ($ @firstElement).html @firstView.render().el
+
+  setSecondView: (view) ->
+    @secondView.cleanup()
+    @secondView = view
+    ($ @secondElement).html @secondView.render().el
