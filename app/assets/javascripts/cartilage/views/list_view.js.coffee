@@ -28,14 +28,14 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @allowsMultipleSelection = options["allowsMultipleSelection"] || (@allowsMultipleSelection ?= true)
     @itemView = options["itemView"]
 
-    # Bind to collection
-    @collection.bind "reset", @render # TODO Don't re-render the entire view for removals
-    @collection.bind "add", @addModel
-    @collection.bind "remove", @render # TODO Don't re-render the entire view for removals
-
     # Set a tab index on the element, if necessary, to enable focus support
     # for the list view and its items
     ($ @el).attr("tabindex", 0) unless ($ @el).attr("tabindex")
+
+    # Observe Collection
+    @observe(@collection, "add", @addModel)
+    @observe(@collection, "reset", @render) # TODO Don't re-render the entire view for removals
+    @observe(@collection, "remove", @render) # TODO Don't re-render the entire view for removals
 
   cleanup: ->
     @clearSelection { silent: true }
