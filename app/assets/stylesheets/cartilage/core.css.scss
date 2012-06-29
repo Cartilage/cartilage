@@ -222,9 +222,9 @@ body
     padding-right: 20px;
 
     border-bottom: 1px solid rgb(198, 198, 199);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.45);
     @include gradient-vertical(rgb(248, 248, 249), rgb(252, 251, 252));
-    @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.075));
+    @include box-shadow(0 1px 3px rgba(0, 0, 0, 0.15));
     @include user-select(none);
 
     h1
@@ -353,7 +353,7 @@ body
   position: relative;
   margin: 20px;
   background-color: rgb(245, 247, 247);
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgb(195, 196, 196);
   border: 1px solid rgba(0, 0, 0, 0.2);
   @include border-radius(3px);

@@ -57,9 +57,16 @@ $zindexModal:           1050;
 // Input placeholder text color
 $placeholderText:       $grayLight;
 
-// Navbar
+// Navigation Bar ------------------------------------------------------------
+
+//
+// The navigation bar (or "navbar") is the primary header for the site that is
+// pinned to the top of the page and is responsible for primary navigation and
+// other global actions.
+//
+
 $navbarHeight:                    64px;
-$navbarBackground:                #233137; // #2b3036;
+$navbarBackground:                #233137;
 $navbarBackgroundHighlight:       #464d53;
 
 $navbarText:                      $grayLight;
@@ -84,7 +91,13 @@ $infoText:                #3a87ad;
 $infoBackground:          #d9edf7;
 $infoBorder:              darken(adjust-hue($infoBackground, -10), 20%);
 
+// Content
 
+$sectionWellBackground: #a4aaad asset-url("cartilage/patterns/background.medium.png", image);
+
+// Source List View
+
+$sourceListBackground: #dee4ea;
 
 // GRID
 // --------------------------------------------------

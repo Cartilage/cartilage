@@ -14,8 +14,8 @@
   right: 0;
   bottom: 0;
 
-  background-color: #dee4ea;
-  border-right: 1px solid #b4b4b4;
+  background: $sourceListBackground;
+  border-right: 1px solid rgba(0, 0, 0, 0.45);
 
   overflow: scroll-y;
 
@@ -26,5 +26,4 @@
       color: rgba(0, 0, 0, 0.4)
     }
   }
-
 }
