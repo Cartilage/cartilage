@@ -142,10 +142,8 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     _.each elements, (element) =>
       model = ($ element).data("model")
       if model in @selected.models
-        console.log "adding class"
         ($ element).addClass("selected")
       else
-        console.log "removing model", model
         @selected.remove model
 
   #
