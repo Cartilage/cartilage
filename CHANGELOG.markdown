@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Extensions] Added 3 new methods to Underscore: dasherize, underscore and
+   remove.
+
  * [CallConduit.Views.ListView] Implemented support for restoring the selected
    state of a list view when its collection is reset or otherwise changed.
 
