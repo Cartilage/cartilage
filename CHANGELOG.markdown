@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.View] Added basic view lifecycle management through the
+   addSubview and removeFromSuperview methods.
+
  * [Extensions] Added 3 new methods to Underscore: dasherize, underscore and
    remove.
 
