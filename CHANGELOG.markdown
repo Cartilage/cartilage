@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Application] Added as a new base class to be used by all
+   Cartilage-based applications.
+
  * [Cartilage.View] Added basic view lifecycle management through the
    addSubview and removeFromSuperview methods.
 

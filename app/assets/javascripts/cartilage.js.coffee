@@ -4,6 +4,7 @@
 #= require "jquery-points"
 #
 #= require "cartilage/core"
+#= require "cartilage/application"
 #
 #= require "cartilage/views/view"
 #
