@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.LoadingIndicatorView] Automatically start and stop the
+   indicator animation when added as a subview.
+
  * [Cartilage.Application] Added as a new base class to be used by all
    Cartilage-based applications.
 

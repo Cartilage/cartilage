@@ -74,6 +74,8 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
     # Initialize Canvas Context
     @canvasContext = @canvasElement.getContext("2d")
 
+    @observe @, "willPresent", @start
+    @observe @, "removed", @stop
   render: ->
     ($ @el).html @canvasElement
 
@@ -93,7 +95,7 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
   #
   # Starts the loading indicator animation.
   #
-  start: ->
+  start: =>
     return if @isAnimating
     @isAnimating = true
     @_animateNextFrame()
