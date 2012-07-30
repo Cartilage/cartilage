@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.LoadingIndicatorView] Now automatically derives the bar
+   color from CSS, if specified as the "color" property.
+
  * [Cartilage.Views.LoadingIndicatorView] Automatically start and stop the
    indicator animation when added as a subview.
 

@@ -76,20 +76,19 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
 
     @observe @, "willPresent", @start
     @observe @, "removed", @stop
+
+  prepare: ->
+
+    # Determine the bar color from CSS, if present
+    if color = ($ @el).css("color")
+      colors = color.split(',')
+      red    = parseInt(colors[0].substr(4, 3), 10)
+      green  = parseInt(colors[1], 10)
+      blue   = parseInt(colors[2], 10)
+      @barColor = { red: red, green: green, blue: blue }
+
   render: ->
     ($ @el).html @canvasElement
-
-    #     var color = this.get("element").getStyle("color");
-    #     if (color)
-    #     {
-    #       colors = color.split(',');
-    #       red    = parseInt(colors[0].substr(4, 3), 10);
-    #       green  = parseInt(colors[1], 10);
-    #       blue   = parseInt(colors[2], 10);
-    #       this.barColor = { red: red, green: green, blue: blue };
-    #     }
-    #     else this.barColor = { red: 85, green: 85, blue: 85 };
-    # @start()
     @
 
   #
