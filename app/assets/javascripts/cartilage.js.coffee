@@ -6,6 +6,7 @@
 #= require "cartilage/core"
 #= require "cartilage/application"
 #
+#= require "cartilage/models/model"
 #= require "cartilage/views/view"
 #
 #= require_tree "./cartilage/models"

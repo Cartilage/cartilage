@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Model] Added as a new base model class to be used by all
+   Cartilage-based applications.
+
  * [Cartilage.Views.LoadingIndicatorView] Now automatically derives the bar
    color from CSS, if specified as the "color" property.
 
