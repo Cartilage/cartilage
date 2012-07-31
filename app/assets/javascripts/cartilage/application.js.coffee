@@ -19,6 +19,11 @@ class window.Cartilage.Application
         href = $(this).attr("href")
         protocol = this.protocol + "//"
 
+        # Ensure that the link element does not define data-passthrough="true",
+        # which denotes that the link should be passed through to the backend
+        # application.
+        return if $(this).attr("data-passthrough") is "true"
+
         # Ensure the protocol is not part of URL, meaning its relative.
         # Stop the event bubbling to ensure the link will not cause a page refresh.
         if href.slice(protocol.length) != protocol

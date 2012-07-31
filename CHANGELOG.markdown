@@ -3,6 +3,10 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Application] Added support for passing through relative URLs to
+   the backend application when the link element contains the data attribute
+   data-passthrough="true".
+
  * [Cartilage.Model] Added as a new base model class to be used by all
    Cartilage-based applications.
 
