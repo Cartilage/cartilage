@@ -25,11 +25,13 @@ class window.Cartilage.Application
         return if $(this).attr("data-passthrough") is "true"
 
         # Ensure the protocol is not part of URL, meaning its relative.
-        # Stop the event bubbling to ensure the link will not cause a page refresh.
-        if href.slice(protocol.length) != protocol
-          event.preventDefault()
+        return if href.match(/\:\/\//)
 
-          # Note by using Backbone.history.navigate, router events will not be
-          # triggered.  If this is a problem, change this to navigate on your
-          # router.
-          Backbone.history.navigate(href, true)
+        # Stop the event bubbling to ensure the link will not cause a page
+        # refresh.
+        event.preventDefault()
+
+        # Note by using Backbone.history.navigate, router events will not be
+        # triggered. If this is a problem, change this to navigate on your
+        # router.
+        Backbone.history.navigate(href, true)

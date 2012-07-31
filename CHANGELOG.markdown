@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Application] Fixed support for passing absolute URLs through to
+   the browser.
+
  * [Cartilage.Application] Added support for passing through relative URLs to
    the backend application when the link element contains the data attribute
    data-passthrough="true".
