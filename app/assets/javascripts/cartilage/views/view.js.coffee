@@ -32,7 +32,7 @@ class window.Cartilage.View extends Backbone.View
       observer.source.off(observer.event, observer.callback, @)
     @observers = []
 
-  addSubview: (view, animated = false) ->
+  addSubview: (view, container = @el, animated = false) ->
 
     # Maintain a reference to the added subview for later cleanup, or other
     # operations
@@ -48,7 +48,7 @@ class window.Cartilage.View extends Backbone.View
     ($ view.el).css("visibility", "hidden")
 
     # Add the View's Element to the DOM
-    ($ @el).append(view.el)
+    ($ container).append(view.el)
 
     # Prepare the View for display, if necessary
     unless view.isPrepared
@@ -72,8 +72,8 @@ class window.Cartilage.View extends Backbone.View
       ($ view.el).css("visibility", "visible")
       view.trigger("presented")
 
-  addSubviewAnimated: (view) ->
-    @addSubview(view, true)
+  addSubviewAnimated: (view, container = @el) ->
+    @addSubview(view, container, true)
 
   removeFromSuperview: (animated = false) ->
 

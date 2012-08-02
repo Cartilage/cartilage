@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.View] Added support for specifying the container element that
+   the subview will be inserted into.
+
  * [Cartilage.Application] Fixed support for passing absolute URLs through to
    the browser.
 
