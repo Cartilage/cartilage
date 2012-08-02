@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Extensions] Added _.camelize for converting titlecase, underscored or
+   dasherized values to camel-case.
+
  * [Cartilage.View] Added support for specifying the container element that
    the subview will be inserted into.
 

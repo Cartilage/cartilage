@@ -20,7 +20,7 @@ $ ->
     return unless string
 
     # Remove Camelization
-    string = string.replace /([A-Z])/g, (match) ->  "-#{match.toLowerCase()}"
+    string = string.replace /([A-Z])/g, (match) -> "-#{match.toLowerCase()}"
 
     # Convert Underscores to Dashes
     string = string.replace /_/g, "-"
@@ -28,6 +28,21 @@ $ ->
     # Remove Leading Dash
     string.replace /^-/, ""
 
+  #
+  # Converts titlecased, underscored or dashed strings to camel-case. Example:
+  #
+  #    _.camelize("FooBarView") => "fooBarView"
+  #    _.camelize("foo-bar-view") => "fooBarView"
+  #    _.camelize("foo_bar_view") => "fooBarView"
+  #
+  _.camelize = (string) ->
+    return unless string
+
+    # Remove Camelization
+    string = string.replace /((_|-)([a-z]))/g, (match) -> match[1].toUpperCase()
+
+    # Convert First Letter to Lowercase
+    string = string.replace /^([A-Z])/g, (match) -> match.toLowerCase()
 
   #
   # Converts dashed or camel-cased strings to dashes. Example:
@@ -39,13 +54,14 @@ $ ->
     return unless string
 
     # Remove Camelization
-    string = string.replace /([A-Z])/g, (match) ->  "_#{match.toLowerCase()}"
+    string = string.replace /([A-Z])/g, (match) -> "_#{match.toLowerCase()}"
 
     # Convert Dashes to Underscores
     string = string.replace /-/g, "_"
 
     # Remove Leading Underscore
     string.replace /^_/, ""
+
 
   #
   # Removes the specified value from the given array.
