@@ -11,15 +11,17 @@ class window.Cartilage.View extends Backbone.View
   className: ->
     [ "view", _.dasherize(@constructor.name) ].join(" ")
 
-  template: ->
-    JST[_.underscore(@constructor.name)]
+  template: (options) ->
+    JST[_.underscore(@constructor.name)](options)
 
   render: ->
     templateOptions = {}
+
     if @collection
       templateOptions[_.camelize(@collection.constructor.name)] = @collection
     if @model
       templateOptions[_.camelize(@model.constructor.name)] = @model
+
     ($ @el).html @template(templateOptions)
     @
 
