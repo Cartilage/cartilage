@@ -3,6 +3,10 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.View] The @collection and @model attributes are now exposed to
+   the template automatically (unless you've overridden the render method) as
+   the camelized collection or model class name.
+
  * [Extensions] Added _.camelize for converting titlecase, underscored or
    dasherized values to camel-case.
 
