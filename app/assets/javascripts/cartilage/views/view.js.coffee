@@ -8,21 +8,23 @@ class window.Cartilage.View extends Backbone.View
   subviews: []
   observers: []
 
-  className: ->
-    [ "view", _.dasherize(@constructor.name) ].join(" ")
-
   template: (options) ->
     JST[_.underscore(@constructor.name)](options)
 
   render: ->
-    templateOptions = {}
 
+    # Determine CSS class names from the view class hierarchy and any other
+    # custom classes defined by a subclass.
+
+    # Automatically assign collections and models to the template, as their
+    # respective class names.
+    templateVariables = {}
     if @collection
-      templateOptions[_.camelize(@collection.constructor.name)] = @collection
+      templateVariables[_.camelize(@collection.constructor.name)] = @collection
     if @model
-      templateOptions[_.camelize(@model.constructor.name)] = @model
+      templateVariables[_.camelize(@model.constructor.name)] = @model
+    ($ @el).html @template(templateVariables)
 
-    ($ @el).html @template(templateOptions)
     @
 
   cleanup: ->
@@ -115,3 +117,32 @@ class window.Cartilage.View extends Backbone.View
 
   removeFromSuperviewAnimated: ->
     @removeFromSuperview(true)
+
+  determineClassName: ->
+    classNames = [ _.dasherize(@constructor.name) ]
+
+    # Get class names for each view in the class heirarchy
+    superklass = @constructor.__super__
+    while superklass
+      classNames.push _.dasherize(superklass.constructor.name)
+      superklass = superklass.__super__
+
+    # Reverse the order of the class names
+    classNames = classNames.reverse()
+
+    # Merge in custom class name(s)
+    if _.isFunction(@className)
+      console.log "Merging Classes:", @className
+      classNames.push @className().split(" ")
+    else if @className
+      console.log "Merging Classes:", @className
+      classNames.push @className.split(" ")
+
+    # Flatten the Array
+    classNames = _.flatten(classNames)
+
+    # Remove any duplicate class names
+    classNames = _.unique(classNames)
+
+    # Convert the class names array and override the @className property
+    @className = classNames.join(" ")
