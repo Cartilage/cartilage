@@ -18,6 +18,7 @@ class window.Cartilage.View extends Backbone.View
 
     # Determine CSS class names from the view class hierarchy and any other
     # custom classes defined by a subclass.
+    @determineClassName()
 
     # Automatically assign collections and models to the template, as their
     # respective class names.
@@ -53,11 +54,14 @@ class window.Cartilage.View extends Backbone.View
     # Set a reference to this view as the added view's superview
     view.superview = @
 
-    # Render the View
-    view.render()
+    # Render the View, if necessary
+    unless view.isRendered
+      view.render()
+      view.isRendered = true
+      view.trigger("rendered")
 
     # Make the View's Element invisible
-    ($ view.el).css("visibility", "hidden")
+    ($ view.el).css("visibility", "hidden").show()
 
     # Add the View's Element to the DOM
     ($ container).append(view.el)
@@ -104,12 +108,12 @@ class window.Cartilage.View extends Backbone.View
     if animated
       ($ @el).fadeOut 750, =>
         @trigger("removed")
-        @remove()
+        ($ @el).detach()
 
     else
       ($ @el).hide()
       @trigger("removed")
-      @remove()
+      ($ @el).detach()
 
     # Remove the reference to this view from its superview's subviews
     # array

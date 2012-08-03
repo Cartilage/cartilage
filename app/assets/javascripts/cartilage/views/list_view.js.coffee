@@ -35,7 +35,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @clearSelection { silent: true }
     super()
 
-  render: =>
+  prepare: ->
 
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
@@ -46,10 +46,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     _.each @renderModels(), (element) =>
       element.appendTo ($ @el)
 
-
     @restoreSelection() if @selected.models.length > 0
-
-    @
 
   renderModels: =>
     items = _.map @collection.models, (model) =>
