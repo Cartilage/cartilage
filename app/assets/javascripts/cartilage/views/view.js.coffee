@@ -9,7 +9,10 @@ class window.Cartilage.View extends Backbone.View
   observers: []
 
   template: (options) ->
-    JST[_.underscore(@constructor.name)](options)
+    try
+      JST[_.underscore(@constructor.name)](options)
+    catch error
+      console.log "No template!"
 
   render: ->
 
