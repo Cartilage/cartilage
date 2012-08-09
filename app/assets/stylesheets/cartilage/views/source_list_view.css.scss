@@ -17,13 +17,61 @@
   background: $sourceListBackground;
   border-right: 1px solid rgba(0, 0, 0, 0.45);
 
-  overflow: scroll-y;
+  overflow: hidden;
 
-  li
+  > .header-view
   {
-    &.disabled
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    z-index: 1;
+
+    &:after
     {
-      color: rgba(0, 0, 0, 0.4)
+      content: "";
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyYWRpYWxHcmFkaWVudCBpZD0iZyI+PHN0b3Agb2Zmc2V0PSIwLjM4IiBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuMDc1KSIvPjxzdG9wIG9mZnNldD0iMSIgc3RvcC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwKSIvPjwvcmFkaWFsR3JhZGllbnQ+PHJlY3QgeD0iMCUiIHk9IjAlIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJyZ2JhKDAsIDAsIDAsIDApIiAvPjxyZWN0IHg9IjAlIiB5PSItMTAwJSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMjAwJSIgZmlsbD0idXJsKCNnKSIgLz48L3N2Zz4=);
+      background-image: -webkit-gradient(radial, 50% 0%, 0, 50% 0%, 283, color-stop(38%, rgba(0, 0, 0, 0.075)), color-stop(100%, rgba(0, 0, 0, 0)));
+      background-image: -webkit-radial-gradient(center top, farthest-side, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
+      background-image: -moz-radial-gradient(center top, farthest-side, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
+      background-image: -ms-radial-gradient(center top, farthest-side, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
+      background-image: -o-radial-gradient(center top, farthest-side, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
+      background-image: radial-gradient(farthest-side at center top, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
     }
+  }
+
+  > .list-view
+  {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    overflow: auto;
+
+    li
+    {
+      &.disabled
+      {
+        color: rgba(0, 0, 0, 0.4)
+      }
+    }
+  }
+
+  > .footer-view
+  {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    z-index: 1;
   }
 }

@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.SourceListView] Added support for specifying (optional)
+   header and footer views.
+
  * [Cartilage.View] The @collection and @model attributes are now exposed to
    the template automatically (unless you've overridden the render method) as
    the camelized collection or model class name.
