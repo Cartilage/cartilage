@@ -18,7 +18,7 @@ class window.Cartilage.View extends Backbone.View
 
     # Determine CSS class names from the view class hierarchy and any other
     # custom classes defined by a subclass.
-    @determineClassName()
+    ($ @el).addClass @determineClassName()
 
     # Automatically assign collections and models to the template, as their
     # respective class names.
@@ -132,24 +132,25 @@ class window.Cartilage.View extends Backbone.View
     superklass = @constructor.__super__
     while superklass
       classNames.push _.dasherize(superklass.constructor.name)
-      superklass = superklass.__super__
+      superklass = superklass.constructor.__super__
 
     # Reverse the order of the class names
     classNames = classNames.reverse()
 
     # Merge in custom class name(s)
     if _.isFunction(@className)
-      console.log "Merging Classes:", @className
       classNames.push @className().split(" ")
     else if @className
-      console.log "Merging Classes:", @className
       classNames.push @className.split(" ")
 
     # Flatten the Array
     classNames = _.flatten(classNames)
 
+    # Compact the Array to remove any empty values
+    classNames = _.compact(classNames)
+
     # Remove any duplicate class names
     classNames = _.unique(classNames)
 
-    # Convert the class names array and override the @className property
-    @className = classNames.join(" ")
+    # Convert the class names array to a string
+    classNames.join(" ")
