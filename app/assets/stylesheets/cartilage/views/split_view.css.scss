@@ -14,8 +14,8 @@
   right: 0;
   bottom: 0;
 
-  > .first,
-  > .second
+  > .first-view,
+  > .second-view
   {
     position: absolute;
     top: 0;
@@ -28,12 +28,12 @@
 
   &.horizontal
   {
-    .first
+    .first-view
     {
       height: 50%;
     }
 
-    .second
+    .second-view
     {
       top: 50%;
     }
@@ -41,12 +41,12 @@
 
   &.vertical
   {
-    .first
+    .first-view
     {
       width: 50%;
     }
 
-    .second
+    .second-view
     {
       left: 50%;
     }

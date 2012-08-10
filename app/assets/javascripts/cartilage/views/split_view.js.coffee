@@ -7,8 +7,6 @@
 
 class window.Cartilage.Views.SplitView extends Cartilage.View
 
-  className: "split-view"
-
   #
   # The first view in split view. This is the view on the left when the
   # orientation is set to vertical or the view on the top when set to
@@ -39,22 +37,20 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     @firstView     = options["firstView"]
     @secondView    = options["secondView"]
     @orientation   = options["orientation"] || "vertical"
-    @firstElement  = @make("div", { class: "first" })
-    @secondElement = @make("div", { class: "second" })
+    @firstElement  = @make("div", { class: "first-view" })
+    @secondElement = @make("div", { class: "second-view" })
 
     # Observe for window resize events and re-render the view when it occurs...
     ($ window).on "resize", @handleWindowResize
 
-  render: =>
-    ($ @el).empty().addClass @orientation
-
-    ($ @firstElement).html @firstView.render().el
-    ($ @secondElement).html @secondView.render().el
-
+  prepare: ->
     ($ @el).append @firstElement
     ($ @el).append @secondElement
 
-    @
+    ($ @el).addClass @orientation
+
+    @addSubview @firstView, @firstElement
+    @addSubview @secondView, @secondElement
 
   cleanup: ->
     ($ window).off "resize", @handleWindowResize
@@ -100,11 +96,11 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     @position(@_currentPosition) if @_currentPosition?
 
   setFirstView: (view) ->
-    @firstView.cleanup()
+    @firstView.removeFromSuperview() if @firstView
     @firstView = view
-    ($ @firstElement).html @firstView.render().el
+    @addSubview view, @firstElement
 
   setSecondView: (view) ->
-    @secondView.cleanup()
+    @secondView.removeFromSuperview() if @secondView
     @secondView = view
-    ($ @secondElement).html @secondView.render().el
+    @addSubview view, @firstElement
