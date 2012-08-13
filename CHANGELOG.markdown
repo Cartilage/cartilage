@@ -3,6 +3,10 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.SplitView] Added support for drag-resizing split views,
+   which is enabled by default and can be controlled via the isResizable
+   property.
+
  * [Cartilage.Views.SourceListView] Added support for specifying (optional)
    header and footer views.
 
