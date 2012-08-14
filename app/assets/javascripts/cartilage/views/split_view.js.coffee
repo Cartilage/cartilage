@@ -141,7 +141,7 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
   setSecondView: (view) ->
     @secondView.removeFromSuperview() if @secondView
     @secondView = view
-    @addSubview view, @firstElement
+    @addSubview view, @secondElement
 
   onMouseDown: (event) =>
     return unless @isResizable
