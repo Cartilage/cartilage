@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.ListView] Added a ListViewItem class that all items should
+   derive from and converted ListView to use the new view lifecycle methods.
+
  * [Cartilage.Views.SplitView] Added support for drag-resizing split views,
    which is enabled by default and can be controlled via the isResizable
    property.

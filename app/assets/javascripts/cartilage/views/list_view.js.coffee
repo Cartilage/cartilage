@@ -5,7 +5,6 @@
 class window.Cartilage.Views.ListView extends Cartilage.View
 
   tagName: "ul"
-  className: "list-view"
 
   events:
     "dblclick li": "open"
@@ -27,9 +26,10 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     ($ @el).attr("tabindex", 0) unless ($ @el).attr("tabindex")
 
     # Observe Collection
-    @observe(@collection, "add", @addModel)
-    @observe(@collection, "reset", @render) # TODO Don't re-render the entire view for removals
-    @observe(@collection, "remove", @render) # TODO Don't re-render the entire view for removals
+    if @collection
+      @observe(@collection, "add", @addModel)
+      @observe(@collection, "reset", @prepare) # TODO Don't re-render the entire view for removals
+      @observe(@collection, "remove", @prepare) # TODO Don't re-render the entire view for removals
 
   cleanup: ->
     @clearSelection { silent: true }
@@ -43,9 +43,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
         view.cleanup()
       ($ element).remove()
 
-    _.each @renderModels(), (element) =>
-      element.appendTo ($ @el)
-
+    _.each @renderModels(), (view) => @addSubview view
     @restoreSelection() if @selected.models.length > 0
 
   renderModels: =>
@@ -53,16 +51,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       @renderModel(model)
 
   renderModel: (model) =>
-    itemElement = ($ @make("li"))
-    itemElement.attr "tabindex", ($ @el).attr("tabindex")
-    itemElement.data "model", model
-    if @itemView?
-      itemView = new @itemView { model: model }
-      itemElement.html itemView.render().el
-      itemElement.data "view", itemView
-    else
-      itemElement.html model.constructor.name
-    itemElement
+    new @itemView { model: model } if @itemView?
 
   addModel: (model) =>
     index   = _.indexOf(@collection.models, model) + 1
@@ -88,7 +77,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     @selected.add model
     ($ element).addClass "selected"
-    ($ element).focus() unless ($ element).is(":focus")
+    # ($ element).focus() unless ($ element).is(":focus")
     @focusedElement = ($ element)
     @trigger "select", @selected
 
