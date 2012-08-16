@@ -7,7 +7,7 @@
 
 class window.Cartilage.Views.ModalView extends Cartilage.View
 
-  className: "modal-view modal fade"
+  className: "modal fade"
 
   render: ->
     ($ @el).html @template { model: @model }

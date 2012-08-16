@@ -15,8 +15,6 @@
 
 class window.Cartilage.Views.ImageView extends Cartilage.View
 
-  className: "image-view"
-
   #
   # The URL to the image.
   #

@@ -6,8 +6,6 @@
 
 class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
 
-  className: "loading-indicator-view"
-
   #
   # The canvas element where the loading indicator is drawn.
   #

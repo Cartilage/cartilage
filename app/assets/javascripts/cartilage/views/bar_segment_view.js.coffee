@@ -5,7 +5,6 @@
 class window.Cartilage.Views.BarSegmentView extends Cartilage.View
 
   tagName: "li"
-  className: "bar-segment-view"
 
   #
   # The BarView instance that this segment belongs to.

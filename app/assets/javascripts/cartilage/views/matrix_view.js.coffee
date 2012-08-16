@@ -4,8 +4,6 @@
 
 class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
 
-  className: "list-view matrix-view"
-
   events: _.extend {
     "mouseup": "onMouseUp",
     "mousemove": "onMouseMove"

@@ -5,7 +5,6 @@
 class window.Cartilage.Views.BarView extends Cartilage.View
 
   tagName: "ul"
-  className: "bar-view"
 
   #
   # The segments of the bar view.

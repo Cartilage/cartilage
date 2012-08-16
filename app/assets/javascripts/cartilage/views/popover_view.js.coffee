@@ -4,8 +4,6 @@
 
 class window.Cartilage.Views.PopoverView extends Cartilage.View
 
-  className: "popover-view"
-
   #
   # Aphid.UI.PopoverView#attachedView -> Aphid.UI.View | false
   #

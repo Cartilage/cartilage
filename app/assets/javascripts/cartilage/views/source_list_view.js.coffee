@@ -4,8 +4,6 @@
 
 class window.Cartilage.Views.SourceListView extends Cartilage.View
 
-  className: "source-list-view"
-
   #
   # An optional header view...
   #
