@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.ListView] Implemented allowsSelection option for enabling
+   or disabling list view selection (which is enabled by default).
+
  * [Cartilage.Views.ListView] Added a ListViewItem class that all items should
    derive from and converted ListView to use the new view lifecycle methods.
 

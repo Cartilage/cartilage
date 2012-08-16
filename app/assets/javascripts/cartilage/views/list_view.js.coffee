@@ -15,10 +15,13 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   initialize: (options = {}) ->
 
     # Apply options
-    @allowsRemove = options["allowsRemove"] || (@allowsRemove ?= false)
-    @allowsDeselection = options["allowsDeselection"] || (@allowsDeselection ?= true)
-    @allowsMultipleSelection = options["allowsMultipleSelection"] || (@allowsMultipleSelection ?= true)
-    @itemView = options["itemView"]
+    @allowsRemove            = unless _.isUndefined(options["allowsRemove"]) then options["allowsRemove"] else @allowsRemove ?= true
+    @allowsSelection         = unless _.isUndefined(options["allowsSelection"]) then options["allowsRemove"] else @allowsSelection ?= true
+    @allowsDeselection       = unless _.isUndefined(options["allowsDeselection"]) then options["allowsDeselection"] else @allowsDeselection ?= true
+    @allowsMultipleSelection = unless _.isUndefined(options["allowsMultipleSelection"]) then options["allowsMultipleSelection"] else @allowsMultipleSelection ?= true
+    @itemView                = options["itemView"]
+
+    # Defaults
     @selected = new Backbone.Collection
 
     # Set a tab index on the element, if necessary, to enable focus support
@@ -36,7 +39,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     super()
 
   prepare: ->
-
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
       if view = ($ element).data("view")
@@ -66,6 +68,8 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # false if no action was performed.
   #
   select: (e) =>
+    return unless @allowsSelection
+
     element = unless _.isUndefined(e.target) then e.target else e
     model = ($ element).data("model")
 
@@ -84,7 +88,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   selectAnother: (e) =>
     # If multiple selection is not allowed, simply select the requested item
     # and return instead of adding it to the selection.
-    unless @allowsMultipleSelection
+    unless @allowsSelection and @allowsMultipleSelection
       @select(e)
       return
 
@@ -116,7 +120,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # Selects all elements in the list.
   #
   selectAll: ->
-    return unless @allowsMultipleSelection
+    return unless @allowsSelection and @allowsMultipleSelection
     elements = ($ @el).find "li:not(.selected)"
     _.each elements, @selectAnother
 
