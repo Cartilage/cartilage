@@ -19,6 +19,9 @@ class window.Cartilage.Application
         href = $(this).attr("href")
         protocol = this.protocol + "//"
 
+        # Ignore anchors without hrefs.
+        return unless href
+
         # Ensure that the link element does not define data-passthrough="true",
         # which denotes that the link should be passed through to the backend
         # application.
