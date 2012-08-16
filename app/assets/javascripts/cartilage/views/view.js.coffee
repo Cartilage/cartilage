@@ -10,9 +10,11 @@ class window.Cartilage.View extends Backbone.View
 
   template: (options) ->
     try
-      JST[_.underscore(@constructor.name)](options)
+      if JST[_.underscore(@constructor.name)]
+        JST[_.underscore(@constructor.name)](options)
     catch error
-      console.log "No template!"
+      if console
+        console.warn "Template error in #{_.underscore(@constructor.name)}.jst.ejs: \"#{error.message}\"", error
 
   render: ->
 
@@ -22,12 +24,12 @@ class window.Cartilage.View extends Backbone.View
 
     # Automatically assign collections and models to the template, as their
     # respective class names.
-    templateVariables = {}
+    @templateVariables ?= {}
     if @collection
-      templateVariables[_.camelize(@collection.constructor.name)] = @collection
+      @templateVariables[_.camelize(@collection.constructor.name)] = @collection
     if @model
-      templateVariables[_.camelize(@model.constructor.name)] = @model
-    ($ @el).html @template(templateVariables)
+      @templateVariables[_.camelize(@model.constructor.name)] = @model
+    ($ @el).html @template(@templateVariables)
 
     @
 
