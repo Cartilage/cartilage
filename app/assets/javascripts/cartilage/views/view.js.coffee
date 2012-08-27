@@ -49,6 +49,9 @@ class window.Cartilage.View extends Backbone.View
 
   addSubview: (view, container = @el, animated = false) ->
 
+    # Don't allow nil objects to be passed...
+    return unless view
+
     # Maintain a reference to the added subview for later cleanup, or other
     # operations
     @subviews.push(view)
