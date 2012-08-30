@@ -16,6 +16,10 @@ class window.Cartilage.View extends Backbone.View
       if console
         console.warn "Template error in #{_.underscore(@constructor.name)}.jst.ejs: \"#{error.message}\"", error
 
+  prepare: ->
+
+    # Empty implementation
+
   render: ->
 
     # Determine CSS class names from the view class hierarchy and any other

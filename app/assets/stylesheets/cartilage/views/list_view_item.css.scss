@@ -1,0 +1,22 @@
+
+// Cartilage Support ---------------------------------------------------------
+
+@import "cartilage/mixins";
+@import "cartilage/variables";
+
+// List View Item ------------------------------------------------------------
+
+.list-view-item
+{
+
+  &.drop-before
+  {
+    border-top: 2px solid black;
+  }
+
+  &.drop-after
+  {
+    border-bottom: 2px solid black;
+  }
+
+}

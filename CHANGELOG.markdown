@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.ListView] List views can now be reordered by dragging
+   items around.
+
  * [Cartilage.Views.ListView] Implemented allowsSelection option for enabling
    or disabling list view selection (which is enabled by default).
 

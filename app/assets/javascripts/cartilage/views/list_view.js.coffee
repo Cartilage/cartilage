@@ -11,6 +11,10 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     "focus li": "onFocus"
     "keydown": "onKeyDown"
     "mousedown": "onMouseDown"
+    "dragover": "onDragOver"
+    "drop": "onDrop"
+
+  @draggedItem: false
 
   initialize: (options = {}) ->
 
@@ -19,6 +23,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @allowsSelection         = unless _.isUndefined(options["allowsSelection"]) then options["allowsRemove"] else @allowsSelection ?= true
     @allowsDeselection       = unless _.isUndefined(options["allowsDeselection"]) then options["allowsDeselection"] else @allowsDeselection ?= true
     @allowsMultipleSelection = unless _.isUndefined(options["allowsMultipleSelection"]) then options["allowsMultipleSelection"] else @allowsMultipleSelection ?= true
+    @allowsDragToReorder     = unless _.isUndefined(options["allowsDragToReorder"]) then options["allowsDragToReorder"] else @allowsDragToReorder ?= true
     @itemView                = options["itemView"]
 
     # Defaults
@@ -53,7 +58,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       @renderModel(model)
 
   renderModel: (model) =>
-    new @itemView { model: model } if @itemView?
+    new @itemView { model: model, listView: @ } if @itemView?
 
   addModel: (model) =>
     index   = _.indexOf(@collection.models, model) + 1
@@ -246,6 +251,35 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     # Space Key
     return event.preventDefault() if keyCode == 32
+
+  onDragOver: (event) =>
+    allowed = true
+
+    # Ensure that the list item belongs to us...
+    unless "application/x-list-view-item-id" in event.dataTransfer.types
+      # console.log "Item not of the right type"
+      allowed = false
+
+    unless Cartilage.Views.ListView.draggedItem.model in @collection.models
+      # console.log "Item not in listView collection", @collection.models, Cartilage.Views.ListView.draggedItem
+      allowed = false
+
+    event.preventDefault() if allowed
+
+  onDrop: (event) =>
+    draggedElementId = event.dataTransfer.getData("application/x-list-view-item-id")
+
+    element = ($ event.target).parents("li.list-view-item")[0] || ($ event.target)
+
+    if element[0] and element[0].tagName is "LI"
+      if event.originalEvent.offsetY < (($ element).height() / 2)
+        ($ "##{draggedElementId}").detach().insertBefore(($ element))
+      else
+        ($ "##{draggedElementId}").detach().insertAfter(($ element))
+      ($ element).removeClass("drop-before").removeClass("drop-after")
+
+    # Clear the global draggedItem reference
+    Cartilage.Views.ListView.draggedItem = false
 
   #
   # Moves the selection to the item visually above the selected item. If there

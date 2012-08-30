@@ -13,3 +13,8 @@
 #= require_tree "./cartilage/collections"
 #= require_tree "./cartilage/views"
 #
+#= require_self
+#
+
+$ ->
+  jQuery.event.props.push("dataTransfer");
