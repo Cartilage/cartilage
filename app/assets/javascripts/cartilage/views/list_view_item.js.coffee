@@ -41,20 +41,18 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
     ($ @el).removeClass("drop-before").removeClass("drop-after")
 
   onDragStart: (event) =>
-    event.dataTransfer.setData("application/x-list-view-item-id", ($ @el).attr("id"))
-    # console.log "I belong to listView:", @listView
+    event.originalEvent.dataTransfer.setData("application/x-list-view-item-id", ($ @el).attr("id"))
     Cartilage.Views.ListView.draggedItem = @
 
   onDragOver: (event) =>
     allowed = true
 
-    # Ensure that the list item belongs to us...
-    unless "application/x-list-view-item-id" in event.dataTransfer.types
-      # console.log "Item not of the right type"
+    # Ensure that the dragged item is a list view item...
+    unless "application/x-list-view-item-id" in event.originalEvent.dataTransfer.types
       allowed = false
 
+    # Ensure that the dragged item belongs to us...
     unless Cartilage.Views.ListView.draggedItem.model in @listView.collection.models
-      # console.log "Item not in listView collection", @collection.models, Cartilage.Views.ListView.draggedItem
       allowed = false
 
     if allowed

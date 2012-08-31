@@ -15,6 +15,3 @@
 #
 #= require_self
 #
-
-$ ->
-  jQuery.event.props.push("dataTransfer");

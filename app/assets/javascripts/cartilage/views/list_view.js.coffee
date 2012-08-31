@@ -255,28 +255,30 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   onDragOver: (event) =>
     allowed = true
 
-    # Ensure that the list item belongs to us...
-    unless "application/x-list-view-item-id" in event.dataTransfer.types
-      # console.log "Item not of the right type"
+    # Ensure that the dragged item is a list view item...
+    unless "application/x-list-view-item-id" in event.originalEvent.dataTransfer.types
       allowed = false
 
+    # Ensure that the dragged item belongs to us...
     unless Cartilage.Views.ListView.draggedItem.model in @collection.models
-      # console.log "Item not in listView collection", @collection.models, Cartilage.Views.ListView.draggedItem
       allowed = false
 
     event.preventDefault() if allowed
 
   onDrop: (event) =>
-    draggedElementId = event.dataTransfer.getData("application/x-list-view-item-id")
+    draggedElementId = event.originalEvent.dataTransfer.getData("application/x-list-view-item-id")
+    draggedElement   = ($ "##{draggedElementId}")
+    droppedElement   = ($ event.target).parents("li.list-view-item")[0] || ($ event.target)[0]
 
-    element = ($ event.target).parents("li.list-view-item")[0] || ($ event.target)
+    # Ensure that the dragged element is not the same as the dropped element
+    unless $(draggedElement)[0] is $(droppedElement)[0]
+      if droppedElement and droppedElement.tagName is "LI"
+        if event.originalEvent.offsetY < (($ droppedElement).height() / 2)
+          ($ draggedElement).detach().insertBefore(droppedElement)
+        else
+          ($ draggedElement).detach().insertAfter(droppedElement)
 
-    if element[0] and element[0].tagName is "LI"
-      if event.originalEvent.offsetY < (($ element).height() / 2)
-        ($ "##{draggedElementId}").detach().insertBefore(($ element))
-      else
-        ($ "##{draggedElementId}").detach().insertAfter(($ element))
-      ($ element).removeClass("drop-before").removeClass("drop-after")
+    ($ droppedElement).removeClass("drop-before").removeClass("drop-after")
 
     # Clear the global draggedItem reference
     Cartilage.Views.ListView.draggedItem = false
