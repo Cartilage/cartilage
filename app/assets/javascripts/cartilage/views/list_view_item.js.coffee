@@ -7,7 +7,6 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
     "list-view-item-#{Math.floor(Math.random() * 1000000000)}"
 
   events:
-    "dragenter": "onDragEnter"
     "dragover": "onDragOver"
     "dragleave": "onDragLeave"
     "dragstart": "onDragStart"
@@ -26,25 +25,23 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
 
   render: ->
     ($ @el).attr "tabindex", 0
-    ($ @el).attr "draggable", true
     ($ @el).data "model", @model
     ($ @el).data "view", @
+    if @listView and @listView.allowsDragToReorder
+      ($ @el).attr "draggable", true
     super()
 
-  onDragEnter: (event) =>
-    # TODO check the parent listView for drag support
-    # console.log "listItem.dragEnter"
-    # return if @dragOver
-    #   @dragOver = true
-
   onDragLeave: (event) =>
+    return unless @listView.allowsDragToReorder
     ($ @el).removeClass("drop-before").removeClass("drop-after")
 
   onDragStart: (event) =>
+    return unless @listView.allowsDragToReorder
     event.originalEvent.dataTransfer.setData("application/x-list-view-item-id", ($ @el).attr("id"))
     Cartilage.Views.ListView.draggedItem = @
 
   onDragOver: (event) =>
+    return unless @listView.allowsDragToReorder
     allowed = true
 
     # Ensure that the dragged item is a list view item...

@@ -3,6 +3,9 @@
 
 ## Version 0.9.5 — Not Yet Released
 
+ * [Cartilage.Views.ListView] Drag to reorder is now disabled by default, but
+   can be enabled with the allowsDragToReorder during initialization.
+
  * [Cartilage.Views.ListView] List views can now be reordered by dragging
    items around.
 

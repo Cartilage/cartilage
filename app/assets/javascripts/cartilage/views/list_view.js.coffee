@@ -23,7 +23,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @allowsSelection         = unless _.isUndefined(options["allowsSelection"]) then options["allowsRemove"] else @allowsSelection ?= true
     @allowsDeselection       = unless _.isUndefined(options["allowsDeselection"]) then options["allowsDeselection"] else @allowsDeselection ?= true
     @allowsMultipleSelection = unless _.isUndefined(options["allowsMultipleSelection"]) then options["allowsMultipleSelection"] else @allowsMultipleSelection ?= true
-    @allowsDragToReorder     = unless _.isUndefined(options["allowsDragToReorder"]) then options["allowsDragToReorder"] else @allowsDragToReorder ?= true
+    @allowsDragToReorder     = unless _.isUndefined(options["allowsDragToReorder"]) then options["allowsDragToReorder"] else @allowsDragToReorder ?= false
     @itemView                = options["itemView"]
 
     # Defaults
@@ -253,6 +253,8 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     return event.preventDefault() if keyCode == 32
 
   onDragOver: (event) =>
+    return unless @allowsDragToReorder
+
     allowed = true
 
     # Ensure that the dragged item is a list view item...
@@ -266,6 +268,8 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     event.preventDefault() if allowed
 
   onDrop: (event) =>
+    return unless @allowsDragToReorder
+
     draggedElementId = event.originalEvent.dataTransfer.getData("application/x-list-view-item-id")
     draggedElement   = ($ "##{draggedElementId}")
     droppedElement   = ($ event.target).parents("li.list-view-item")[0] || ($ event.target)[0]
