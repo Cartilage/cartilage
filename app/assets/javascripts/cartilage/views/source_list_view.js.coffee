@@ -32,8 +32,6 @@ class window.Cartilage.Views.SourceListView extends Cartilage.Views.ListView
   #
   @property "itemView", default: Cartilage.Views.SourceListViewItem
 
-  # Internal Properties ------------------------------------------------------
-
   # --------------------------------------------------------------------------
 
   initialize: (options = {}) ->

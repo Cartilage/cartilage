@@ -59,8 +59,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   @property "items", access: READONLY, default: new Backbone.Collection
 
-  # Internal Properties ------------------------------------------------------
-
   # --------------------------------------------------------------------------
 
   @draggedItem: undefined
@@ -75,6 +73,9 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
   initialize: (options = {}) ->
 
+    # Initialize the View
+    super(options)
+
     # Initialize List View Items Container
     ($ @el).append @_listViewItemsContainer = @make "ul",
       class: "list-view-items-container"
@@ -82,23 +83,25 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     # Observe Collection
     @observe @collection, "add", @addModel
-    @observe @collection, "reset", @prepare # TODO Don't re-render the entire view for removals
+    @observe @collection, "reset", @update # TODO Don't re-render the entire view for removals
     @observe @collection, "remove", @prepare # TODO Don't re-render the entire view for removals
 
-    super(options)
-
-  cleanup: ->
-    @clearSelection { silent: true }
-    super()
-
   prepare: ->
+
+    # Prepare the View
     super()
+
+    # Update the View
+    @update()
+
+  update: ->
 
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
       if view = ($ element).data("view")
-        view.cleanup()
-      ($ element).remove()
+        view.removeFromSuperview()
+      else
+        ($ element).remove()
 
     _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
     @restoreSelection() if @selected.models.length > 0
