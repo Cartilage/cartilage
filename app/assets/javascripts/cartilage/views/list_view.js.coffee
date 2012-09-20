@@ -1,56 +1,106 @@
 #
 # List View
 #
+# Manages a list of items as an unordered list (<ul/>), providing rich
+# interaction support (selection, keyboard navigation, removal, reordering,
+# etc).
+#
+
+#= require cartilage/views/list_view_item
 
 class window.Cartilage.Views.ListView extends Cartilage.View
 
-  tagName: "ul"
+  # Properties ---------------------------------------------------------------
+
+  #
+  # Whether or not items may be removed from the list view through keyboard
+  # actions (i.e. pressing delete while the item is selected).
+  #
+  @property "allowsRemove", default: no
+
+  #
+  # Whether or not selections of list view items can be made in the list
+  # view.
+  #
+  @property "allowsSelection", default: yes
+
+  #
+  # Whether or not the list view may clear its selection through user
+  # actions, such as clicking on the empty areas of a list view.
+  #
+  @property "allowsDeselection", default: yes
+
+  #
+  # Whether or not multiple list view items may be selected at once.
+  #
+  @property "allowsMultipleSelection", default: no
+
+  #
+  # Whether or not the user can drag list view items around to reorder them.
+  #
+  @property "allowsDragToReorder", default: no
+
+  #
+  # The default class for all list view items that are not explicitly
+  # initialized.
+  #
+  @property "itemView", default: Cartilage.Views.ListViewItem
+
+  #
+  # A collection containing the models of the currently selected items.
+  #
+  # TODO Rename to selectedModels
+  # TODO Add selectedItems
+  @property "selected", access: READONLY, default: new Backbone.Collection
+
+  #
+  # A collection containing all of the list view items managed by the list
+  # view.
+  #
+  @property "items", access: READONLY, default: new Backbone.Collection
+
+  # Internal Properties ------------------------------------------------------
+
+  # --------------------------------------------------------------------------
+
+  @draggedItem: undefined
 
   events:
-    "dblclick li": "open"
-    "focus li": "onFocus"
-    "keydown": "onKeyDown"
-    "mousedown": "onMouseDown"
-    "dragover": "onDragOver"
-    "drop": "onDrop"
-
-  @draggedItem: false
+    "dblclick > ul > li": "open"
+    "focus > ul > li": "onFocus"
+    "keydown > ul": "onKeyDown"
+    "mousedown > ul": "onMouseDown"
+    "dragover > ul": "onDragOver"
+    "drop > ul": "onDrop"
 
   initialize: (options = {}) ->
 
-    # Apply options
-    @allowsRemove            = unless _.isUndefined(options["allowsRemove"]) then options["allowsRemove"] else @allowsRemove ?= true
-    @allowsSelection         = unless _.isUndefined(options["allowsSelection"]) then options["allowsRemove"] else @allowsSelection ?= true
-    @allowsDeselection       = unless _.isUndefined(options["allowsDeselection"]) then options["allowsDeselection"] else @allowsDeselection ?= true
-    @allowsMultipleSelection = unless _.isUndefined(options["allowsMultipleSelection"]) then options["allowsMultipleSelection"] else @allowsMultipleSelection ?= true
-    @allowsDragToReorder     = unless _.isUndefined(options["allowsDragToReorder"]) then options["allowsDragToReorder"] else @allowsDragToReorder ?= false
-    @itemView                = options["itemView"]
-
-    # Defaults
-    @selected = new Backbone.Collection
-
-    # Set a tab index on the element, if necessary, to enable focus support
-    # for the list view and its items
-    ($ @el).attr("tabindex", 0) unless ($ @el).attr("tabindex")
+    # Initialize List View Items Container
+    ($ @el).append @_listViewItemsContainer = @make "ul",
+      class: "list-view-items-container"
+      tabindex: 0
 
     # Observe Collection
-    if @collection
-      @observe(@collection, "add", @addModel)
-      @observe(@collection, "reset", @prepare) # TODO Don't re-render the entire view for removals
-      @observe(@collection, "remove", @prepare) # TODO Don't re-render the entire view for removals
+    @observe @collection, "add", @addModel
+    @observe @collection, "reset", @prepare # TODO Don't re-render the entire view for removals
+    @observe @collection, "remove", @prepare # TODO Don't re-render the entire view for removals
+
+    super(options)
 
   cleanup: ->
     @clearSelection { silent: true }
     super()
 
   prepare: ->
+    super()
+
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
       if view = ($ element).data("view")
         view.cleanup()
       ($ element).remove()
 
-    _.each @renderModels(), (view) => @addSubview view
+    _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
     @restoreSelection() if @selected.models.length > 0
 
   renderModels: =>
@@ -61,12 +111,19 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     new @itemView { model: model, listView: @ } if @itemView?
 
   addModel: (model) =>
-    index   = _.indexOf(@collection.models, model) + 1
-    element = (@$ "li:nth-of-type(#{index})")
-    if element.length == 1
-      @renderModel(model).insertBefore(element)
-    else
-      @renderModel(model).appendTo @el
+    @collection.add model, { silent: true }
+    @addSubview @renderModel(model)
+
+  #
+  # Adds an already instantiated list view item (must derive from
+  # Cartilage.Views.ListViewItem) to the list view. The list view item's
+  # model will automatically be added to the list view's collection, but
+  # will not trigger any notifications that it was added.
+  #
+  addItem: (item) =>
+    # TODO Ensure that the item derives from ListViewItem
+    @addSubview item
+    @collection.add item.model, { silent: true }
 
   #
   # Selects the specified list item. Returns true if the item was selected or

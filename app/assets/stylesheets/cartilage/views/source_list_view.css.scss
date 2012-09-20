@@ -8,12 +8,6 @@
 
 .source-list-view
 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
   background: $sourceListBackground;
   border-right: 1px solid rgba(0, 0, 0, 0.45);
 
@@ -27,6 +21,19 @@
     right: 0;
 
     z-index: 1;
+
+    // List Views are absolutely positioned to take up all available space,
+    // by default. When in a header view, we want to force it to relative
+    // position so that we can calculate its height.
+    > .list-view
+    {
+      position: relative;
+
+      > .list-view-items-container
+      {
+        position: relative;
+      }
+    }
 
     &:after
     {
@@ -43,25 +50,6 @@
       background-image: -ms-radial-gradient(center top, farthest-side, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
       background-image: -o-radial-gradient(center top, farthest-side, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
       background-image: radial-gradient(farthest-side at center top, rgba(0, 0, 0, 0.075) 38%, rgba(0, 0, 0, 0) 100%);
-    }
-  }
-
-  > .list-view
-  {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    overflow: auto;
-
-    li
-    {
-      &.disabled
-      {
-        color: rgba(0, 0, 0, 0.4)
-      }
     }
   }
 

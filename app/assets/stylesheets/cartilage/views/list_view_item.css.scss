@@ -8,6 +8,31 @@
 
 .list-view-item
 {
+  margin: 0;
+  padding: 6px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  @include box-sizing(border-box);
+
+  &:nth-of-type(even)
+  {
+    background-color: rgba(0, 0, 0, 0.025);
+  }
+
+  &:focus
+  {
+    outline: none;
+  }
+
+  &.disabled
+  {
+    color: rgba(0, 0, 0, 0.4)
+  }
+
+  &.selected
+  {
+    background-color: #73adff;
+  }
 
   &.drop-before
   {

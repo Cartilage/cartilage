@@ -6,76 +6,67 @@
 
 class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
 
-  #
-  # The canvas element where the loading indicator is drawn.
-  #
-  canvasElement: null
-
-  #
-  # The canvas context for the loading indicator.
-  #
-  canvasContext: null
+  # Properties ---------------------------------------------------------------
 
   #
   # The number of bars that should be drawn in the spinner. Defaults to 10.
   #
-  barCount: 10
+  @property "barCount", default: 10
 
   #
   # The width and height of the bars. Defaults to `{ width: 4, height: 12 }`.
   #
-  barSize:
-    width: 4
-    height: 12
+  @property "barSize", default: { width: 4, height: 12 }
 
   #
   # The color of the bars.
   #
-  barColor:
-    red: 85
-    green: 85
-    blue: 85
+  @property "barColor", default: { red: 85, green: 85, blue: 85 }
 
   #
   # The x and y coordinates for the center point of the loading indicator
   # within the canvas. This should typically be the canvas width and height
   # divided by 2.
   #
-  centerPosition:
-    x: 48
-    y: 48
+  @property "centerPosition", default: { x: 48, y: 48 }
 
   #
   # The inner radius of the spinning indicator. Each bar will be drawn from
   # this point, outward.
   #
-  innerRadius: 10
+  @property "innerRadius", default: 10
 
   #
   # Whether or not the loading indicator is currently animating.
   #
-  isAnimating: false
+  @property "isAnimating", access: READONLY, default: no
 
-  _currentOffset: 0
+  # Internal Properties ------------------------------------------------------
+
+  # --------------------------------------------------------------------------
 
   initialize: (options = {}) ->
-    # TODO Set options...
+
+    # Initialize the View
+    super(options)
 
     # Initialize Canvas Element
-    @canvasElement = ($ "<canvas width='96' height='96'/>")[0]
-
-    # If ExplorerCanvas is present, initialize the canvas element with it for
-    # compatibility with Internet Explorer
-    if typeof G_vmlCanvasManager != "undefined"
-      G_vmlCanvasManager.initElement(@canvasElement)
+    ($ @el).html @_canvasElement = @make "canvas",
+      width: 96,
+      height: 96
 
     # Initialize Canvas Context
-    @canvasContext = @canvasElement.getContext("2d")
+    @_canvasContext = @_canvasElement.getContext("2d")
 
+    # Observe for view events so that we can start or stop the indicator
+    # when appropriate.
     @observe @, "willPresent", @start
     @observe @, "removed", @stop
 
   prepare: ->
+
+    # Prepare the View
+    super()
 
     # Determine the bar color from CSS, if present
     if color = ($ @el).css("color")
@@ -85,16 +76,12 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
       blue   = parseInt(colors[2], 10)
       @barColor = { red: red, green: green, blue: blue }
 
-  render: ->
-    ($ @el).html @canvasElement
-    @
-
   #
   # Starts the loading indicator animation.
   #
   start: =>
     return if @isAnimating
-    @isAnimating = true
+    @_isAnimating = true
     @_animateNextFrame()
     @isAnimating
 
@@ -103,8 +90,8 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
   #
   stop: ->
     return unless @isAnimating
-    @_clearFrame(@canvasContext)
-    @isAnimating = false
+    @_clearFrame(@_canvasContext)
+    @_isAnimating = false
 
   remove: =>
     @stop() and super()
@@ -125,7 +112,7 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
       context.translate(pos.x, pos.y)
       context.rotate(pos.angle)
 
-      @_drawBlock(@canvasContext, i)
+      @_drawBlock(@_canvasContext, i)
 
       context.restore()
 
@@ -137,12 +124,12 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
 
   _animateNextFrame: =>
     return unless @isAnimating
-    @_currentOffset = (@_currentOffset + 1) % @barCount
-    @_draw(@canvasContext, @_currentOffset)
+    @_currentOffset = if _.isUndefined(@_currentOffset) then 1 else (@_currentOffset + 1) % @barCount
+    @_draw(@_canvasContext, @_currentOffset)
     _.delay @_animateNextFrame, 50
 
   _clearFrame: (context) ->
-    context.clearRect(0, 0, @canvasElement.clientWidth, @canvasElement.clientHeight)
+    context.clearRect(0, 0, @_canvasElement.clientWidth, @_canvasElement.clientHeight)
 
   _calculateAngle: (barNumber) ->
     2 * barNumber * Math.PI / @barCount
@@ -154,7 +141,6 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
       x: (@innerRadius * Math.sin(-angle)),
       angle: angle
     }
-
 
   _makeRGBA: ->
     "rgba(#{arguments[0]}, #{arguments[1]}, #{arguments[2]}, #{arguments[3]})"

@@ -4,43 +4,51 @@
 
 class window.Cartilage.Views.PopoverView extends Cartilage.View
 
-  #
-  # Aphid.UI.PopoverView#attachedView -> Aphid.UI.View | false
-  #
-  attachedView: false
+  # Properties ---------------------------------------------------------------
 
   #
-  # Aphid.UI.PopoverView#contentView -> Aphid.UI.View
+  # The view that the popover instance is attached to. This is used for
+  # calculating where the popover should be displayed.
   #
-  contentElement: false
+  @property "attachedView"
 
   #
-  # Aphid.UI.PopoverView#position -> String
+  # Where the popover should be positioned relative to the attached view.
+  # Valid options are top, bottom, left and right.
   #
-  position: false
+  @property "position", default: "top"
 
-  #
-  # Aphid.UI.PopoverView#triangleElement -> Element
-  #
-  triangleElement: false
+  # Internal Properties ------------------------------------------------------
+
+  # TODO Make this @contentView, an actual read-only view
+  _contentElement: null
+  _triangleElement: null
 
   # --------------------------------------------------------------------------
 
   initialize: (options = {}) ->
-    #     this.attachedView = false;
-    #     this.position = "top";
 
-    @triangleElement = ($ "<div class='triangle'/>")
-    ($ @el).append @triangleElement
+    # Initialize the View
+    super(options)
 
-    @contentElement = ($ "<div class='content-view'/>")
-    ($ @el).append @contentElement
+    # Initialize the Triange Element
+    ($ @el).append @_triangleElement = @make "div",
+      class: "triangle"
 
-  render: ->
-    @calculatePosition()
-    @
+    # Initialize the Content Element
+    # TODO Should be an instance of View...
+    ($ @el).append @_contentElement = @make "div",
+      class: "content-view"
 
-  calculatePosition: () ->
+  prepare: ->
+
+    # Prepare the View
+    super()
+
+    # Calculate Position
+    @_calculatePosition()
+
+  _calculatePosition: () ->
     return unless @attachedElement
 
     @resizeToFitContents()
@@ -116,20 +124,20 @@ class window.Cartilage.Views.PopoverView extends Cartilage.View
     @attachedElement = element
     @position = (position ?= "top")
     ($ @el).css { visibility: "hidden" }
-    ($ @contentElement).children().css("display", "block")
+    ($ @_contentElement).children().css("display", "block")
     ($ document.body).append @render().el
-    @calculatePosition()
+    @_calculatePosition()
     ($ @el).hide().css { visibility: "visible" }
     ($ @el).fadeIn()
 
     ($ document).unbind("click", @handleDocumentClickEvent).click @handleDocumentClickEvent
 
   resizeToFitContents: ->
-    element = ($ @contentElement).children()[0]
+    element = ($ @_contentElement).children()[0]
     width = ($ element).outerWidth()
     height = ($ element).outerHeight()
 
-    ($ @contentElement).css {
+    ($ @_contentElement).css {
       width: "#{width}px",
       height: "#{height}px"
     }

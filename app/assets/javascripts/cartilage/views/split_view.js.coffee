@@ -7,37 +7,43 @@
 
 class window.Cartilage.Views.SplitView extends Cartilage.View
 
-  events:
-    "mousedown .drag-handle": "onMouseDown"
-    "mouseup": "onMouseUp",
-    "mousemove": "onMouseMove"
+  # Properties ---------------------------------------------------------------
 
   #
   # The first view in split view. This is the view on the left when the
   # orientation is set to vertical or the view on the top when set to
   # horizontal.
   #
-  firstView: null
-  firstElement: null
+  @property "firstView", default: null
 
   #
   # The second view in split view. This is the view on the right when the
   # orientation is set to vertical or the view on the bottom when set to
   # horizontal.
   #
-  secondView: null
-  secondElement: null
+  @property "secondView", default: null
 
   #
   # The orientation of the split view, either "horizontal" or "vertical".
   # Defaults to "vertical".
   #
-  orientation: null
+  @property "orientation", default: "vertical"
 
   #
   # Whether or not the split view is resizable. Defaults to true.
   #
-  isResizable: null
+  @property "isResizable", default: yes
+
+  # Internal Properties ------------------------------------------------------
+
+  # Events -------------------------------------------------------------------
+
+  events:
+    "mousedown .drag-handle": "onMouseDown"
+    "mouseup": "onMouseUp",
+    "mousemove": "onMouseMove"
+
+  # --------------------------------------------------------------------------
 
   #
   # Initializes a new instance of the split view. Pass firstView and
@@ -45,33 +51,33 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
   #
   initialize: (options = {}) ->
 
-    # Options
-    @firstView     = options["firstView"]
-    @secondView    = options["secondView"]
-    @orientation   = options["orientation"] || (@orientation ?= "vertical")
-    @isResizable   = unless _.isUndefined(options["isResizable"]) then options["isResizable"] else @isResizable ?= true
+    # Initialize View Containers
+    ($ @el).append @_firstViewContainer = @make "div",
+      class: "first-view"
+    ($ @el).append @_secondViewContainer = @make "div",
+      class: "second-view"
 
-    # Elements
-    @firstElement  = @make("div", { class: "first-view" })
-    @secondElement = @make("div", { class: "second-view" })
+    # Initialize Drag Handle
     if @isResizable
-      @dragElement = @make("div", { class: "drag-handle" })
+      ($ @el).append @dragElement = @make "div",
+        class: "drag-handle"
+
+    # Set Orientation
+    ($ @el).addClass @orientation
 
     # Observe for window resize events and re-render the view when it occurs...
     ($ window).on "resize", @handleWindowResize
 
+    super(options)
+
   prepare: ->
-    ($ @el).append @firstElement
-    ($ @el).append @secondElement
-    if @isResizable
-      ($ @el).append @dragElement
 
-    ($ @el).addClass @orientation
+    super()
 
-    @addSubview @firstView, @firstElement
-    @addSubview @secondView, @secondElement
+    @addSubview @firstView, @_firstViewContainer
+    @addSubview @secondView, @_secondViewContainer
 
-    @position(($ @firstElement).width())
+    @position(($ @_firstViewContainer).width())
 
   cleanup: ->
     ($ window).off "resize", @handleWindowResize
@@ -88,8 +94,8 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     return @_currentPosition unless newPosition?
 
     if @orientation is "vertical"
-      minWidth = parseInt ($ @firstElement).css("min-width")
-      maxWidth = parseInt ($ @firstElement).css("max-width")
+      minWidth = parseInt ($ @_firstViewContainer).css("min-width")
+      maxWidth = parseInt ($ @_firstViewContainer).css("max-width")
 
       if newPosition < minWidth
         newPosition = minWidth
@@ -97,19 +103,19 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
         newPosition = maxWidth
 
       if options["animated"]
-        ($ @firstElement).css { left: '' }
-        ($ @firstElement).animate { width: newPosition + 'px' }, 250
-        ($ @secondElement).css { width: '' }
-        ($ @secondElement).animate { left: newPosition + 'px' }, 250
+        ($ @_firstViewContainer).css { left: '' }
+        ($ @_firstViewContainer).animate { width: newPosition + 'px' }, 250
+        ($ @_secondViewContainer).css { width: '' }
+        ($ @_secondViewContainer).animate { left: newPosition + 'px' }, 250
       else
-        ($ @firstElement).css { width: newPosition + 'px', left: '' }
-        ($ @secondElement).css { left: newPosition + 'px', width: '' }
+        ($ @_firstViewContainer).css { width: newPosition + 'px', left: '' }
+        ($ @_secondViewContainer).css { left: newPosition + 'px', width: '' }
 
       ($ @dragElement).css("left", (newPosition - ($ @dragElement).width() / 2) + "px")
 
     else
-      minHeight = parseInt ($ @firstElement).css("min-height")
-      maxHeight = parseInt ($ @firstElement).css("max-height")
+      minHeight = parseInt ($ @_firstViewContainer).css("min-height")
+      maxHeight = parseInt ($ @_firstViewContainer).css("max-height")
 
       if newPosition < minHeight
         newPosition = minHeight
@@ -117,13 +123,13 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
         newPosition = maxHeight
 
       if options["animated"]
-        ($ @firstElement).css { bottom: '' }
-        ($ @firstElement).animate { height: newPosition + 'px' }, 250
-        ($ @secondElement).css { height: '' }
-        ($ @secondElement).animate { top: newPosition + "px" }, 250
+        ($ @_firstViewContainer).css { bottom: '' }
+        ($ @_firstViewContainer).animate { height: newPosition + 'px' }, 250
+        ($ @_secondViewContainer).css { height: '' }
+        ($ @_secondViewContainer).animate { top: newPosition + "px" }, 250
       else
-        ($ @firstElement).css { height: newPosition + 'px', bottom: '' }
-        ($ @secondElement).css { top: newPosition + "px", height: '' }
+        ($ @_firstViewContainer).css { height: newPosition + 'px', bottom: '' }
+        ($ @_secondViewContainer).css { top: newPosition + "px", height: '' }
 
       ($ @dragElement).css("top", (newPosition - ($ @dragElement).height() / 2) + "px")
 
@@ -136,12 +142,12 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
   setFirstView: (view) ->
     @firstView.removeFromSuperview() if @firstView
     @firstView = view
-    @addSubview view, @firstElement
+    @addSubview view, @_firstViewContainer
 
   setSecondView: (view) ->
     @secondView.removeFromSuperview() if @secondView
     @secondView = view
-    @addSubview view, @secondElement
+    @addSubview view, @_secondViewContainer
 
   onMouseDown: (event) =>
     return unless @isResizable

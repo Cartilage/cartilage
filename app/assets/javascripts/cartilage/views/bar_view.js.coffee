@@ -4,31 +4,37 @@
 
 class window.Cartilage.Views.BarView extends Cartilage.View
 
+  # View Configuration -------------------------------------------------------
+
   tagName: "ul"
+
+  # Properties ---------------------------------------------------------------
 
   #
   # The segments of the bar view.
   #
-  segments: null
+  @property "segments", default: new Cartilage.Collections.Segments
 
   #
   # The value of the bar view.
   #
-  value: 0
+  @property "value", default: 0
 
   #
   # The default colors for the segments that comprise the bar view.
   #
-  colors: [ '#6ba2d4', '#a765a2', '#f69062', '#8ccc64', '#c26bb4', '#e9d243' ]
+  @property "colors", default: [ '#6ba2d4', '#a765a2', '#f69062', '#8ccc64', '#c26bb4', '#e9d243' ]
 
-  initialize: ->
-    @segments ?= new Cartilage.Collections.Segments
+  # Internal Properties ------------------------------------------------------
 
-  render: ->
-    @_cumulativeWidth = 0
+  _cumulativeWidth: 0
 
-    # Clear out the previously rendered segments...
-    ($ @el).empty()
+  # --------------------------------------------------------------------------
+
+  prepare: ->
+
+    # Prepare the View
+    super()
 
     # Create segment views for each segment of the bar view.
     _.each @segments.models, (segment, index) =>
@@ -41,12 +47,9 @@ class window.Cartilage.Views.BarView extends Cartilage.View
         fillWidth: barWidth,
         color: @colors[index]
       }
+      @addSubview segmentView
 
-      ($ @el).append segmentView.render().el
-
-    @
-
-  # TODO Move this to Segment.js
+  # TODO Move this to BarSegmentView
   _percentageWidthForSegmentAtIndex: (index) =>
     segment       = @segments.models[index]
     segmentWidth  = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")
@@ -62,7 +65,7 @@ class window.Cartilage.Views.BarView extends Cartilage.View
 
     computedWidth
 
-  # TODO Move this to Segment.js
+  # TODO Move this to BarSegmentView
   _percentageWidthForBarInSegmentAtIndex: (index) ->
     segment      = @segments.models[index]
     segmentWidth = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")

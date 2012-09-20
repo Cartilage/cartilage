@@ -9,98 +9,92 @@
 .usage-bar-view
 {
   position: relative;
+  margin: 0;
+  border: 1px solid #888;
+  height: 24px;
+  overflow: hidden;
 
-  // Bar View ----------------------------------------------------------------
+  @include gradient-vertical(rgb(161, 162, 162), rgb(177, 179, 179));
+  @include border-radius(2px);
 
-  ul.bar-view
+  list-style: none;
+
+  &:after
+  {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    @include box-shadow(inset 0px 1px 4px rgba(0, 0, 0, 0.5));
+  }
+
+  // Bar Segment Views -----------------------------------------------------
+
+  .bar-segment-view
   {
     position: relative;
-    margin: 0;
-    border: 1px solid #888;
-    height: 24px;
-    overflow: hidden;
-
-    @include gradient-vertical(rgb(161, 162, 162), rgb(177, 179, 179));
-    @include border-radius(2px);
-
+    float: left;
+    width: 0px;
+    height: inherit;
+    @include box-sizing(border-box);
     list-style: none;
 
+    &:before,
     &:after
     {
       content: "";
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
       top: 0;
-      @include box-shadow(inset 0px 1px 4px rgba(0, 0, 0, 0.5));
+      bottom: 0;
+      width: 1px;
     }
 
-    // Bar Segment Views -----------------------------------------------------
-
-    li.bar-segment-view
+    &:before
     {
-      position: relative;
-      float: left;
-      width: 0px;
-      height: inherit;
-      @include box-sizing(border-box);
-      list-style: none;
+      left: 0;
+      background-color: rgb(200, 200, 200);
+      background-color: rgba(255, 255, 255, 0.25);
+    }
 
-      &:before,
+    &:after
+    {
+      right: 0;
+      background-color: rgb(216, 216, 217);
+      background-color: rgba(0, 0, 0, 0.1);
+    }
+
+    &:first-of-type
+    {
+      @include border-radius(2px 0px 0px 2px);
+    }
+
+    &:last-of-type
+    {
+      @include border-radius(0px 2px 2px 0);
       &:after
-      {
-        content: "";
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 1px;
-      }
-
-      &:before
-      {
-        left: 0;
-        background-color: rgb(200, 200, 200);
-        background-color: rgba(255, 255, 255, 0.25);
-      }
-
-      &:after
-      {
-        right: 0;
-        background-color: rgb(216, 216, 217);
-        background-color: rgba(0, 0, 0, 0.1);
-      }
-
-      &:first-of-type
-      {
-        @include border-radius(2px 0px 0px 2px);
-      }
-
-      &:last-of-type
-      {
-        @include border-radius(0px 2px 2px 0);
-        &:after
-        {
-          display: none;
-        }
-      }
-
-      .bar
       {
         display: none;
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-
-        @include gradient-vertical(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
-
-        border-right: 1px solid rgb(216, 216, 217);
-        border-right: 1px solid rgba(0, 0, 0, 0.1);
-        border-left: 1px solid rgba(255, 255, 255, 0.15);
-
-        @include box-sizing(border-box);
       }
     }
+
+    .bar
+    {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+
+      @include gradient-vertical(rgba(0, 0, 0, 0.025), rgba(0, 0, 0, 0.2));
+
+      border-right: 1px solid rgb(216, 216, 217);
+      border-right: 1px solid rgba(0, 0, 0, 0.1);
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+
+      @include box-sizing(border-box);
+    }
   }
+
 }

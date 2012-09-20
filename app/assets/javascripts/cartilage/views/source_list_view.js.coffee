@@ -1,57 +1,71 @@
 #
 # Source List View
 #
+# As the name implies, the source list view is a subclass of ListView that
+# attempts to emulate the common source list master/detail pattern. It applies
+# some default styling to the list view and allows for header and footer views
+# to be used.
+#
 
-class window.Cartilage.Views.SourceListView extends Cartilage.View
+#= require cartilage/views/source_list_view_item
 
-  #
-  # An optional header view...
-  #
-  headerView: null
-  headerViewContainer: null
+class window.Cartilage.Views.SourceListView extends Cartilage.Views.ListView
 
-  #
-  # The managed list view.
-  #
-  listView: null
-  itemView: null
+  # Properties ---------------------------------------------------------------
 
   #
-  # An optional toolbar view that is displayed in the footer.
+  # If defined, displays the specified view above the list view. Dimensions of
+  # the view are automatically determined, so be sure that the passed view has
+  # height or is relatively positioned so that height may be determined.
   #
-  footerView: null
-  footerViewContainer: null
+  @property "headerView"
+
+  #
+  # If defined, displays the specified view below the list view. Dimensions of
+  # the view are automatically determined, so be sure that the passed view has
+  # height or is relatively positioned so that height may be determined.
+  #
+  @property "footerView"
+
+  #
+  # Override the default itemView to SourceListViewItem.
+  #
+  @property "itemView", default: Cartilage.Views.SourceListViewItem
+
+  # Internal Properties ------------------------------------------------------
+
+  # --------------------------------------------------------------------------
 
   initialize: (options = {}) ->
 
-    # Apply options
-    @headerView = options["headerView"]
-    @listView   = options["listView"]
-    @itemView   = options["itemView"]
-    @footerView = options["footerView"]
+    # Initialize the List View
+    super(options)
 
+    # Initialize Header View Container
     if @headerView
-      @headerViewContainer = @make("div", { class: "header-view" })
-      ($ @el).append(@headerViewContainer)
+      ($ @el).append @_headerViewContainer = @make "div",
+        class: "header-view"
 
-    @listView ?= new Cartilage.Views.ListView
-      collection: @collection
-      itemView: @itemView
-
+    # Initialize Footer View Container
     if @footerView
-      @footerViewContainer = @make("div", { class: "footer-view" })
-      ($ @el).append(@footerViewContainer)
+      ($ @el).append @_footerViewContainer = @make "div",
+        class: "footer-view"
 
   prepare: ->
 
-    @addSubview @listView
+    # Prepare the List View
+    super()
 
+    # Add the header view as a subview and reposition the list view to account
+    # for the height of the header view.
     if @headerView
-      @addSubview @headerView, @headerViewContainer
-      ($ @listView.el).css("top", ($ @headerView.el).outerHeight())
-      ($ @headerViewContainer).css("height", ($ @headerView.el).outerHeight())
+      @addSubview @headerView, @_headerViewContainer
+      ($ @_listViewItemsContainer).css("top", ($ @headerView.el).outerHeight())
+      ($ @_headerViewContainer).css("height", ($ @headerView.el).outerHeight())
 
+    # Add the footer view as a subview and reposition the list view to account
+    # for the height of the footer view.
     if @footerView
-      @addSubview @footerView, @footerViewContainer
-      ($ @listView.el).css("bottom", ($ @footerView.el).outerHeight())
-      ($ @footerViewContainer).css("height", ($ @footerView.el).outerHeight())
+      @addSubview @footerView, @_footerViewContainer
+      ($ @_listViewItemsContainer).css("bottom", ($ @footerView.el).outerHeight())
+      ($ @_footerViewContainer).css("height", ($ @footerView.el).outerHeight())

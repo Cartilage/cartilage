@@ -9,23 +9,25 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
     "mousemove": "onMouseMove"
   }, Cartilage.Views.ListView.prototype.events
 
+  # Properties ---------------------------------------------------------------
+
   #
   # Whether or not drag-selection should be enabled.
   #
-  allowsDragSelection: false
+  @property "allowsDragSelection", default: no
+
+  # Internal Properties ------------------------------------------------------
+
+  # --------------------------------------------------------------------------
 
   initialize: (options = {}) ->
 
+    # Initialize the List View
     super(options)
 
-    # Apply options
-    @allowsDragSelection = options["allowsDragSelection"] || (@allowsDragSelection ?= false)
-    @allowsMultipleSelection = options["allowsDragSelection"] || (@allowsMultipleSelection ?= @allowsDragSelection)
-
-  render: =>
-    super()
-    ($ @el).append ($ "<div/>").addClass("overlay").hide()
-    @
+    # Add the Drag Selection Overlay
+    if @allowsDragSelection
+      ($ @el).append ($ "<div/>").addClass("overlay").hide()
 
   #
   # Handles click events for the entire list elements, including the list

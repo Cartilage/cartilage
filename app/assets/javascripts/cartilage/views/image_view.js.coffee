@@ -15,74 +15,72 @@
 
 class window.Cartilage.Views.ImageView extends Cartilage.View
 
+  # Properties ---------------------------------------------------------------
+
   #
   # The URL to the image.
   #
-  imageAddress: null
+  @property "imageAddress"
 
   #
   # Denotes whether or not the image has finished loading.
   #
-  isLoaded: false
+  @property "isLoaded", access: READONLY, default: no
 
   #
   # Denotes whether or not an error occurred while loading.
   #
-  isError: false
+  @property "isError", access: READONLY, default: no
 
-  #
-  # Initializes a new instance of the split view. Pass firstView and
-  # secondView as options, at a minimum, to specify the view setup.
-  #
+  # Internal Properties ------------------------------------------------------
+
+  # --------------------------------------------------------------------------
+
   initialize: (options = {}) ->
-    @isLoaded     = false
-    @imageElement = ($ "<img />").hide()
-    @imageAddress = options["imageAddress"]
-    ($ @imageElement).attr("src", @imageAddress) if @imageAddress?
 
-  render: =>
+    # Initialize the View
+    super(options)
 
-    unless @isRendered
+    # Initialize Image Element
+    ($ @el).html @_imageElement = @make "img"
+    ($ @_imageElement).hide()
 
-      # Add the Image Element
-      ($ @el).html @imageElement
+    # (Re-)bind to Events manually because event delegation will not work for
+    # image load and error events...
+    ($ @_imageElement).load @handleLoadEvent
+    ($ @_imageElement).error @handleErrorEvent
 
-      # (Re-)bind to Events manually because event delegation will not work for
-      # image load and error events...
-      ($ @imageElement).load @handleLoadEvent
-      ($ @imageElement).error @handleErrorEvent
+  prepare: ->
 
-      @isRendered = true
+    # Prepare the View
+    super()
 
-    # Update the Image Source
-    unless @imageAddress == @imageElement.attr("src")
-      @imageElement.attr("src", @imageAddress)
-
-    @
+    # Set Image Source
+    ($ @_imageElement).attr("src", @imageAddress) if @imageAddress?
 
   cleanup: ->
     @clear { silent: true }
     super()
 
   #
-  # Sets the image to that which is specified by URL. This causes a render to
-  # take place.
+  # Sets the image to that which is specified by URL.
   #
   setImage: (url) ->
     @imageAddress = url
-    @render()
+    ($ @_imageElement).attr("src", @imageAddress)
 
   clear: (options = {}) ->
     @isLoaded = false
     @imageAddress = null
-    ($ @imageElement).off()
-    @imageElement.hide().attr("src", null)
-    @trigger "cleared" unless options["silent"]
+    ($ @_imageElement).off().hide().attr("src", null)
+    @trigger "cleared" unless options.silent
+
+  # Event Handlers -----------------------------------------------------------
 
   handleLoadEvent: (event) =>
     @isLoaded = true
     @isError = false
-    @imageElement.fadeIn() unless @imageElement.is ":visible"
+    @_imageElement.fadeIn() unless @_imageElement.is ":visible"
     @trigger "load", event
 
   handleErrorEvent: (event) =>

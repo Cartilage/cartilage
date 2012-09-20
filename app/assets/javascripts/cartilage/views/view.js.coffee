@@ -4,17 +4,57 @@
 
 class window.Cartilage.View extends Backbone.View
 
-  superview: null
-  subviews: []
-  observers: []
+  # Properties ---------------------------------------------------------------
 
+  #
+  # The superview that considers this view to be a subview. This will be set
+  # automatically on the view that has been added by using addSubview.
+  #
+  @property "superview", access: READONLY
+
+  #
+  # An array containing a reference to each of the views subviews. Views that
+  # are added as subviews (with addSubview) will be added here automatically.
+  #
+  @property "subviews", access: READONLY, default: []
+
+  #
+  # A reference to all observers currently assigned to this view. This is
+  # needed for cleanup.
+  #
+  @property "observers", access: READONLY, default: []
+
+  # --------------------------------------------------------------------------
+
+  #
+  # Attempt to determine the name of the template (which, by default, should
+  # be the underscored-version of a class name in the templates folder (i.e.
+  # for MyAwesomeView, the template my_awesome_view.jst.ejs should exist in
+  # templates).
+  #
   template: (options) ->
     try
       if JST[_.underscore(@constructor.name)]
         JST[_.underscore(@constructor.name)](options)
+      else
+        if console
+          console.warn "Missing template #{_.underscore(@constructor.name)}.jst.ejs for #{@constructor.name}"
     catch error
       if console
         console.warn "Template error in #{_.underscore(@constructor.name)}.jst.ejs: \"#{error.message}\"", error
+
+  #
+  # Override the standard constructor so that we can extend each view with any
+  # of the options passed, instead of simply @collection, @model and others
+  # that are baked into Backbone.js.
+  #
+  constructor: (options = {}) ->
+    _.extend(@, options)
+    Backbone.View.apply(@, arguments)
+
+  initialize: (options = {}) ->
+
+    # Empty implementation
 
   prepare: ->
 
@@ -44,13 +84,18 @@ class window.Cartilage.View extends Backbone.View
 
   observe: (source, event, callback) ->
     source.on(event, callback, @)
-    @observers.push { source: source, event: event, callback: callback }
+    @_observers.push { source: source, event: event, callback: callback }
 
   removeObservers: ->
     _.each @observers, (observer) ->
       observer.source.off(observer.event, observer.callback, @)
-    @observers = []
+    @_observers = []
 
+  #
+  # Adds the provided view instance as a subclass of the current view. If a
+  # container element is specified, it will be added within that element of
+  # the view's element.
+  #
   addSubview: (view, container = @el, animated = false) ->
 
     # Don't allow nil objects to be passed...
@@ -58,10 +103,10 @@ class window.Cartilage.View extends Backbone.View
 
     # Maintain a reference to the added subview for later cleanup, or other
     # operations
-    @subviews.push(view)
+    @_subviews.push(view)
 
     # Set a reference to this view as the added view's superview
-    view.superview = @
+    view._superview = @
 
     # Render the View, if necessary
     unless view.isRendered
@@ -100,6 +145,10 @@ class window.Cartilage.View extends Backbone.View
   addSubviewAnimated: (view, container = @el) ->
     @addSubview(view, container, true)
 
+  #
+  # Removes the view from its superview, if it currently belongs to another
+  # view as a subview.
+  #
   removeFromSuperview: (animated = false) ->
 
     # Trigger the "willRemove" event so that views have a chance to
@@ -134,10 +183,15 @@ class window.Cartilage.View extends Backbone.View
   removeFromSuperviewAnimated: ->
     @removeFromSuperview(true)
 
+  #
+  # Attempts to determine the class name(s) of the view by iterating and
+  # assigning the dasherized name of each of the class in the hierarchy.
+  #
   determineClassName: ->
     classNames = [ _.dasherize(@constructor.name) ]
 
     # Get class names for each view in the class heirarchy
+    # TODO Update this to use @superclasses()
     superklass = @constructor.__super__
     while superklass
       classNames.push _.dasherize(superklass.constructor.name)
@@ -163,3 +217,13 @@ class window.Cartilage.View extends Backbone.View
 
     # Convert the class names array to a string
     classNames.join(" ")
+
+  #
+  # Returns an array containing each of the superclasses that this class
+  # derives from.
+  #
+  @superclasses: ->
+    classes = [ superklass = @.__super__ ]
+    while superklass = superklass.constructor.__super__
+      classes.push superklass
+    classes.reverse()
