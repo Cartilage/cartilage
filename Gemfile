@@ -12,3 +12,8 @@ gemspec
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
+
+gem 'sprockets'
+gem 'uglifier'
+gem 'sass-rails'
+gem 'coffee-rails'
