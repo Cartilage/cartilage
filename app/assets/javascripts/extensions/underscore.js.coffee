@@ -6,7 +6,7 @@
 #
 _.sum = (obj) ->
   return 0 if !_.isArray(obj) or obj.length is 0
-  _.reduce obj, (sum, n) -> sum += n
+  _.reduce obj, (sum, n) -> sum += parseInt(n, 10)
 
 #
 # Converts underscored or camel-cased strings to dashes. Example:
@@ -27,7 +27,7 @@ _.dasherize = (string) ->
   string.replace /^-/, ""
 
 #
-# Converts titlecased, underscored or dashed strings to camel-case. Example:
+# Converts title-cased, underscored or dashed strings to camel-case. Example:
 #
 #    _.camelize("FooBarView") => "fooBarView"
 #    _.camelize("foo-bar-view") => "fooBarView"
@@ -43,7 +43,7 @@ _.camelize = (string) ->
   string = string.replace /^([A-Z])/g, (match) -> match.toLowerCase()
 
 #
-# Converts dashed or camel-cased strings to dashes. Example:
+# Converts dashed, title-cased or camel-cased strings underscores. Example:
 #
 #    _.underscore("FooBarView") => "foo_bar_view"
 #    _.underscore("foo-bar-view") => "foo_bar_view"
@@ -61,7 +61,8 @@ _.underscore = (string) ->
   string.replace /^_/, ""
 
 #
-# Removes the specified value from the given array.
+# Removes the specified value from the given array by altering the array
+# in place, without making a copy.
 #
 #    _.remove([ "A", "B", "C" ], "B") => [ "A", "C" ]
 #
