@@ -10,6 +10,7 @@ class window.Cartilage.Application
 
   @launch: ->
     @sharedInstance = new @
+    @sharedInstance.initialize()
     @hijackLinks()
 
   @hijackLinks: ->
