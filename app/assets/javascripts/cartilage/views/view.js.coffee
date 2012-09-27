@@ -175,10 +175,10 @@ class window.Cartilage.View extends Backbone.View
 
     # Remove the reference to this view from its superview's subviews
     # array
-    _.remove @superview.subviews, @
+    _.remove @_superview._subviews, @
 
     # Clear the superview reference
-    @superview = null
+    @_superview = null
 
   removeFromSuperviewAnimated: ->
     @removeFromSuperview(true)

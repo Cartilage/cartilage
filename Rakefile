@@ -60,7 +60,7 @@ task :compile do
   environment.append_path 'vendor/assets/stylesheets'
 
   cartilage_js  = environment.find_asset('cartilage.js.coffee').to_s
-  compressed_js = Uglifier.compile(cartilage_js)
+  compressed_js = Uglifier.compile(cartilage_js, :mangle => false)
   File.open('cartilage.js', 'w') { |f| f.write(compressed_js) }
 
   # cartilage_css  = environment.find_asset('cartilage.css.scss').to_s
