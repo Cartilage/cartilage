@@ -20,7 +20,9 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
   #
   # The URL to the image.
   #
-  @property "imageAddress"
+  @property "imageAddress", set: (url) ->
+    @_imageAddress = url
+    ($ @_imageElement).attr("src", @_imageAddress)
 
   #
   # Denotes whether or not the image has finished loading.
@@ -32,7 +34,10 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
   #
   @property "isError", access: READONLY, default: no
 
-  # Internal Properties ------------------------------------------------------
+  #
+  # The image element that this view manages.
+  #
+  @property "imageElement", access: READONLY, default: ($ "<img/>")
 
   # --------------------------------------------------------------------------
 
@@ -41,49 +46,30 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
     # Initialize the View
     super(options)
 
-    # Initialize Image Element
-    ($ @el).html @_imageElement = @make "img"
-    ($ @_imageElement).hide()
-
-    # (Re-)bind to Events manually because event delegation will not work for
+    # Bind to Events manually because event delegation will not work for
     # image load and error events...
-    ($ @_imageElement).load @handleLoadEvent
-    ($ @_imageElement).error @handleErrorEvent
-
-  prepare: ->
-
-    # Prepare the View
-    super()
-
-    # Set Image Source
-    ($ @_imageElement).attr("src", @imageAddress) if @imageAddress?
+    ($ @imageElement).load @handleLoadEvent
+    ($ @imageElement).error @handleErrorEvent
 
   cleanup: ->
     @clear { silent: true }
     super()
 
-  #
-  # Sets the image to that which is specified by URL.
-  #
-  setImage: (url) ->
-    @imageAddress = url
-    ($ @_imageElement).attr("src", @imageAddress)
-
   clear: (options = {}) ->
-    @isLoaded = false
-    @imageAddress = null
+    @_isLoaded = false
+    @_imageAddress = null
     ($ @_imageElement).off().hide().attr("src", null)
     @trigger "cleared" unless options.silent
 
   # Event Handlers -----------------------------------------------------------
 
   handleLoadEvent: (event) =>
-    @isLoaded = true
-    @isError = false
-    @_imageElement.fadeIn() unless @_imageElement.is ":visible"
+    @_isLoaded = true
+    @_isError = false
+    @imageElement.fadeIn() unless @imageElement.is ":visible"
     @trigger "load", event
 
   handleErrorEvent: (event) =>
     @clear()
-    @isError = true
+    @_isError = true
     @trigger "error", event
