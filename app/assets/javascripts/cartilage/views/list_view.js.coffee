@@ -111,7 +111,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       @renderModel(model)
 
   renderModel: (model) =>
-    new @itemView { model: model, listView: @ } if @itemView?
+    if @itemView? then new @itemView { model: model, listView: @ } else console.warn("Could not find corresponding itemView for #{@constructor.name}")
 
   addModel: (model) =>
     @collection.add model, { silent: true }
