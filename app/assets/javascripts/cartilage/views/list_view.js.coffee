@@ -64,12 +64,12 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   @draggedItem: undefined
 
   events:
-    "dblclick > ul > li": "open"
-    "focus > ul > li": "onFocus"
-    "keydown > ul": "onKeyDown"
-    "mousedown > ul": "onMouseDown"
-    "dragover > ul": "onDragOver"
-    "drop > ul": "onDrop"
+    "dblclick ul > li": "open"
+    "click ul > li": "onFocus"
+    "keydown ul": "onKeyDown"
+    "mousedown ul": "onMouseDown"
+    "dragover ul": "onDragOver"
+    "drop ul": "onDrop"
 
   initialize: (options = {}) ->
 
@@ -242,7 +242,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # container.
   #
   onMouseDown: (event) =>
-
     # Get the list item element
     element = ($ event.target).parents("li") || event.target
 
