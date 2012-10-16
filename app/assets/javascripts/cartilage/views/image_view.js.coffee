@@ -22,8 +22,8 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
   #
   @property "imageAddress", set: (url) ->
     @_imageAddress = url
-    ($ @_imageElement).attr("src", @_imageAddress)
-
+    @_imageElement = ($ "<img />").attr('src', @imageAddress)
+  
   #
   # Denotes whether or not the image has finished loading.
   #
@@ -37,7 +37,7 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
   #
   # The image element that this view manages.
   #
-  @property "imageElement", access: READONLY, default: ($ "<img/>")
+  @property "imageElement", access: READONLY
 
   # --------------------------------------------------------------------------
 
@@ -46,16 +46,17 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
     # Initialize the View
     super(options)
 
-  render: ->
-    ($ @el).html @_imageElement
-
     # Bind to Events manually because event delegation will not work for
     # image load and error events...
     ($ @imageElement).load @handleLoadEvent
     ($ @imageElement).error @handleErrorEvent
 
+  render: ->
+    super()
+    ($ @el).html @_imageElement
+
     @
- 
+
   cleanup: ->
     @clear { silent: true }
     super()
