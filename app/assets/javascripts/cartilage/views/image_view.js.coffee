@@ -46,11 +46,16 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
     # Initialize the View
     super(options)
 
+  render: ->
+    ($ @el).html @_imageElement
+
     # Bind to Events manually because event delegation will not work for
     # image load and error events...
     ($ @imageElement).load @handleLoadEvent
     ($ @imageElement).error @handleErrorEvent
 
+    @
+ 
   cleanup: ->
     @clear { silent: true }
     super()
