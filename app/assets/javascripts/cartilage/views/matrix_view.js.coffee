@@ -7,6 +7,7 @@ class window.Cartilage.Views.MatrixView extends Cartilage.Views.ListView
   events: _.extend {
     "mouseup": "onMouseUp",
     "mousemove": "onMouseMove"
+    "mousedown": "onMouseDown"
   }, Cartilage.Views.ListView.prototype.events
 
   # Properties ---------------------------------------------------------------
