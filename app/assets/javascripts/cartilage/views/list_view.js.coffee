@@ -352,9 +352,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   moveSelectionUp: (e) =>
     element = ($ @focusedElement).prev "li"
-    if element.length > 0
-      @clearSelection { silent: true } and @select element
-      @focusedElement = ($ element).focus()
+    @select element if element.length > 0
 
   #
   # Moves the selection to the item visually below the selected item. If there
@@ -362,9 +360,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   moveSelectionDown: (e) =>
     element = ($ @focusedElement).next "li"
-    if element.length > 0
-      @clearSelection { silent: true } and @select element
-      @focusedElement = ($ element).focus()
+    @select element if element.length > 0
 
   #
   # Expands the selection downward from the currently selected element.
