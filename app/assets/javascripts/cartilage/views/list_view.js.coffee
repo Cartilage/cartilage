@@ -114,8 +114,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     if @itemView? then new @itemView { model: model, listView: @ } else console.warn("Could not find corresponding itemView for #{@constructor.name}")
 
   addModel: (model) =>
-    @collection.add model, { silent: true }
-    @addSubview @renderModel(model)
+    @addItem @renderModel(model)
 
   #
   # Adds an already instantiated list view item (must derive from
@@ -125,7 +124,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   addItem: (item) =>
     # TODO Ensure that the item derives from ListViewItem
-    @addSubview item
+    @addSubview item, @_listViewItemsContainer
     @collection.add item.model, { silent: true }
 
   #
