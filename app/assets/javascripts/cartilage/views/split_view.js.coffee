@@ -77,7 +77,10 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
     @addSubview @firstView, @_firstViewContainer
     @addSubview @secondView, @_secondViewContainer
 
-    @position(($ @_firstViewContainer).width())
+    if @orientation is "vertical"
+      @position(($ @_firstViewContainer).width())
+    else
+      @position(0)
 
   cleanup: ->
     ($ window).off "resize", @handleWindowResize
@@ -114,22 +117,24 @@ class window.Cartilage.Views.SplitView extends Cartilage.View
       ($ @dragElement).css("left", (newPosition - ($ @dragElement).width() / 2) + "px")
 
     else
-      minHeight = parseInt ($ @_firstViewContainer).css("min-height")
-      maxHeight = parseInt ($ @_firstViewContainer).css("max-height")
+      minHeight = parseInt ($ @_secondViewContainer).css("min-height")
+      maxHeight = parseInt ($ @_secondViewContainer).css("max-height")
 
       if newPosition < minHeight
         newPosition = minHeight
       else if newPosition > maxHeight
         newPosition = maxHeight
 
+      bottom = ($ @el).height() - newPosition
+
       if options["animated"]
         ($ @_firstViewContainer).css { bottom: '' }
-        ($ @_firstViewContainer).animate { height: newPosition + 'px' }, 250
+        ($ @_firstViewContainer).animate { height: bottom + 'px' }, 250
         ($ @_secondViewContainer).css { height: '' }
-        ($ @_secondViewContainer).animate { top: newPosition + "px" }, 250
+        ($ @_secondViewContainer).animate { top: bottom + "px" }, 250
       else
-        ($ @_firstViewContainer).css { height: newPosition + 'px', bottom: '' }
-        ($ @_secondViewContainer).css { top: newPosition + "px", height: '' }
+        ($ @_firstViewContainer).css { height: bottom + 'px', bottom: '' }
+        ($ @_secondViewContainer).css { top: bottom + 'px', height: newPosition + 'px' }
 
       ($ @dragElement).css("top", (newPosition - ($ @dragElement).height() / 2) + "px")
 
