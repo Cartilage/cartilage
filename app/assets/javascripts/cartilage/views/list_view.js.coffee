@@ -242,7 +242,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   onMouseDown: (event) =>
     # Get the list item element
-    element = ($ event.target).parents("li") || event.target
+    element = if ($ event.target).is("li") then event.target else ($ event.target).parents("li") 
 
     # Clear the selection if the user clicks in the list container.
     @clearSelection() if @allowsDeselection and event.target.tagName == "UL"
