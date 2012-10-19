@@ -1,0 +1,6 @@
+# Empty dir for sqlite3 files for dummy framework
+#
+# To get started:
+#
+# $ cd ~/RAILS_ROOT/test/dummy/
+# $ rake db:create
