@@ -53,11 +53,9 @@ class window.Cartilage.View extends Backbone.View
     Backbone.View.apply(@, arguments)
 
   initialize: (options = {}) ->
-
-    # Empty implementation
+    _.extend(@, options)
 
   prepare: ->
-
     # Empty implementation
 
   render: ->

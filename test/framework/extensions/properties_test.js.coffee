@@ -55,3 +55,15 @@ test "should initialize property with custom setter", ->
   testView.testProperty = "foo"
 
   equal testView.testProperty, "customSetter", "testProperty should equal 'customSetter'"
+
+test "should initialize property via super()", ->
+
+  class TestView extends Cartilage.View
+    @property "testProperty"
+
+    initialize: (options = {}) ->
+      options.testProperty = "bar"
+      super(options)
+      
+  testView = new TestView
+  equal testView.testProperty, "bar"
