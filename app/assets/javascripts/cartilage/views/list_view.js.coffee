@@ -141,7 +141,12 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     return if model in @selected.models
 
     # If an element is already selected, deselect it before continuing.
-    @clearSelection { silent: true } if @selected.length > 0
+    if @allowsMultipleSelection
+      # In multi-select, do a full reset so observing "reset" on @selected works as expected
+      @clearSelection() if @selected.length > 0
+    else
+      # In single select, call deselect on each selected element so observing "deselect" works as expected
+      _.each(($ @el).find("li.selected"), (element) => @deselect(element))
 
     @selected.add model
     ($ element).addClass "selected"
