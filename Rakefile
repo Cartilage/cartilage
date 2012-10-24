@@ -33,10 +33,9 @@ end
 namespace :test do
   desc "Run tests for framework"
   task :framework => [ :compile ] do
-    # Ideally should use PhantomJS 1.5+.  Current brew version is 1.6.x
     `which phantomjs`
     if $?.success? 
-      system "phantomjs --local-to-remote-url-access=yes #{File.dirname(__FILE__)}/test/framework/vendor/run-qunit.js #{File.dirname(__FILE__)}/test/framework/index.html"
+      system "phantomjs --debug=no --local-to-remote-url-access=yes #{File.dirname(__FILE__)}/test/framework/vendor/run-qunit.js #{File.dirname(__FILE__)}/test/framework/index.html"
     else
       raise "PhantomJS is not installed.  On Mac OS X please make sure you have the latest homebrew and try 'brew install phantomjs'"
     end
@@ -76,5 +75,4 @@ task :compile do
   # cartilage_css  = environment.find_asset('cartilage.css.scss').to_s
   # compressed_css = Uglifier.compile(cartilage_css)
   # File.open('cartilage.css', 'w') { |f| f.write(compressed_js) }
-
 end
