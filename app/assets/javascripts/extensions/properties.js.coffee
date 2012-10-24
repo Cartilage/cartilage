@@ -21,7 +21,7 @@ Function::property = (name, options = {}) ->
   config =
     writeable: writeable
     get: getter if readable
-    set: setter if writeable
+    set: if writeable then setter else ()->
     configurable: no
     enumerable: yes
 

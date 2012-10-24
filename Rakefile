@@ -26,31 +26,34 @@ Bundler::GemHelper.install_tasks
 require 'rake/testtask'
 
 desc "Run tests for both engine and framework"
-task :test => [ "test:engine", "test:framework" ] do
+task :test => [ "test:framework" ] do
   # ...
 end
 
 namespace :test do
-
-  Rake::TestTask.new(:engine) do |t|
-    t.libs << 'lib'
-    t.libs << 'test'
-    t.pattern = 'test/**/*_test.rb'
-    t.verbose = false
-  end
-
   desc "Run tests for framework"
   task :framework => [ :compile ] do
-    # You'll want to replace this with whatever you're using to launch a browser 
-    # so we can run the QUnit tests.
-    #
-    # Having trouble running this in Chrome due to cross-origin issues due to file://? 
-    # Quit Chrome and let open start it up with the -allow-file-access-from-files flag 
-    # which should make things work again. FF and Safari work fine with the default 'open'.
-    # system "open -a \"Google Chrome.app\" #{File.dirname(__FILE__)}/test/framework/index.html --args -allow-file-access-from-files"
+    # Ideally should use PhantomJS 1.5+.  Current brew version is 1.6.x
+    `which phantomjs`
+    if $?.success? 
+      system "phantomjs --local-to-remote-url-access=yes #{File.dirname(__FILE__)}/test/framework/vendor/run-qunit.js #{File.dirname(__FILE__)}/test/framework/index.html"
+    else
+      raise "PhantomJS is not installed.  On Mac OS X please make sure you have the latest homebrew and try 'brew install phantomjs'"
+    end
+  end
+
+  task :browser => [ :compile ] do
     system "open #{File.dirname(__FILE__)}/test/framework/index.html"
   end
 
+  namespace :browser do
+    # Having trouble running this in Chrome due to cross-origin issues due to file://? 
+    # Quit Chrome and let open start it up with the -allow-file-access-from-files flag 
+    # which should make things work again. FF and Safari work fine with the default 'open'.    
+    task :chrome => [ :compile ] do
+      system "open -a \"Google Chrome.app\" --args -allow-file-access-from-files #{File.dirname(__FILE__)}/test/framework/index.html"
+    end
+  end
 end
 
 # task :default => :test

@@ -38,10 +38,10 @@ class window.Cartilage.View extends Backbone.View
         JST[_.underscore(@constructor.name)](options)
       else
         if console
-          console.warn "Missing template #{_.underscore(@constructor.name)}.jst.ejs for #{@constructor.name}"
+          console.info "Missing template #{_.underscore(@constructor.name)}.jst.ejs for #{@constructor.name}"
     catch error
       if console
-        console.warn "Template error in #{_.underscore(@constructor.name)}.jst.ejs: \"#{error.message}\"", error
+        console.error "Template error in #{_.underscore(@constructor.name)}.jst.ejs: \"#{error.message}\"", error
 
   #
   # Override the standard constructor so that we can extend each view with any
