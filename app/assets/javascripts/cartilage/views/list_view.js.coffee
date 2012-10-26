@@ -51,7 +51,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   # TODO Rename to selectedModels
   # TODO Add selectedItems
-  @property "selected", access: READONLY, default: new Backbone.Collection
+  @property "selected", access: READONLY 
 
   #
   # A collection containing all of the list view items managed by the list
@@ -72,7 +72,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     "drop ul": "onDrop"
 
   initialize: (options = {}) ->
-
     # Initialize the View
     super(options)
 
@@ -81,6 +80,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       class: "list-view-items-container"
       tabindex: 0
 
+    @_selected = new Backbone.Collection()
     # Observe Collection
     @observe @collection, "add", @addModel
     @observe @collection, "reset", @update # TODO Don't re-render the entire view for removals
@@ -104,7 +104,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
         ($ element).remove()
 
     _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
-    @restoreSelection() if @selected.models.length > 0
+    @restoreSelection() if @_selected.models.length > 0
 
   renderModels: =>
     items = _.map @collection.models, (model) =>
@@ -138,21 +138,21 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     model = ($ element).data("model")
 
     # Do not attempt to select the element if it is already selected.
-    return if model in @selected.models
+    return if model in @_selected.models
 
     # If an element is already selected, deselect it before continuing.
     if @allowsMultipleSelection
-      # In multi-select, do a full reset so observing "reset" on @selected works as expected
-      @clearSelection() if @selected.length > 0
+      # In multi-select, do a full reset so observing "reset" on @_selected works as expected
+      @clearSelection() if @_selected.length > 0
     else
       # In single select, call deselect on each selected element so observing "deselect" works as expected
       _.each(($ @el).find("li.selected"), (element) => @deselect(element))
 
-    @selected.add model
+    @_selected.add model
     ($ element).addClass "selected"
     # ($ element).focus() unless ($ element).is(":focus")
     @focusedElement = ($ element)
-    @trigger "select", @selected
+    @trigger "select", @_selected
 
   selectAnother: (e) =>
     # If multiple selection is not allowed, simply select the requested item
@@ -165,11 +165,11 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     model = ($ element).data("model")
 
     # Do not attempt to select the element if it is already selected.
-    return if model in @selected.models
+    return if model in @_selected.models
 
-    @selected.add model
+    @_selected.add model
     ($ element).addClass "selected"
-    @trigger "select", @selected
+    @trigger "select", @_selected
 
   #
   # Selects the first element in the list.
@@ -200,10 +200,10 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     elements = ($ @el).find "li"
     _.each elements, (element) =>
       model = ($ element).data("model")
-      if model in @selected.models
+      if model in @_selected.models
         ($ element).addClass("selected")
       else
-        @selected.remove model
+        @_selected.remove model
 
   #
   # Deselects the specified list view item, if it is currently selected.
@@ -213,7 +213,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   deselect: (element) ->
     model = ($ element).data("model")
     ($ element).removeClass "selected"
-    @selected.remove model
+    @_selected.remove model
     @trigger "deselect", element
 
   #
@@ -223,23 +223,23 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   clearSelection: (options = {}) ->
     ($ @el).find("li.selected").removeClass "selected"
-    @selected.reset(null, { silent: options["silent"] })
-    @trigger("clear", @selected) unless options["silent"]
+    @_selected.reset(null, { silent: options["silent"] })
+    @trigger("clear", @_selected) unless options["silent"]
 
   #
   # Opens the selected item(s).
   #
   open: (e) ->
-    @trigger "open", @selected
+    @trigger "open", @_selected
 
   #
   # Removes the selected item(s).
   #
   remove: (e) =>
     return unless @allowsRemove
-    @collection.remove @selected.models
-    @selected.reset()
-    @trigger "remove", @selected
+    @collection.remove @_selected.models
+    @_selected.reset()
+    @trigger "remove", @_selected
 
   #
   # Handles click events for the entire list elements, including the list
@@ -254,7 +254,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     if event.metaKey
       model = ($ element).data("model")
-      if model in @selected.models
+      if model in @_selected.models
         @deselect element
       else
         @selectAnother element
@@ -286,7 +286,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
       # Select the first item if there is no selection when the first key press
       # occurs.
-      return @selectFirst() unless @selected.length > 0
+      return @selectFirst() unless @_selected.length > 0
 
       # Route the key event to the proper handler based on the combination of
       # keys that were pressed.
@@ -416,18 +416,18 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #     console.log "returning"
   #     return
   #
-  #   selectedItemTop     = @selectedElement.offset().top - ($ scrollElement).offset().top
-  #   selectedItemBottom  = selectedItemTop + @selectedElement.innerHeight()
-  #   selectedItemLeft    = @selectedElement.offset().left - ($ scrollElement).offset().left
-  #   selectedItemRight   = selectedItemLeft + @selectedElement.innerWidth()
+  #   selectedItemTop     = @_selectedElement.offset().top - ($ scrollElement).offset().top
+  #   selectedItemBottom  = selectedItemTop + @_selectedElement.innerHeight()
+  #   selectedItemLeft    = @_selectedElement.offset().left - ($ scrollElement).offset().left
+  #   selectedItemRight   = selectedItemLeft + @_selectedElement.innerWidth()
   #   currentScrollTop    = ($ scrollElement).scrollTop()
   #   currentScrollBottom = ($ scrollElement).scrollTop() + ($ scrollElement).innerHeight()
   #   currentScrollLeft   = ($ scrollElement).scrollLeft()
   #   currentScrollRight  = ($ scrollElement).scrollLeft() + ($ scrollElement).innerWidth()
-  #   itemTopMargin       = parseInt(@selectedElement.css("margin-top"), 10)
-  #   itemBottomMargin    = parseInt(@selectedElement.css("margin-bottom"), 10)
-  #   itemLeftMargin      = parseInt(@selectedElement.css("margin-left"), 10)
-  #   itemRightMargin     = parseInt(@selectedElement.css("margin-right"), 10)
+  #   itemTopMargin       = parseInt(@_selectedElement.css("margin-top"), 10)
+  #   itemBottomMargin    = parseInt(@_selectedElement.css("margin-bottom"), 10)
+  #   itemLeftMargin      = parseInt(@_selectedElement.css("margin-left"), 10)
+  #   itemRightMargin     = parseInt(@_selectedElement.css("margin-right"), 10)
   #   scrollTopValue      = selectedItemTop - itemTopMargin
   #   scrollLeftValue     = selectedItemLeft - itemLeftMargin
   #   shouldScrollTop     = false
