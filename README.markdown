@@ -1,5 +1,7 @@
 # Cartilage for Backbone.js
 
+[![Build Status](https://secure.travis-ci.org/Cartilage/cartilage.png)](http://travis-ci.org/Cartilage/cartilage)
+
 Cartilage is a standardized set of layouts and user interface elements that
 are bundled as a Rails Engine. It is build on top of Backbone.js (for
 interactivity) and Bootstrap (for visual styling).
