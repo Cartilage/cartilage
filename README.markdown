@@ -8,7 +8,8 @@ interactivity) and Bootstrap (for visual styling).
 
 ## Example
 
-An example project is available at http://github.com/activeprospect/cartilage-example.
+An example project is available at http://github.com/Cartilage/cartilage-example which
+is available as a demo here http://example.cartilagejs.org/
 ## Requirements
 
 * Ruby on Rails 3.2+
@@ -20,7 +21,7 @@ An example project is available at http://github.com/activeprospect/cartilage-ex
 Include the Cartilage library in your project by adding the following to your
 Gemfile:
 
-    gem 'cartilage', :git => 'git@github.com:activeprospect/cartilage.git'
+    gem 'cartilage', :git => 'git@github.com:Cartilage/cartilage.git'
 
 Cartilage depends on Twitter Bootstrap and we prefer the bootstrap-sass gem
 for this, so also add this line while you're at it:
