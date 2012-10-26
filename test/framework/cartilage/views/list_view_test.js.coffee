@@ -85,3 +85,20 @@ asyncTest "should trigger reset event on @selected collection for multi-select L
   equal @testListView.selected.length, 2, "Two elements should have been selected"
   @testListView.clearSelection()
   equal @testListView.selected.length, 0, "No elements should have been selected"
+
+test "should keep selected items collection in the same order as collection passed to the view", 5, ->
+  @testListView.prepare()
+  $('#testElement').html @testListView.render().el
+  
+  @testListView.select($('.list-view > ul.list-view-items-container > li').first())
+  @testListView.selectAnother($('.list-view > ul.list-view-items-container > li').last())
+
+  equal @testListView.collection.at(0), @testListView.selected.at(0)
+  equal @testListView.collection.at(2), @testListView.selected.at(1)
+
+  @testListView.selectAnother($('.list-view > ul.list-view-items-container > li')[1])
+
+  equal @testListView.collection.at(0), @testListView.selected.at(0)
+  equal @testListView.collection.at(1), @testListView.selected.at(1)
+  equal @testListView.collection.at(2), @testListView.selected.at(2)
+
