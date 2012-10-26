@@ -3,6 +3,7 @@
 @READWRITE = 2
 
 Function::property = (name, options = {}) ->
+  
   options.access ?= (READONLY | READWRITE)
   options.default ?= null
   options.variable ?= "_#{name}"
@@ -13,7 +14,13 @@ Function::property = (name, options = {}) ->
   writeable = options.access & READWRITE
 
   getter = options.get or ->
-    @[options.variable]
+    if _.has(@, options.variable)
+      @[options.variable]
+    else
+      if _.isObject(@[options.variable]) and !_.isFunction(@[options.variable])
+        @[options.variable] = _.clone(@[options.variable])
+      else
+        @[options.variable]
 
   setter = options.set or (value) ->
     @[options.variable] = value

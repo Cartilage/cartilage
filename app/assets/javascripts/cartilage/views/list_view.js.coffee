@@ -92,7 +92,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @observe @collection, "reset", @update # TODO Don't re-render the entire view for removals
     @observe @collection, "remove", @prepare # TODO Don't re-render the entire view for removals
 
-
   prepare: ->
 
     # Prepare the View

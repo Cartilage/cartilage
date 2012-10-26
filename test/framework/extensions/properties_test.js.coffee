@@ -67,3 +67,16 @@ test "should initialize property via super()", ->
       
   testView = new TestView
   equal testView.testProperty, "bar"
+
+test "should clone default instead of returning directly when it is an object", ->
+
+  class TestView extends Cartilage.View
+    @property "testProperty", default: {foo: "bar"}
+
+  testView1 = new TestView
+  testView2 = new TestView
+
+  testView1.testProperty.foo = "baz"
+
+  equal testView1.testProperty.foo, "baz"
+  equal testView2.testProperty.foo, "bar"
