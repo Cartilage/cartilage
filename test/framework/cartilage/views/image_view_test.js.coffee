@@ -9,10 +9,10 @@ test "isLoaded property should be read-only", 1, ->
 test "isError property should be read-only", 1, ->
   @imageView.isError = true
   ok @imageView.isError == false, "isError should be false"
-
+  
 asyncTest "should fire load event upon successful load", 1, ->
-  @imageView.on "load", =>
-    ok 'load called'
+  @imageView.on "load", ->
+    ok true, 'load called'
     start()
 
   @imageView.imageAddress = "http://www.placehold.it/500x500"
@@ -20,9 +20,8 @@ asyncTest "should fire load event upon successful load", 1, ->
 
 asyncTest "should fire error event upon unsuccessful load attempt", 1, ->
   @imageView.on "error", ->
-    ok 'error called'
+    ok true, 'error called'
     start()
 
   @imageView.imageAddress = '404'
   $('#testElement').html @imageView.render().el 
-
