@@ -80,11 +80,18 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       class: "list-view-items-container"
       tabindex: 0
 
-    @_selected = new Backbone.Collection()
+    # Keep the selected collection in the same order as the view collection
+    @_selected = new Backbone.Collection(
+      null,
+      comparator: (item) =>
+        @collection.indexOf(item)
+      )
+
     # Observe Collection
     @observe @collection, "add", @addModel
     @observe @collection, "reset", @update # TODO Don't re-render the entire view for removals
     @observe @collection, "remove", @prepare # TODO Don't re-render the entire view for removals
+
 
   prepare: ->
 
