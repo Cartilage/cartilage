@@ -30,6 +30,12 @@ task :test => [ "test:framework" ] do
   # ...
 end
 
+namespace :pow do
+  task :prepare do
+    File.symlink("test/framework", "public")
+  end
+end
+
 namespace :test do
   desc "Run tests for framework"
   task :framework => [ :compile ] do
