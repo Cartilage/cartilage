@@ -15,9 +15,6 @@ gemspec
 
 gem 'sprockets'
 gem 'uglifier'
-gem 'sass-rails'
-gem 'coffee-rails'
-
 
 group :test do
   gem 'sqlite3'
