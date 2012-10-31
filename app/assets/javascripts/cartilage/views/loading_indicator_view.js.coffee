@@ -93,8 +93,9 @@ class window.Cartilage.Views.LoadingIndicatorView extends Cartilage.View
     @_clearFrame(@_canvasContext)
     @_isAnimating = false
 
-  remove: =>
-    @stop() and super()
+  cleanup: ->
+    @stop()
+    super()
 
   #
   # Draw a frame.
