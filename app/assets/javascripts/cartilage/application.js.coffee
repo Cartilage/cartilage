@@ -7,11 +7,16 @@ class window.Cartilage.Application
   @Views: {}
 
   @sharedInstance: null
+  @contentView: null
 
   @launch: ->
     @sharedInstance = new @
     @sharedInstance.initialize()
     @hijackLinks()
+
+  @show: (view) ->
+    @contentView = new Cartilage.Views.ContentView unless @contentView?
+    @contentView.show(view)
 
   @hijackLinks: ->
     if Backbone.history and Backbone.history._hasPushState
