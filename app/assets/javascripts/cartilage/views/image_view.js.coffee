@@ -21,13 +21,13 @@ class window.Cartilage.Views.ImageView extends Cartilage.View
   # The URL to the image.
   #
   @property "imageAddress", set: (url) ->
-    @_imageAddress = url
-    @_imageElement = ($ "<img />").attr('src', @imageAddress)
+    @__imageAddress = url
+    @__imageElement = ($ "<img />").attr('src', @imageAddress)
 
     # Bind to Events manually because event delegation will not work for
     # image load and error events...
-    ($ @_imageElement).load @handleLoadEvent
-    ($ @_imageElement).error @handleErrorEvent
+    ($ @__imageElement).load @handleLoadEvent
+    ($ @__imageElement).error @handleErrorEvent
   
   #
   # Denotes whether or not the image has finished loading.
