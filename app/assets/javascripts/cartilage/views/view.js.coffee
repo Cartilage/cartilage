@@ -78,7 +78,7 @@ class window.Cartilage.View extends Backbone.View
   cleanup: ->
     @off()
     @removeObservers()
-    @remove()
+    $(@el).remove()
 
   observe: (source, event, callback) ->
     source.on(event, callback, @)
@@ -95,7 +95,6 @@ class window.Cartilage.View extends Backbone.View
   # the view's element.
   #
   addSubview: (view, container = @el, animated = false) ->
-
     # Don't allow nil objects to be passed...
     return unless view
 
