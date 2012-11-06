@@ -134,6 +134,27 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @collection.add item.model, { silent: true }
 
   #
+  # Override View's insertSubviewItem method so a list view item
+  # can be added at the correct position in the list
+  #
+  insertSubviewElement: (view, container) ->
+    if @collection.length == 1
+      ($ container ).append(view.el)
+    else
+      index = _.indexOf(@_subviews, view)
+      if index == 0 
+        ($ container ).prepend(view.el)
+      else
+        ($ @_subviews[index - 1].el ).after(view.el)
+
+  #
+  # Override View's storeSubview method so we can maintain
+  # @subviews in the proper order.
+  # 
+  storeSubview: (view) ->
+    @_subviews.splice(@collection.indexOf(view.model), 0, view)
+
+  #
   # Selects the specified list item. Returns true if the item was selected or
   # false if no action was performed.
   #
