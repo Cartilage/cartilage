@@ -41,12 +41,6 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   @property "allowsDragToReorder", default: no
 
   #
-  # Whether or not list view items should be inserted into the list
-  # view in the same order they are stored in the @collection.
-  #
-  @property "ordered", default: yes
-
-  #
   # The default class for all list view items that are not explicitly
   # initialized.
   #
@@ -144,27 +138,21 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # can be added at the correct position in the list
   #
   insertSubviewElement: (view, container) ->
-    if @ordered
-      if @collection.length == 1
-        ($ container ).append(view.el)
-      else
-        index = _.indexOf(@_subviews, view)
-        if index == 0 
-          ($ container ).prepend(view.el)
-        else
-          ($ @_subviews[index - 1].el ).after(view.el)
+    if @collection.length == 1
+      ($ container ).append(view.el)
     else
-      ($ container).append(view.el)
+      index = _.indexOf(@_subviews, view)
+      if index == 0 
+        ($ container ).prepend(view.el)
+      else
+        ($ @_subviews[index - 1].el ).after(view.el)
 
   #
   # Override View's storeSubview method so we can maintain
   # @subviews in the proper order.
   # 
   storeSubview: (view) ->
-    if @ordered
-      @_subviews.splice(@collection.indexOf(view.model), 0, view)
-    else
-      @_subviews.push(view)
+    @_subviews.splice(@collection.indexOf(view.model), 0, view)
 
   #
   # Selects the specified list item. Returns true if the item was selected or
