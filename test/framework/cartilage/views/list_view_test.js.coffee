@@ -102,3 +102,31 @@ test "should keep selected items collection in the same order as collection pass
   equal @testListView.collection.at(1), @testListView.selected.at(1)
   equal @testListView.collection.at(2), @testListView.selected.at(2)
 
+module "Cartilage.Views.ListView.Ordered"
+  setup: ->
+    @testListView = null
+    @testCollection = new Backbone.Collection(  [], 
+                                                model: Backbone.Model,
+                                                comparator: (item) -> item.get("name")
+                                            )
+    @testListView = new Cartilage.Views.ListView
+      collection: @testCollection
+      ordered: yes
+
+test "should render items inserted into the collection in the proper order on the screen", 9, ->
+  @testListView.prepare()
+  $('#testElement').html @testListView.render().el
+  equal $('#testElement li').length, 0, "No elements should have been rendered"
+  @testCollection.add({id: "charlie", name: "charlie"})
+  equal $('#testElement li').length, 1, "One element should have been rendered"
+  @testCollection.add({id: "alpha", name: "alpha"})
+  equal $('#testElement li').length, 2, "Two elements should have been rendered"
+  equal $('#testElement li').first().data('model'), @testCollection.get("alpha"), "alpha should have been rendered first"
+  equal $('#testElement li').last().data('model'), @testCollection.get("charlie"), "charlie should have been rendered last"
+  @testCollection.add({id: "bravo", name: "bravo"})
+  equal $('#testElement li').length, 3, "Two elements should have been rendered"
+  equal $('#testElement li').first().data('model'), @testCollection.get("alpha"), "alpha should have been rendered first"
+  equal $('#testElement li').eq(1).data('model'), @testCollection.get("bravo"), "bravo should have been rendered second"
+  equal $('#testElement li').last().data('model'), @testCollection.get("charlie"), "charlie should have been rendered last"
+
+

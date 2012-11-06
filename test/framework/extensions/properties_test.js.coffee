@@ -50,7 +50,7 @@ test "should initialize property with custom setter", ->
 
   class TestView extends Cartilage.View
     @property "testProperty",
-      set: (value) -> @_testProperty = "customSetter"
+      set: (value) -> @__testProperty = "customSetter"
   testView = new TestView
   testView.testProperty = "foo"
 
