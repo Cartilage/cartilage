@@ -64,12 +64,12 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   @draggedItem: undefined
 
   events:
-    "dblclick ul > li": "open"
-    "click ul > li": "onFocus"
-    "keydown ul": "onKeyDown"
-    "mousedown ul": "onMouseDown"
-    "dragover ul": "onDragOver"
-    "drop ul": "onDrop"
+    "dblclick ul.list-view-items-container > li": "open"
+    "click ul.list-view-items-container > li": "onFocus"
+    "keydown ul.list-view-items-container": "onKeyDown"
+    "mousedown ul.list-view-items-container": "onMouseDown"
+    "dragover ul.list-view-items-container": "onDragOver"
+    "drop ul.list-view-items-container": "onDrop"
 
   initialize: (options = {}) ->
     # Initialize the View
