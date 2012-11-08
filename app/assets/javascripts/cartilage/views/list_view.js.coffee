@@ -47,6 +47,11 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   @property "itemView", default: Cartilage.Views.ListViewItem
 
   #
+  # An array containing the view of each item rendered as a part of the list
+  #
+  @property "listItemViews", access: READONLY, default: []
+
+  #
   # A collection containing the models of the currently selected items.
   #
   # TODO Rename to selectedModels
@@ -104,10 +109,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     # Clean up all existing item views and their container elements.
     (@$ "li").each (idx, element) ->
-      if view = ($ element).data("view")
-        view.removeFromSuperview()
-      else
-        ($ element).remove()
+      @removeItem(element)
 
     _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
     @restoreSelection() if @_selected.models.length > 0
@@ -129,9 +131,26 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # will not trigger any notifications that it was added.
   #
   addItem: (item) =>
+    # Store the view in order in the _listItemView array so we can
+    # insert views in the correct order.
+    @_listItemViews.splice(@collection.indexOf(item.model), 0, item)
+
     # TODO Ensure that the item derives from ListViewItem
     @addSubview item, @_listViewItemsContainer
+
     @collection.add item.model, { silent: true }
+
+  #
+  # Removes a passed element from the list view's superview as well
+  # as from the @_listViewItems array.
+  # 
+  removeItem: (element) =>
+    if view = ($ element).data("view")
+      view.removeFromSuperview()
+      _.remove(@_listViewItems, view)
+    else
+      ($ element).remove()
+
 
   #
   # Override View's insertSubviewItem method so a list view item
@@ -141,18 +160,13 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     if @collection.length == 1
       ($ container ).append(view.el)
     else
-      index = _.indexOf(@_subviews, view)
-      if index == 0 
+      index = _.indexOf(@_listItemViews, view)
+      if index == -1
+        ($ container ).append(view.el)
+      else if index == 0 
         ($ container ).prepend(view.el)
       else
-        ($ @_subviews[index - 1].el ).after(view.el)
-
-  #
-  # Override View's storeSubview method so we can maintain
-  # @subviews in the proper order.
-  # 
-  storeSubview: (view) ->
-    @_subviews.splice(@collection.indexOf(view.model), 0, view)
+        ($ @_listItemViews[index - 1].el ).after(view.el)
 
   #
   # Selects the specified list item. Returns true if the item was selected or
