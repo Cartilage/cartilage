@@ -106,9 +106,8 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     @update()
 
   update: ->
-
     # Clean up all existing item views and their container elements.
-    (@$ "li").each (idx, element) =>
+    (@$ "ul.list-view-items-container > li.list-view-item").each (idx, element) =>
       @removeItem(element)
 
     _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
@@ -187,7 +186,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       @clearSelection() if @_selected.length > 0
     else
       # In single select, call deselect on each selected element so observing "deselect" works as expected
-      _.each(($ @el).find("li.selected"), (element) => @deselect(element))
+      _.each(($ @el).find("li.list-view-item.selected"), (element) => @deselect(element))
 
     @_selected.add model
     ($ element).addClass "selected"
@@ -216,14 +215,14 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # Selects the first element in the list.
   #
   selectFirst: ->
-    element = ($ @el).find("li").first()
+    element = ($ @el).find("ul.list-view-items-container > li.list-view-item").first()
     @select element
 
   #
   # Selects the last element in the list.
   #
   selectLast: ->
-    element = ($ @el).find "li:last-of-type"
+    element = ($ @el).find "ul.list-view-items-container > li.list-view-item:last-of-type"
     @select element
 
   #
@@ -231,14 +230,14 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   selectAll: ->
     return unless @allowsSelection and @allowsMultipleSelection
-    elements = ($ @el).find "li:not(.selected)"
+    elements = ($ @el).find "ul.list-view-items-container > li.list-view-item:not(.selected)"
     _.each elements, @selectAnother
 
   #
   # Restores the selection after a re-rendering.
   #
   restoreSelection: =>
-    elements = ($ @el).find "li"
+    elements = ($ @el).find "ul.list-view-items-container > li.list-view-item"
     _.each elements, (element) =>
       model = ($ element).data("model")
       if model in @_selected.models
@@ -263,7 +262,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # performed.
   #
   clearSelection: (options = {}) ->
-    ($ @el).find("li.selected").removeClass "selected"
+    ($ @el).find("ul.list-view-items-container > li.list-view-item.selected").removeClass "selected"
     @_selected.reset(null, { silent: options["silent"] })
     @trigger("clear", @_selected) unless options["silent"]
 
@@ -288,7 +287,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   #
   onMouseDown: (event) =>
     # Get the list item element
-    element = if ($ event.target).is("li") then event.target else ($ event.target).parents("li") 
+    element = if ($ event.target).is("li.list-view-item") then event.target else ($ event.target).parents("li.list-view-item") 
 
     # Clear the selection if the user clicks in the list container.
     @clearSelection() if @allowsDeselection and event.target.tagName == "UL"
@@ -303,14 +302,14 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     else if event.shiftKey
       element = event.target
-      @expandSelectionToElement ($ element).parents("li") || element
+      @expandSelectionToElement ($ element).parents("li.list-view-item") || element
       event.preventDefault()
 
   #
   # Handles focus events.
   #
   onFocus: (event) =>
-    @focusedElement = $(event.target).closest("li")
+    @focusedElement = $(event.target).closest("li.list-view-item")
     @select @focusedElement unless event.metaKey
     event.preventDefault()
 
@@ -396,7 +395,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # is no selection the first item will be selected.
   #
   moveSelectionUp: (e) =>
-    element = ($ @focusedElement).prev "li"
+    element = ($ @focusedElement).prev "li.list-view-item"
     @select element if element.length > 0
 
   #
@@ -404,14 +403,14 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # is no selection the first item will be selected.
   #
   moveSelectionDown: (e) =>
-    element = ($ @focusedElement).next "li"
+    element = ($ @focusedElement).next "li.list-view-item"
     @select element if element.length > 0
 
   #
   # Expands the selection downward from the currently selected element.
   #
   expandSelectionDown: (e) ->
-    element = ($ @focusedElement).next "li"
+    element = ($ @focusedElement).next "li.list-view-item"
     if element.length > 0
       @selectAnother element
       @focusedElement = ($ element).focus()
@@ -420,7 +419,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # Expands the selection upward from the currently selected element.
   #
   expandSelectionUp: (e) ->
-    element = ($ @focusedElement).prev "li"
+    element = ($ @focusedElement).prev "li.list-view-item"
     if element.length > 0
       @selectAnother element
       @focusedElement = ($ element).focus()
@@ -439,7 +438,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     indexes[1] += 1
 
     # Select the elements in the requested indexes.
-    elements = ($ @el).find("li").slice indexes...
+    elements = ($ @el).find("li.list-view-item").slice indexes...
     _.each elements, @selectAnother
 
   #
