@@ -111,7 +111,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     (@$ "li").each (idx, element) =>
       @removeItem(element)
 
-    _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
+    _.each @renderModels(), (view) => @addItem(view)
     @restoreSelection() if @_selected.models.length > 0
 
   renderModels: =>
@@ -130,13 +130,13 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # model will automatically be added to the list view's collection, but
   # will not trigger any notifications that it was added.
   #
-  addItem: (item) =>
+  addItem: (item, container = @_listViewItemsContainer) =>
     # Store the view in order in the _listItemView array so we can
     # insert views in the correct order.
     @_listItemViews.splice(@collection.indexOf(item.model), 0, item)
 
     # TODO Ensure that the item derives from ListViewItem
-    @addSubview item, @_listViewItemsContainer
+    @addSubview item, container
 
     @collection.add item.model, { silent: true }
 

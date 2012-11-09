@@ -139,9 +139,23 @@ test "should render items inserted into the collection in the proper order on th
   equal $('#testElement li').first().data('model'), @testCollection.get("alpha"), "alpha should have been rendered first"
   equal $('#testElement li').last().data('model'), @testCollection.get("charlie"), "charlie should have been rendered last"
   @testCollection.add({id: "bravo", name: "bravo"})
-  equal $('#testElement li').length, 3, "Two elements should have been rendered"
+  equal $('#testElement li').length, 3, "Three elements should have been rendered"
   equal $('#testElement li').first().data('model'), @testCollection.get("alpha"), "alpha should have been rendered first"
   equal $('#testElement li').eq(1).data('model'), @testCollection.get("bravo"), "bravo should have been rendered second"
   equal $('#testElement li').last().data('model'), @testCollection.get("charlie"), "charlie should have been rendered last"
+
+test "should render removed items back into the proper position", 4, ->
+  @testCollection.add([{id: "alpha", name: "alpha"}, {id: "bravo", name: "bravo"}, {id: "charlie", name: "charlie"}])
+  @testListView.prepare()
+  $('#testElement').html @testListView.render().el
+  equal $('#testElement li').length, 3, "Three elements should have been rendered"
+  @bravo = @testCollection.get("bravo")
+  @testCollection.remove(@bravo)
+  equal $('#testElement li').length, 2, "Two elements should have been rendered"
+  @testCollection.add(@bravo)
+  equal $('#testElement li').length, 3, "Three elements should have been rendered"
+  equal $('#testElement li').eq(1).data('model'), @testCollection.get("bravo"), "bravo should have been reinserted second"
+
+
 
 
