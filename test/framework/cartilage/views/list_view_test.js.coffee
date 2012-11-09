@@ -1,12 +1,12 @@
 module "Cartilage.Views.BasicListView"
   setup: ->
-    testCollection = new Backbone.Collection([ {id: 1, name: "one"}, 
+    @testCollection = new Backbone.Collection([ {id: 1, name: "one"}, 
                                               {id: 2, name: "two"}, 
                                               {id: 3, name: "three"} ],
                                               model: Backbone.Model)
 
     @testListView = new Cartilage.Views.ListView
-      collection: testCollection
+      collection: @testCollection
 
 test "should render collection correctly", 3, ->
   @testListView.prepare()
@@ -14,6 +14,22 @@ test "should render collection correctly", 3, ->
   ok $('.list-view').length, "ListView container was created."
   equal $('.list-view-items-container > li').length, 3, "testListView should have 3 items."
   equal @testListView.selected.length, 0, "testListView should have 0 selected items."
+
+test "should add an item to the list view", 3, ->
+  @testListView.prepare()
+  $('#testElement').html @testListView.render().el
+  ok $('.list-view').length, "ListView container was created."
+  equal $('.list-view-items-container > li').length, 3, "testListView should have 3 items."
+  @testCollection.add({id: 4, name: "four"})
+  equal $('.list-view-items-container > li').length, 4, "testListView should now have 4 items."
+
+test "should remove an item from the list view", 3, ->
+  @testListView.prepare()
+  $('#testElement').html @testListView.render().el
+  ok $('.list-view').length, "ListView container was created."
+  equal $('.list-view-items-container > li').length, 3, "testListView should have 3 items."
+  @testCollection.remove(@testCollection.get(3))
+  equal $('.list-view-items-container > li').length, 2, "testListView should now have 2 items."
 
 asyncTest "should trigger select event for single-select ListView", 1, ->
   @testListView.prepare()
@@ -33,7 +49,6 @@ asyncTest "should trigger deselect event for single-select ListView", 1, ->
     start()
   @testListView.selectFirst()
   @testListView.deselect($('.list-view > ul.list-view-items-container > li').first())
-
 
 module "Cartilage.Views.ListView.AllowsMultipleSelection"
   setup: ->
