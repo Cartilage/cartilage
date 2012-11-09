@@ -108,7 +108,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   update: ->
 
     # Clean up all existing item views and their container elements.
-    (@$ "li").each (idx, element) ->
+    (@$ "li").each (idx, element) =>
       @removeItem(element)
 
     _.each @renderModels(), (view) => @addSubview(view, @_listViewItemsContainer)
@@ -147,7 +147,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   removeItem: (element) =>
     if view = ($ element).data("view")
       view.removeFromSuperview()
-      _.remove(@_listViewItems, view)
+      _.remove(@_listViewItems, view) if @_listViewItems?
     else
       ($ element).remove()
 
