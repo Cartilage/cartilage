@@ -295,10 +295,11 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     if event.metaKey
       model = ($ element).data("model")
-      if model in @_selected.models
-        @deselect element
-      else
-        @selectAnother element
+      if model?
+        if model in @_selected.models
+          @deselect element
+        else
+          @selectAnother element
       event.preventDefault()
 
     else if event.shiftKey
