@@ -129,15 +129,18 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # model will automatically be added to the list view's collection, but
   # will not trigger any notifications that it was added.
   #
-  addItem: (item, container = @_listViewItemsContainer) =>
+  addItem: (itemView, container = @_listViewItemsContainer) =>
+
     # Store the view in order in the _listItemView array so we can
     # insert views in the correct order.
-    @_listItemViews.splice(@collection.indexOf(item.model), 0, item)
+    index = @collection.indexOf(itemView.model)
+    if @_listItemViews[index]?
+      @_listItemViews.splice(@collection.indexOf(itemView.model), 0, itemView)
+    else
+      @_listItemViews[index] = itemView
 
     # TODO Ensure that the item derives from ListViewItem
-    @addSubview item, container
-
-    @collection.add item.model, { silent: true }
+    @addSubview itemView, container
 
   #
   # Removes a passed element from the list view's superview as well
@@ -159,13 +162,14 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     if @collection.length == 1
       ($ container ).append(view.el)
     else
-      index = _.indexOf(@_listItemViews, view)
+      flattenedListItemViews = _.flatten(@_listItemViews)
+      index = _.indexOf(flattenedListItemViews, view)
       if index == -1
         ($ container ).append(view.el)
       else if index == 0 
         ($ container ).prepend(view.el)
       else
-        ($ @_listItemViews[index - 1].el ).after(view.el)
+        ($ flattenedListItemViews[index - 1].el ).after(view.el)
 
   #
   # Selects the specified list item. Returns true if the item was selected or
@@ -294,10 +298,11 @@ class window.Cartilage.Views.ListView extends Cartilage.View
 
     if event.metaKey
       model = ($ element).data("model")
-      if model in @_selected.models
-        @deselect element
-      else
-        @selectAnother element
+      if model?
+        if model in @_selected.models
+          @deselect element
+        else
+          @selectAnother element
       event.preventDefault()
 
     else if event.shiftKey
