@@ -68,8 +68,9 @@ class window.Cartilage.Views.BarView extends Cartilage.View
   # TODO Move this to BarSegmentView
   _percentageWidthForBarInSegmentAtIndex: (index) ->
     segment      = @segments.models[index]
-    segmentWidth = segment.get("maximum") - @segments.models[index - 1]?.get("maximum") || segment.get("maximum")
-    fooWidth     = @value - _.sum(_.map(@segments.models.slice(0, index), (segment) -> segment.get("maximum")))
+    maximumSoFar = @segments.models[index - 1]?.get("maximum") || 0
+    segmentWidth = segment.get("maximum") - maximumSoFar
+    fooWidth     = @value - maximumSoFar
     barWidth     = 0
 
     return 0 if fooWidth <= 0
