@@ -290,6 +290,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # container.
   #
   onMouseDown: (event) =>
+    return unless @allowsSelection
     # Get the list item element
     element = if ($ event.target).is("li.list-view-item") then event.target else ($ event.target).parents("li.list-view-item") 
 
@@ -314,6 +315,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # Handles focus events.
   #
   onFocus: (event) =>
+    return unless @allowsSelection
     @focusedElement = $(event.target).closest("li.list-view-item")
     @select @focusedElement unless event.metaKey
     event.preventDefault()

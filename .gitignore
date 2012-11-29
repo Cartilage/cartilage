@@ -12,3 +12,4 @@ test/framework/cartilage.js
 .rvmrc
 .powrc
 .idea/
+.rbenv-version
