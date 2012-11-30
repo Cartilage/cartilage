@@ -157,5 +157,34 @@ test "should render removed items back into the proper position", 4, ->
   equal $('#testElement li').eq(1).data('model'), @testCollection.get("bravo"), "bravo should have been reinserted second"
 
 
+# This is how I'd like to test to make sure clicks get passed through to links contained
+# in the ListViewItem, but there's no way to simulate a click at coordinates in pure JS.
+#
+# module "Cartilage.Views.ListView.SelectionDisabled"
+#   setup: ->
+#     @testListView = null
 
+#     class window.TestModel extends Backbone.Model
+#     @testCollection = new Backbone.Collection([ {id: 1, name: "one"}, 
+#                                               {id: 2, name: "two"}, 
+#                                               {id: 3, name: "three"} ],
+#                                               model: TestModel)
 
+#     class window.TestListViewItem extends Cartilage.Views.ListViewItem
+#     window.JST = { "test_list_view_item": _.template('<a href="<%= testModel.get(\'name\') %>" id="link-<%= testModel.get(\'id\') %>">Link</a>')}
+
+#     @testListView = new Cartilage.Views.ListView
+#       collection: @testCollection
+#       allowsSelection: no
+#       allowsDeselction: no
+#       itemView: TestListViewItem
+
+# asyncTest "should pass a click in the listview through to the underlying element", 1, ->
+#   @testListView.prepare() 
+#   $('#testElement').html @testListView.render().el
+#   $('#testElement a#link-1').click (e) -> 
+#     ok true, "Click was received"
+#     start()
+#     e.preventDefault();
+#   offset = $('#testElement a#link-1').offset();
+#   $("#testElement a#link-1").simulate("click", {screenX: offset.left + 5, screenY: offset.top + 5}) 
