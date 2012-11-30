@@ -11,3 +11,4 @@ test/dummy/tmp/
 test/framework/cartilage.js
 .rvmrc
 .powrc
+.idea/
