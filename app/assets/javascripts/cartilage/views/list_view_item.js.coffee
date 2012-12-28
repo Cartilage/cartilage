@@ -21,7 +21,7 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
   #
   # The list view instance that the list view item currently belongs to.
   #
-  @property "listView", access: READONLY
+  @property "listView"
 
   #
   # Whether or not the list view item is currently selected.
@@ -55,6 +55,8 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
     if @listView and @listView.allowsDragToReorder
       ($ @el).attr "draggable", true
 
+    ($ @el).attr('data-model-id', @model.get('id')) if @model?
+
   onDragLeave: (event) =>
     return unless @listView.allowsDragToReorder
     ($ @el).removeClass("drop-before").removeClass("drop-after")
@@ -62,7 +64,7 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
   onDragStart: (event) =>
     return unless @listView.allowsDragToReorder
     event.originalEvent.dataTransfer.setData("application/x-list-view-item-id", ($ @el).attr("id"))
-    Cartilage.Views.ListView.draggedItem = @
+    @listView.draggedItems.add(@model)
 
   onDragOver: (event) =>
     return unless @listView.allowsDragToReorder
@@ -73,7 +75,7 @@ class window.Cartilage.Views.ListViewItem extends Cartilage.View
       allowed = false
 
     # Ensure that the dragged item belongs to us...
-    unless Cartilage.Views.ListView.draggedItem.model in @listView.collection.models
+    unless @listView.collection.contains(@listView.draggedItems.models[0])
       allowed = false
 
     if allowed

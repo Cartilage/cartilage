@@ -62,11 +62,9 @@ class window.Cartilage.Views.ListView extends Cartilage.View
   # A collection containing all of the list view items managed by the list
   # view.
   #
-  @property "items", access: READONLY, default: new Backbone.Collection
+  @property "draggedItems"
 
   # --------------------------------------------------------------------------
-
-  @draggedItem: undefined
 
   events:
     "dblclick ul.list-view-items-container > li": "open"
@@ -92,7 +90,10 @@ class window.Cartilage.Views.ListView extends Cartilage.View
         @collection.indexOf(item)
       )
 
-    # Observe Collection
+    # _.clone of properties is shallow only so we won't get a clean copy if we use the
+    # default method in property - instead, we'll maintain explicit creation here.
+    @_draggedItems = new Backbone.Collection
+
     @observe @collection, "add", @addModel
     @observe @collection, "reset", @update # TODO Don't re-render the entire view for removals
     @observe @collection, "remove", @prepare # TODO Don't re-render the entire view for removals
@@ -182,7 +183,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     model = ($ element).data("model")
 
     # Do not attempt to select the element if it is already selected.
-    return if model in @_selected.models
+    return if @_selected.contains(model) 
 
     # If an element is already selected, deselect it before continuing.
     if @allowsMultipleSelection
@@ -209,7 +210,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     model = ($ element).data("model")
 
     # Do not attempt to select the element if it is already selected.
-    return if model in @_selected.models
+    return if @_selected.contains(model)
 
     @_selected.add model
     ($ element).addClass "selected"
@@ -244,7 +245,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     elements = ($ @el).find "ul.list-view-items-container > li.list-view-item"
     _.each elements, (element) =>
       model = ($ element).data("model")
-      if model in @_selected.models
+      if @_selected.contains(model)
         ($ element).addClass("selected")
       else
         @_selected.remove model
@@ -300,7 +301,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     if event.metaKey
       model = ($ element).data("model")
       if model?
-        if model in @_selected.models
+        if @_selected.contains(model)
           @deselect element
         else
           @selectAnother element
@@ -372,7 +373,7 @@ class window.Cartilage.Views.ListView extends Cartilage.View
       allowed = false
 
     # Ensure that the dragged item belongs to us...
-    unless Cartilage.Views.ListView.draggedItem.model in @collection.models
+    unless @collection.contains(@draggedItems.models[0])
       allowed = false
 
     event.preventDefault() if allowed
@@ -395,7 +396,8 @@ class window.Cartilage.Views.ListView extends Cartilage.View
     ($ droppedElement).removeClass("drop-before").removeClass("drop-after")
 
     # Clear the global draggedItem reference
-    Cartilage.Views.ListView.draggedItem = false
+    @trigger 'drop', @_draggedItems
+    @_draggedItems.reset()
 
   #
   # Moves the selection to the item visually above the selected item. If there
