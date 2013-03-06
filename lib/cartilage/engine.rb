@@ -4,7 +4,6 @@ require "coffee-script"
 require "sass-rails"
 require "bootstrap-sass"
 require "jquery-rails"
-require "backbone-rails"
 require "coffee-rails"
 
 module Cartilage
