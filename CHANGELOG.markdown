@@ -1,6 +1,11 @@
 
 # Cartilage Release History
 
+## Version 0.1.1
+
+ * Reports correct version.
+ * Gemfile.lock has been removed.
+
 ## Version 0.9.5 — Not Yet Released
 
  * [Cartilage.Views.ListView] Drag to reorder is now disabled by default, but

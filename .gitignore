@@ -1,6 +1,7 @@
 *.tmproj
 *.sublime*
 *.DS_Store
+Gemfile.lock
 .bundle/
 log/*.log
 public
@@ -13,3 +14,4 @@ test/framework/cartilage.js
 .powrc
 .idea/
 .rbenv-version
+.ruby-version
