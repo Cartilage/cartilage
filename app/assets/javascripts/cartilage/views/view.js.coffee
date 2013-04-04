@@ -43,6 +43,21 @@ class window.Cartilage.View extends Backbone.View
       if console
         console.error "Template error in #{_.underscore(@constructor.name)}.jst.[eco|ejs]: \"#{error.message}\"", error
 
+  # For small amounts of DOM Elements, where a full-blown template isn't
+  # needed, use **make** to manufacture elements, one at a time.
+  # 
+  # var el = this.make('li', {'class': 'row'}, this.model.escape('title'));
+  # 
+  # This method was removed in backbone 0.9.9 so added here for compatibility
+  make: (tagName, attributes, content) ->
+    el = document.createElement(tagName)
+    if attributes
+      $(el).attr(attributes)
+    if content 
+      $(el).html(content)
+
+    el
+
   #
   # Override the standard constructor so that we can extend each view with any
   # of the options passed, instead of simply @collection, @model and others
@@ -76,9 +91,11 @@ class window.Cartilage.View extends Backbone.View
     @
 
   cleanup: ->
-    @off()
     @removeObservers()
-    $(@el).remove()
+    @off()
+
+    # Backbone's remove will stopListening() and remove() the element
+    @remove()
 
   observe: (source, event, callback) ->
     source.on(event, callback, @)
